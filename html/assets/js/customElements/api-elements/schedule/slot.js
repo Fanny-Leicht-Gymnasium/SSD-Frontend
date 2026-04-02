@@ -35,7 +35,7 @@ console.log(slotWrapper)
           <div class="content">
             ${Array.isArray(slotWrapper.baseUsers)
         ? slotWrapper.baseUsers
-          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-mission>`)
+          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
           .join('')
         : '<p>N/A</p>'
       }
@@ -46,7 +46,7 @@ console.log(slotWrapper)
           <div class="content">
             ${Array.isArray(slotWrapper.fallbackusers)
         ? slotWrapper.fallbackusers
-          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-mission>`)
+          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
           .join('')
         : '<p>N/A</p>'
       }
@@ -57,7 +57,7 @@ console.log(slotWrapper)
           <div class="content">
             ${Array.isArray(slotWrapper.replacementUser)
         ? slotWrapper.replacementUser
-          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-mission>`)
+          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
           .join('')
         : '<p>N/A</p>'
       }
@@ -69,7 +69,7 @@ console.log(slotWrapper)
           <div class="content">
             ${Array.isArray(slotWrapper.excuses)
         ? slotWrapper.excuses
-          .map(excusesId =>`<ssd-intra-excuse id="${escapeHtml(excusesId)}"}'></ssd-intra-mission>`)
+          .map(excusesId =>`<ssd-intra-excuse id="${escapeHtml(excusesId)}"}'></ssd-intra-excuse>`)
           .join('')
         : '<p>N/A</p>'
       }
@@ -86,7 +86,17 @@ console.log(slotWrapper)
       }
           </div>
         </div>
-
+              <div collapsable>
+          <div class="header">Applications ${slotWrapper.applications.length}</div>
+          <div class="content">
+            ${Array.isArray(slotWrapper.applications)
+        ? slotWrapper.applications
+          .map(application => `<ssd-intra-applications id="${escapeHtml(application.id)}" data='${JSON.stringify(application)}'></ssd-intra-applications>`)
+          .join('')
+        : '<p>N/A</p>'
+      }
+          </div>
+        </div>
       </div>
     `;
   }
