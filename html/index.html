@@ -6,31 +6,27 @@
     <title>SSD Dashboard</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/global.css">
+    <meta name="view-transition" content="same-origin">
 </head>
 <body>
     <h1>SSD Dashboard</h1>
-    <nav>
-        <button onclick="loadSubpage('login/')">Login</button>
-        <button onclick="loadSubpage('signup/')">Signup (Admin)</button>
-        <button onclick="loadSubpage('whoami/')">Who Am I</button>
+    <ssd-schedule></ssd-schedule>
 
-        <button onclick="loadSubpage('mission-start/')">Mission Start</button>
-        <button onclick="loadSubpage('missions/')">Active Missions</button>
-        <button onclick="logout()">Logout</button>
-    </nav>
 
-    <ssd-login asPopup redirectURL="close"></ssd-login>
+    <!-- <ssd-login asPopup redirectURL="close"></ssd-login>
     <x-translation>welcome_message</x-translation>
     <ssd-icon name="user">user</ssd-icon>
     <ssd-intra-mission id="00899ca0-f8d4-4706-b140-795fee11b27f" alerterror="a"></ssd-intra-mission>
 
     <ssd-intra-mission-list page_size="5"></ssd-intra-mission-list>
-<time-display show-countdown="true" show-date="nottoday">2026-04-01T18:10:00</time-display>
-    <ssd-schedule></ssd-schedule>
+<time-display show-countdown="true" show-date="nottoday">2026-04-01T18:10:00</time-display> -->
+
+
+    <ssd-nav></ssd-nav>
+
     <script src="./assets/js/main.js"></script>
     <script type="module" src="assets/js/api/api.generated.js"></script>
     <script type="module" src="assets/js/util.js"></script>
-
 
     <script type="module" src="assets/js/customElements/general/icon.js"></script>
     <script type="module" src="assets/js/customElements/general/SimplePagination.js"></script>
@@ -39,6 +35,9 @@
     <script type="module" src="assets/js/customElements/ssd-alert/ssd-error.js"></script>
     <script type="module" src="assets/js/customElements/ssd-alert/ssd-warning.js"></script>
     <script type="module" src="assets/js/customElements/ssd-alert/ssd-ok.js"></script>
+
+    <script type="module" src="assets/js/customElements/ssd-nav.js"></script>
+
 
     <script type="module" src="assets/js/customElements/api-elements/mission/missiondisplay.js"></script>
     <script type="module" src="assets/js/customElements/api-elements/mission/missionlist.js"></script>

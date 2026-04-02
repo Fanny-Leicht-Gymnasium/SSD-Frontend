@@ -23,14 +23,19 @@ class SlotElement extends APIElement {
 
         <p>Additional: ${escapeHtml(slotWrapper.additionalInformation || 'N/A')}</p>
 
-        <p>Alerts:</p>
-${
-  Array.isArray(slotWrapper.alerts)
-    ? slotWrapper.alerts
-        .map(id => `<ssd-intra-mission id="${escapeHtml(id)}"></ssd-intra-mission>`)
-        .join('')
-    : '<p>N/A</p>'
-}
+        <div collapsable>
+          <div class="header">Alerts</div>
+          <div class="content">
+                  
+      ${Array.isArray(slotWrapper.alerts)
+              ? slotWrapper.alerts
+                .map(id => `<ssd-intra-mission id="${escapeHtml(id)}"></ssd-intra-mission>`)
+                .join('')
+              : '<p>N/A</p>'
+            }
+           
+          </div>
+        </div>
       </div>
     `;
   }

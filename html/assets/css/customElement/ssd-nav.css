@@ -1,0 +1,53 @@
+.nav-container {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background: #2a2a2a;
+    color: #eaeaea;
+
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+
+    padding: 10px 14px;
+
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    font-size: 14px;
+}
+
+.nav-button:hover {
+    background: #3a3a3a;
+    border-color: #555;
+}
+
+.nav-button.active {
+    background: #007acc;
+    border-color: #007acc;
+    color: white;
+}
+
+/* icon styling */
+.nav-button ssd-icon {
+    width: 18px;
+    height: 18px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0.9;
+}
+
+/* label spacing control */
+.nav-button .label {
+    line-height: 1;
+}
+

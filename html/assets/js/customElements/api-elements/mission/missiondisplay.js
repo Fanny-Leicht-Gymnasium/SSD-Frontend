@@ -18,9 +18,10 @@ class MissionViewer extends APIElement {
       <p><x-translation>Injury</x-translation>: ${escapeHtml(mission.injury || 'N/A')}</p>
       <p><x-translation>Location</x-translation>: ${escapeHtml(mission.location || 'N/A')}</p>
       <p><x-translation>Timestamp</x-translation>: <time-display show-countdown="true" show-date="nottoday">${escapeHtml(mission.timestamp || 'N/A')}<time-display></p>
-
-      <h3>Alerted Users</h3>
-      <ul>
+      <div collapsable>
+          <div class="header">Alerted Users</div>
+          <div class="content">
+              <ul>
         ${
           Array.isArray(mission.alertedUser)
             ? mission.alertedUser.map(u => `
@@ -32,6 +33,9 @@ class MissionViewer extends APIElement {
             : '<li>N/A</li>'
         }
       </ul>
+          </div>
+      </div>
+   
     `;
   }
 }

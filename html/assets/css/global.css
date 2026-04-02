@@ -130,3 +130,38 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+
+/* collapsable container */
+[collapsable] {
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* header */
+[collapsable] > .header {
+    padding: 10px;
+    cursor: pointer;
+    background: #1f1f1f;
+    color: white;
+}
+
+/* content */
+[collapsable]:not([open]) > .content {
+    max-height: 0;
+    overflow: hidden;
+
+    padding: 0 10px;
+    opacity: 0;
+
+    transition: max-height 0.25s ease, opacity 0.2s ease, padding 0.2s ease;
+}
+
+/* open state */
+[collapsable][open] > .content {
+    padding: 10px;
+    opacity: 1;
+}

@@ -7,7 +7,7 @@ export class SSDElement extends HTMLElement {
         super();
         this.root = this.attachShadow({ mode: 'open' });
 
-        this.root.innerHTML = `<div id="container"></div>;`;
+        this.root.innerHTML = `<div id="container"></div>`;
         this._container = this.root.getElementById('container');
         // optional base stylesheet
         this.addStylesheet('/assets/css/global.css');
@@ -17,6 +17,13 @@ export class SSDElement extends HTMLElement {
             this._enablePopupClose();
             console.log('Popup mode enabled for', this.tagName);
         }
+        this.root.addEventListener('click', (e) => {
+            const header = e.target.closest('[collapsable] > .header');
+            if (!header) return;
+            const container = header.closest('[collapsable]');
+            if (!container) return;
+            container.toggleAttribute('open');
+        });
     }
 
     _enablePopupClose() {

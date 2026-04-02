@@ -149,3 +149,8 @@ x-translation {
     width: 100%;
   }
 }
+
+
+@view-transition {
+    navigation: auto;
+}
