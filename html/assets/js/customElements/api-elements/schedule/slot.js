@@ -8,9 +8,11 @@ class SlotElement extends APIElement {
 
   render(slotWrapper) {
     const slot = slotWrapper?.slot ?? {};
+    const isAdmin = this.hasAttribute('isAdmin');
 
     return `
       <div class="slot">
+
         <h3>${escapeHtml(slot.slotName || 'Unnamed Slot')}</h3>
 
         <p>ID: ${escapeHtml(slot.slotId)}</p>
@@ -23,21 +25,43 @@ class SlotElement extends APIElement {
 
         <p>Additional: ${escapeHtml(slotWrapper.additionalInformation || 'N/A')}</p>
 
+        ${isAdmin ? `
+          <button class="edit-btn" data-id="${escapeHtml(slot.slotId)}">
+            <ssd-icon name="edit"></ssd-icon>
+          </button>
+        ` : ''}
+
         <div collapsable>
           <div class="header">Alerts</div>
           <div class="content">
-                  
-      ${Array.isArray(slotWrapper.alerts)
-              ? slotWrapper.alerts
-                .map(id => `<ssd-intra-mission id="${escapeHtml(id)}"></ssd-intra-mission>`)
-                .join('')
-              : '<p>N/A</p>'
-            }
-           
+            ${Array.isArray(slotWrapper.alerts)
+        ? slotWrapper.alerts
+          .map(id => `<ssd-intra-mission id="${escapeHtml(id)}"></ssd-intra-mission>`)
+          .join('')
+        : '<p>N/A</p>'
+      }
           </div>
         </div>
+
       </div>
     `;
+  }
+  postRender() {
+    if (!this.hasAttribute('isAdmin')) return;
+
+    this.root.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+
+        const form = document.createElement('ssd-slot-form');
+
+        form.setAttribute('asPopup', '');
+        form.setAttribute('redirectURL', 'close');
+
+        document.body.appendChild(form);
+        form.setAttribute('id', id); // load by id
+      });
+    });
   }
 }
 

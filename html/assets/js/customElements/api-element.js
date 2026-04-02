@@ -1,8 +1,13 @@
 import { SSDElement } from './ssd-element.js';
 export class APIElement extends SSDElement {
   static get observedAttributes() {
-    return ['data', 'id', 'alertErrors'];
-  }
+    return [
+        ...(super.observedAttributes || []),
+        'data',
+        'id',
+        'alertErrors'
+    ];
+}  
 
   constructor() {
     super();
@@ -38,6 +43,8 @@ export class APIElement extends SSDElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
+    super.attributeChangedCallback()
+
     if (name === 'alerterror') {
       this.alertErrors = this.hasAttribute('alerterror');
     }
@@ -78,6 +85,9 @@ export class APIElement extends SSDElement {
     return `<ssd-error ${this.alertErrors || this.defaultAlertErrors ? 'alert' : ''}>${err.message}</ssd-error>`;
   }
 
+  postRender(){
+
+  }
   // =========================
   // INPUT LAYER (clean priority chain)
   // =========================
@@ -158,5 +168,6 @@ export class APIElement extends SSDElement {
                 el.classList.remove('loading');
 
     }
+    this.postRender()
   }
 }

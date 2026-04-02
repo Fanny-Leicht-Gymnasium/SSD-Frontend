@@ -1,6 +1,6 @@
 export class SSDElement extends HTMLElement {
     static get observedAttributes() {
-        return ['data', 'id'];
+        return ['aspopup'];
     }
 
     constructor() {
@@ -13,7 +13,7 @@ export class SSDElement extends HTMLElement {
         this.addStylesheet('/assets/css/global.css');
         this.addStylesheet('/assets/css/style.css');
         this.loadDefaultStyles();
-        if (this.hasAttribute('asPopup')) {
+        if (this.hasAttribute('aspopup')) {
             this._enablePopupClose();
             console.log('Popup mode enabled for', this.tagName);
         }
@@ -25,7 +25,14 @@ export class SSDElement extends HTMLElement {
             container.toggleAttribute('open');
         });
     }
-
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name=="aspopup"){
+            if (this.hasAttribute('aspopup')) {
+                this._enablePopupClose();
+                console.log('Popup mode enabled for', this.tagName);
+            }
+        }
+}
     _enablePopupClose() {
         const btn = document.createElement('button');
 

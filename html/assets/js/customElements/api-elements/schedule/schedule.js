@@ -3,7 +3,7 @@ import { escapeHtml } from '../../../util.js';
 import { getScheduleYearWeek } from '../../../api/api.generated.js';
 class ScheduleElement extends APIElement {
   static get observedAttributes() {
-    return ['data', 'year', 'week'];
+    return ['data', 'year', 'week', 'isAdmin'];
   }
 
 
@@ -25,119 +25,174 @@ class ScheduleElement extends APIElement {
     };
   }
 
-async fetchByContext() {
-  console.log('Fetching schedule with context input');
-  // 1. direct attribute override (JSON mode)
-  const dataAttr = this.getAttribute('data');
+  async fetchByContext() {
+    console.log('Fetching schedule with context input');
+    // 1. direct attribute override (JSON mode)
+    const dataAttr = this.getAttribute('data');
 
-  if (dataAttr) {
-    try {
-      return JSON.parse(dataAttr);
-    } catch (e) {
-      console.error('Invalid data JSON', e);
-      return null;
-    }
-  }
-
-  // 2. use Base input system (FIXED)
-  const input = this.getInput();
-
-  let year = input?.year;
-  let week = input?.week;
-
-  // 3. fallback attributes
-  year = year || this.getAttribute('year');
-  week = week || this.getAttribute('week');
-
-  // 4. fallback current week
-  if (!week || !year) {
-    const current = this.getCurrentWeek();
-    year = year || current.year;
-    week = week || current.week;
-  }
-
-  return await getScheduleYearWeek(year, week);
-}
-
-render(data) {
-  const slots = Array.isArray(data) ? data : [];
-
-  // group by position -> weekday
-  const grid = new Map();
-
-  let maxWeekday = 0;
-  let maxPosition = 0;
-
-  for (const entry of slots) {
-    const slot = entry?.slot;
-    if (!slot) continue;
-
-    const weekday = slot.weekday ?? 0;
-    const position = slot.slotPosition ?? 0;
-
-    maxWeekday = Math.max(maxWeekday, weekday);
-    maxPosition = Math.max(maxPosition, position);
-
-    if (!grid.has(position)) {
-      grid.set(position, new Map());
+    if (dataAttr) {
+      try {
+        return JSON.parse(dataAttr);
+      } catch (e) {
+        console.error('Invalid data JSON', e);
+        return null;
+      }
     }
 
-    grid.get(position).set(weekday, entry);
+    // 2. use Base input system (FIXED)
+    const input = this.getInput();
+
+    let year = input?.year;
+    let week = input?.week;
+
+    // 3. fallback attributes
+    year = year || this.getAttribute('year');
+    week = week || this.getAttribute('week');
+
+    // 4. fallback current week
+    if (!week || !year) {
+      const current = this.getCurrentWeek();
+      year = year || current.year;
+      week = week || current.week;
+    }
+
+    return await getScheduleYearWeek(year, week);
   }
 
-  let html = `
-    <div class="schedule-grid">
-      <table>
-        <thead>
-          <tr>
-            <th>Position</th>
-  `;
+  render(data) {
+    const slots = Array.isArray(data) ? data : [];
 
-for (let d = 0; d <= maxWeekday; d++) {
-  html += `
-    <th>
-      <x-trans>time.weekday.${d}</x-trans>
-    </th>
-  `;
-}
+    // group by position -> weekday
+    const grid = new Map();
 
-  html += `
-          </tr>
-        </thead>
-        <tbody>
-  `;
+    let maxWeekday = 0;
+    let maxPosition = 0;
 
-  // rows: positions
-  for (let p = 0; p <= maxPosition; p++) {
-    html += `<tr><td>${p}</td>`;
+    for (const entry of slots) {
+      const slot = entry?.slot;
+      if (!slot) continue;
 
-    for (let d = 0; d <= maxWeekday; d++) {
-      const entry = grid.get(p)?.get(d);
+      const weekday = slot.weekday ?? 0;
+      const position = slot.slotPosition ?? 0;
 
-      html += `<td>`;
+      maxWeekday = Math.max(maxWeekday, weekday);
+      maxPosition = Math.max(maxPosition, position);
 
-      if (entry) {
-        html += `
-          <ssd-slot data='${escapeHtml(JSON.stringify(entry))}'></ssd-slot>
-        `;
-      } else {
-        html += `-`;
+      if (!grid.has(position)) {
+        grid.set(position, new Map());
       }
 
-      html += `</td>`;
+      grid.get(position).set(weekday, entry);
     }
 
-    html += `</tr>`;
+    const isAdmin = this.hasAttribute("isAdmin");
+    return this.renderSchedule(grid, maxWeekday, maxPosition, isAdmin);
+  }
+  postRender() {
+    this._bindAdminGridEvents()
+
   }
 
-  html += `
-        </tbody>
-      </table>
-    </div>
-  `;
+  renderSchedule(grid, maxWeekday, maxPosition, isAdmin) {
+    let html = `
+        <div class="schedule-grid">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Position</th>
+    `;
 
-  return html;
-}
+    // weekday headers
+    for (let d = 0; d <= maxWeekday; d++) {
+      html += `
+            <th>
+                <x-trans>time.weekday.${d}</x-trans>
+                `
+      if (isAdmin) {
+        html += `
+                    <button class="add-slot-btn"
+                        data-p="-1"
+                        data-d="${d}"
+                        data-action="open-slot-form">
+                        +
+                    </button>
+                `;
+      }
+
+      html += `
+            </th>
+        `;
+
+    }
+    html += `
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    // rows
+    for (let p = 0; p <= maxPosition; p++) {
+      html += `<tr><td>${p}</td>`;
+
+      for (let d = 0; d <= maxWeekday; d++) {
+        const entry = grid.get(p)?.get(d);
+
+        html += `<td class="schedule-cell">`;
+
+        if (entry) {
+          html += `
+                    <ssd-slot data='${escapeHtml(JSON.stringify(entry))}' ${isAdmin?'isAdmin':''}></ssd-slot>
+                `;
+        } else {
+          html += `<span class="empty-slot">-</span>`;
+        }
+
+        if (isAdmin) {
+          html += `
+                    <button class="add-slot-btn"
+                        data-p="${p}"
+                        data-d="${d}"
+                        data-action="open-slot-form">
+                        +
+                    </button>
+                `;
+        }
+
+        html += `</td>`;
+      }
+
+      html += `</tr>`;
+    }
+
+    html += `
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    return html;
+  }
+  _bindAdminGridEvents() {
+    this.container.querySelectorAll('.add-slot-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const p = Number(e.currentTarget.dataset.p);
+        const d = Number(e.currentTarget.dataset.d);
+
+        const form = document.createElement('ssd-slot-form');
+
+        form.setAttribute('asPopup', '');
+        form.setAttribute('redirectURL', '/');
+
+        
+        const data = {
+          after: p,
+          weekday: d,
+        }
+        form.setAttribute('data', JSON.stringify(data));
+        document.body.appendChild(form);
+      });
+    });
+  }
 }
 
 customElements.define('ssd-schedule', ScheduleElement);

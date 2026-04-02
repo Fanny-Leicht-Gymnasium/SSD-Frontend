@@ -1,0 +1,32 @@
+.schedule-cell {
+    position: relative;
+    min-width: 120px;
+    height: 60px;
+}
+
+.empty-slot {
+    opacity: 0.3;
+}
+
+.add-slot-btn {
+    right: 4px;
+    bottom: 4px;
+
+    width: 22px;
+    height: 22px;
+
+    border: none;
+    border-radius: 4px;
+
+    background: #2a2a2a;
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    line-height: 1;
+}
+
+.add-slot-btn:hover {
+    background: #444;
+}
