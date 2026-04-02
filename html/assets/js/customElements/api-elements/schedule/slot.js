@@ -9,7 +9,7 @@ class SlotElement extends APIElement {
   render(slotWrapper) {
     const slot = slotWrapper?.slot ?? {};
     const isAdmin = this.hasAttribute('isAdmin');
-
+console.log(slotWrapper)
     return `
       <div class="slot">
 
@@ -30,7 +30,51 @@ class SlotElement extends APIElement {
             <ssd-icon name="edit"></ssd-icon>
           </button>
         ` : ''}
-
+        <div collapsable>
+          <div class="header">Base User ${slotWrapper.baseUsers.length}</div>
+          <div class="content">
+            ${Array.isArray(slotWrapper.baseUsers)
+        ? slotWrapper.baseUsers
+          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-mission>`)
+          .join('')
+        : '<p>N/A</p>'
+      }
+          </div>
+        </div>
+<div collapsable>
+          <div class="header">Fallback User ${slotWrapper.fallbackusers.length}</div>
+          <div class="content">
+            ${Array.isArray(slotWrapper.fallbackusers)
+        ? slotWrapper.fallbackusers
+          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-mission>`)
+          .join('')
+        : '<p>N/A</p>'
+      }
+          </div>
+        </div>
+        <div collapsable>
+          <div class="header">Replacement User ${slotWrapper.replacementUser.length}</div>
+          <div class="content">
+            ${Array.isArray(slotWrapper.replacementUser)
+        ? slotWrapper.replacementUser
+          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-mission>`)
+          .join('')
+        : '<p>N/A</p>'
+      }
+          </div>
+        </div>
+        
+                <div collapsable>
+          <div class="header">Excuses ${slotWrapper.excuses.length}</div>
+          <div class="content">
+            ${Array.isArray(slotWrapper.excuses)
+        ? slotWrapper.excuses
+          .map(excusesId =>`<ssd-intra-excuse id="${escapeHtml(excusesId)}"}'></ssd-intra-mission>`)
+          .join('')
+        : '<p>N/A</p>'
+      }
+          </div>
+        </div>
         <div collapsable>
           <div class="header">Alerts ${slotWrapper.alerts.length}</div>
           <div class="content">
