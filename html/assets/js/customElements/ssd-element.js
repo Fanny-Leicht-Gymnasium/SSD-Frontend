@@ -15,7 +15,6 @@ export class SSDElement extends HTMLElement {
         this.loadDefaultStyles();
         if (this.hasAttribute('aspopup')) {
             this._enablePopupClose();
-            console.log('Popup mode enabled for', this.tagName);
         }
         this.root.addEventListener('click', (e) => {
             const header = e.target.closest('[collapsable] > .header');
@@ -26,13 +25,11 @@ export class SSDElement extends HTMLElement {
         });
     }
     attributeChangedCallback(name, oldValue, newValue) {
-        if (name=="aspopup"){
-            if (this.hasAttribute('aspopup')) {
-                this._enablePopupClose();
-                console.log('Popup mode enabled for', this.tagName);
-            }
+        if (this.hasAttribute('aspopup')) {
+            this._enablePopupClose();
         }
-}
+
+    }
     _enablePopupClose() {
         const btn = document.createElement('button');
 
