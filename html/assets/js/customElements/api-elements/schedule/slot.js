@@ -32,7 +32,7 @@ class SlotElement extends APIElement {
         ` : ''}
 
         <div collapsable>
-          <div class="header">Alerts</div>
+          <div class="header">Alerts ${slotWrapper.alerts.length}</div>
           <div class="content">
             ${Array.isArray(slotWrapper.alerts)
         ? slotWrapper.alerts
