@@ -75,7 +75,7 @@ class ScheduleElement extends APIElement {
       const weekday = slot.weekday ?? 0;
       const position = slot.slotPosition ?? 0;
 
-      maxWeekday = Math.max(maxWeekday, weekday);
+      maxWeekday = 6;
       maxPosition = Math.max(maxPosition, position);
 
       if (!grid.has(position)) {
