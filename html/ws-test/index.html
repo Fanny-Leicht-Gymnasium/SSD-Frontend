@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Test UI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, textarea {
+            width: 100%;
+            margin: 5px 0;
+            padding: 8px;
+        }
+        button {
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        #log {
+            margin-top: 20px;
+            background: #111;
+            color: #0f0;
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .log-entry {
+            cursor: pointer;
+            padding: 4px;
+        }
+        .log-entry:hover {
+            background: #222;
+        }
+    </style>
+</head>
+<body>
+
+<h2>WebSocket Test Client</h2>
+
+<button onclick="connect()">Connect</button>
+
+<label>Type</label>
+<input id="typeInput" placeholder="e.g. status_request">
+
+<label>ThreadId</label>
+<input id="threadId" placeholder="UUID for thread (optional)">
+
+<label>Data (JSON)</label>
+<textarea id="dataInput" rows="4">{}</textarea>
+
+<button onclick="sendMessage()">Send</button>
+
+<h3>Log</h3>
+<div id="log"></div>
+<script>
+let ws = null;
+
+const WS_URL = "ws://localhost:8080/system/gsm?key=gsm-secret-key";
+
+function log(msg, meta = null) {
+    const logBox = document.getElementById("log");
+
+    const div = document.createElement("div");
+    div.className = "log-entry";
+    div.textContent = msg;
+
+    if (meta && meta.thread_id) {
+        div.dataset.threadId = meta.thread_id;
+    }
+
+    div.onclick = () => {
+        if (div.dataset.threadId) {
+            document.getElementById("threadId").value = div.dataset.threadId;
+            log("[UI] copied thread_id: " + div.dataset.threadId);
+        }
+    };
+
+    logBox.appendChild(div);
+    logBox.scrollTop = logBox.scrollHeight;
+}
+
+function connect() {
+    ws = new WebSocket(WS_URL);
+
+    ws.onopen = () => log("[CONNECTED]");
+
+    ws.onmessage = (event) => {
+        let msg;
+
+        try {
+            msg = JSON.parse(event.data);
+        } catch {
+            log("[RECV RAW] " + event.data);
+            return;
+        }
+
+        const threadId = msg.thread_id || null;
+
+        log("[RECV] " + JSON.stringify(msg), { thread_id: threadId });
+
+        // AUTO RESPONSE
+        if (msg.type === "status_request") {
+            const response = {
+                type: "status_response",
+                timestamp: new Date().toISOString(),
+                thread_id: threadId
+            };
+
+            ws.send(JSON.stringify(response));
+            log("[AUTO-SENT] " + JSON.stringify(response));
+        }
+    };
+
+    ws.onerror = (err) => log("[ERROR] " + err);
+    ws.onclose = () => log("[CLOSED]");
+}
+
+function sendMessage() {
+    if (!ws || ws.readyState !== 1) {
+        log("[ERROR] not connected");
+        return;
+    }
+
+    const type = document.getElementById("typeInput").value;
+    const thread_id = document.getElementById("threadId").value;
+    const dataText = document.getElementById("dataInput").value;
+
+    let data = {};
+
+    try {
+        data = JSON.parse(dataText || "{}");
+    } catch {
+        log("[ERROR] invalid JSON");
+        return;
+    }
+
+    const msg = {
+        type,
+        timestamp: new Date().toISOString(),
+        thread_id: thread_id || null,
+        ...data
+    };
+
+    ws.send(JSON.stringify(msg));
+    log("[SENT] " + JSON.stringify(msg));
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: #0f1115;
+  color: #e6e6e6;
+  line-height: 1.5;
+  padding: 24px;
+}
+
+/* =========================
+   HEADER
+========================= */
+h1 {
+  font-size: 28px;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+}
+
+/* =========================
+   NAV BAR
+========================= */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 12px;
+  background: #151922;
+  border: 1px solid #232838;
+  border-radius: 12px;
+}
+
+nav button {
+  background: #1f2430;
+  color: #e6e6e6;
+  border: 1px solid #2d3345;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+nav button:hover {
+  background: #2a3142;
+  transform: translateY(-1px);
+}
+
+nav button:active {
+  transform: translateY(0);
+}
+
+/* =========================
+   DASHBOARD LAYOUT
+========================= */
+body > *:not(nav):not(h1) {
+  display: block;
+  margin-bottom: 16px;
+}
+
+/* =========================
+   CUSTOM ELEMENT CARDS
+========================= */
+ssd-schedule,
+ssd-intra-mission {
+  display: block;
+  background: #151922;
+  border: 1px solid #232838;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================
+   SCHEDULE SPECIFIC
+========================= */
+ssd-schedule h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* slot styling */
+ssd-slot {
+  display: block;
+  padding: 10px;
+  border-radius: 10px;
+  background: #1f2430;
+  border: 1px solid #2d3345;
+}
+
+/* =========================
+   ALERT / MISSION ELEMENTS
+========================= */
+ssd-intra-mission {
+  margin-top: 10px;
+    border: 1px solid #2d3345;
+
+}
+
+/* =========================
+   ICONS
+========================= */
+ssd-icon {
+  vertical-align: middle;
+  margin-left: 6px;
+  color: #7aa2ff;
+}
+
+/* =========================
+   User ELEMENTS
+========================= */
+ssd-intra-user {
+  margin-top: 10px;
+  background: red;
+
+
+}
+/* =========================
+   TRANSLATION ELEMENT
+========================= */
+x-translation {
+  display: inline;
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+  }
+
+  nav button {
+    width: 100%;
+  }
+}

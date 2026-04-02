@@ -1,0 +1,107 @@
+/* =========================
+   Notification Stack
+========================= */
+#ssd-notification-stack {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  z-index: 9999999;
+}
+
+/* =========================
+   Alert wrapper animation
+========================= */
+.ssd-alert {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.2s ease;
+}
+
+.ssd-alert.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* =========================
+   Base notification box
+========================= */
+.ssd-notification {
+  font-family: system-ui, sans-serif;
+
+  min-width: 280px;
+  max-width: 420px;
+
+  padding: 12px 14px;
+  border-radius: 8px;
+
+  color: #fff;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+}
+
+/* =========================
+   Title + meta
+========================= */
+.ssd-notification .title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+
+.ssd-notification .meta {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 6px;
+  word-break: break-word;
+}
+
+/* =========================
+   Types
+========================= */
+.ssd-notification.error {
+  background: #7f1d1d;
+}
+
+.ssd-notification.warning {
+  background: #92400e;
+}
+
+.ssd-notification.success {
+  background: #166534;
+}
+
+.ssd-notification.info {
+  background: #1e3a8a;
+}
+
+/* =========================
+   Inline mode (non-alert)
+========================= */
+#inline {
+  display: block;
+}
+
+#inline .ssd-notification {
+  margin: 10px 0;
+}
+
+/* =========================
+   Optional: hover behavior
+========================= */
+.ssd-alert:hover {
+  transform: scale(1.01);
+}
+
+/* =========================
+   Optional: reduce motion
+========================= */
+@media (prefers-reduced-motion: reduce) {
+  .ssd-alert {
+    transition: none;
+  }
+}

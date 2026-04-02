@@ -1,0 +1,28 @@
+
+/* error box styling */
+.ssd-notification.error {
+  font-family: sans-serif;
+  border: 1px solid #ff4d4d;
+  background: #2a0f0f;
+  color: #ffd6d6;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* title */
+.ssd-notification.error .title {
+  font-weight: bold;
+  color: #ff6b6b;
+  margin-bottom: 6px;
+}
+
+/* meta info */
+.ssd-notification.error .meta {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 6px;
+  word-break: break-word;
+}
+
+/* stack spacing handled by parent, not here */

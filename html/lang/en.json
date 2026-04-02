@@ -1,0 +1,29 @@
+ {
+    "lang": "English",
+    "Author": "Author",
+    "mission": "Mission",
+    "noMission": "No mission",
+    "missionId": "Mission ID",
+    "collapsed": "Collapsed",
+    "welcome_message": "Welcome to the SSD Frontend",
+    "description": "This is the frontend for the SSD (Space Simulation Dashboard). It allows",
+    "time":{
+         "seconds": "seconds",
+         "minutes": "minutes",
+         "hours": "hours",
+         "days": "days",
+         "months": "months",
+         "years": "years",
+         "ago": "ago",
+         "in": "in",
+         "weekday": {
+             "0": "Sunday",
+             "1": "Monday",
+             "2": "Tuesday",
+             "3": "Wednesday",
+             "4": "Thursday",
+             "5": "Friday",
+             "6": "Saturday"
+         }
+      }
+ }
