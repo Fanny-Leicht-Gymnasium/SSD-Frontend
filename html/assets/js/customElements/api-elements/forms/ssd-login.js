@@ -25,22 +25,29 @@ class SSDLogin extends FormAPIElement {
     // UPDATE HANDLER
     // -------------------------
     async handleSend(data) {
-
-
         try {
             this.result.innerHTML = 'Logging in...';
+
             console.log('Submitting login with data:', data);
-            await postLogin({ username: data.username, password: data.password });
+
+            const res = await postLogin({
+                username: data.username,
+                password: data.password
+            });
+            
+            // IMPORTANT: store token
+            if (res?.Token) {
+                localStorage.setItem("jwt", res.Token);
+                console.log("login data stored")
+            }
 
             this.result.innerHTML = 'Login successful! Redirecting...';
-            return { success: true };
 
+            return { success: true, data: res };
 
         } catch (error) {
             return { success: false, error: error };
-
         }
-        return { success: false };
     }
 }
 
