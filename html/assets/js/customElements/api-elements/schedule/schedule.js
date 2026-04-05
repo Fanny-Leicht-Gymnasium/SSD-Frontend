@@ -65,7 +65,7 @@ class ScheduleElement extends APIElement {
     // group by position -> weekday
     const grid = new Map();
 
-    let maxWeekday = 0;
+    let maxWeekday = 6;
     let maxPosition = 0;
 
     for (const entry of slots) {
