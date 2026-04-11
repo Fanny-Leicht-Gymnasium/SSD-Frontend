@@ -32,4 +32,4 @@ class ApplicationViewer extends APIElement {
   }
 }
 
-customElements.define('ssd-intra-mission', ApplicationViewer);
+customElements.define('ssd-intra-application', ApplicationViewer);

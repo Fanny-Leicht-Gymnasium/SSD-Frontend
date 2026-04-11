@@ -92,7 +92,7 @@ console.log(slotWrapper)
           <div class="content">
             ${Array.isArray(slotWrapper.applications)
         ? slotWrapper.applications
-          .map(application => `<ssd-intra-applications id="${escapeHtml(application.id)}" data='${JSON.stringify(application)}'></ssd-intra-applications>`)
+          .map(application => `<ssd-intra-application id="${escapeHtml(application.id)}" data='${JSON.stringify(application)}'></ssd-intra-application>`)
           .join('')
         : '<p>N/A</p>'
       }
