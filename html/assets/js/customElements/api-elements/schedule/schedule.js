@@ -141,7 +141,7 @@ class ScheduleElement extends APIElement {
 
         if (entry) {
           html += `
-                    <ssd-slot data='${escapeHtml(JSON.stringify(entry))}' ${isAdmin?'isAdmin':''}></ssd-slot>
+                    <ssd-slot-wrapped data='${escapeHtml(JSON.stringify(entry))}' ${isAdmin?'isAdmin':''}></ssd-slot-wrapped>
                 `;
         } else {
           html += `<span class="empty-slot">-</span>`;
