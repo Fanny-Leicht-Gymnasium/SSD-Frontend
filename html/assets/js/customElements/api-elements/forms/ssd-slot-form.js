@@ -4,7 +4,7 @@ import { FormAPIElement } from '../../form-api-element.js';
 class SSDSlotForm extends FormAPIElement {
     constructor() {
         super();
-        this.defaultSubmittext = 'Login';
+        this.defaultSubmittext = 'Update Slot';
         this.defaultAlertErrors = true;
     }
 
@@ -16,23 +16,36 @@ class SSDSlotForm extends FormAPIElement {
 
         this.form.innerHTML = `
         <h1>Slot Editor</h1>
-        <input type="text" id="slotName" placeholder="Name" required>
+        <div class="field" input-label="Name">
+            <input type="text" id="slotName" placeholder="Name" required>
+        </div>
 
-        <input type="number" id="weekday" placeholder="Weekday (0-6)" required>
+        <div class="field" input-label="Weekday">
+        <select id="weekday" required>
+                <option value="1"><x-trans>time.weekday.1</x-trans></option>
+                <option value="2"><x-trans>time.weekday.2</x-trans></option>
+                <option value="3"><x-trans>time.weekday.3</x-trans></option>
+                <option value="4"><x-trans>time.weekday.4</x-trans></option>
+                <option value="5"><x-trans>time.weekday.5</x-trans></option>
+                <option value="6"><x-trans>time.weekday.6</x-trans></option>
+                <option value="7"><x-trans>time.weekday.7</x-trans></option>
+            </select>
+        </div>
         ${hasId ? `
         <input type="number" id="slotPosition" placeholder="Position" required>
         ` : '<input type="number" id="after" placeholder="After" required>'}
 
-        <label>Start time</label>
-        <input type="time" id="starttime" required>
+        <div class="field" input-label="Start time">
+            <input type="time" id="starttime" required>
+        </div>
+        <div class="field" input-label="End time">
+            <input type="time" id="endtime" required>
+        </div>
 
-        <label>End time</label>
-        <input type="time" id="endtime" required>
-
-        <label>
+   
+        <div class="field" input-label="Required">
             <input type="checkbox" id="required">
-            Required
-        </label>
+        </div>
 
         ${hasId ? `
             <button type="button" id="deleteBtn" class="danger-btn">

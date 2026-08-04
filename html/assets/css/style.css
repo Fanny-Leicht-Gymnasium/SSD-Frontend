@@ -1,3 +1,5 @@
+
+
 /* =========================
    GLOBAL RESET
 ========================= */
@@ -8,74 +10,41 @@
 }
 
 body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: #0f1115;
-  color: #e6e6e6;
-  line-height: 1.5;
-  padding: 24px;
+    margin: 0;
+    padding: 24px;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    line-height: 1.5;
 }
 
-/* =========================
-   HEADER
-========================= */
-h1 {
-  font-size: 28px;
-  margin-bottom: 16px;
-  letter-spacing: 0.5px;
-}
-
-/* =========================
-   NAV BAR
-========================= */
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 24px;
-  padding: 12px;
-  background: #151922;
-  border: 1px solid #232838;
-  border-radius: 12px;
-}
-
-nav button {
-  background: #1f2430;
-  color: #e6e6e6;
-  border: 1px solid #2d3345;
-  padding: 8px 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-nav button:hover {
-  background: #2a3142;
-  transform: translateY(-1px);
-}
-
-nav button:active {
-  transform: translateY(0);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
 
 /* =========================
    DASHBOARD LAYOUT
 ========================= */
-body > *:not(nav):not(h1) {
-  display: block;
-  margin-bottom: 16px;
-}
 
-/* =========================
-   CUSTOM ELEMENT CARDS
-========================= */
-ssd-schedule,
-ssd-intra-mission {
-  display: block;
-  background: #151922;
-  border: 1px solid #232838;
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
 }
 
 /* =========================
@@ -153,4 +122,160 @@ x-translation {
 
 @view-transition {
     navigation: auto;
+}
+
+.fullscreen-formbox{
+    position: absolute;
+    top:0;
+    left:0;
+    height: 100vh;
+    width: 100vw;
+    padding: 10vw;
+    padding-top: 1vh;
+}
+
+
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+    font: inherit;
+
+    cursor: pointer;
+
+    padding: .85rem 1rem;
+
+    color: white;
+    background: var(--primary);
+
+    border: none;
+    border-radius: var(--radius-small);
+
+    transition: all var(--transition);
+}
+
+button:hover {
+    background: var(--primary-hover);
+}
+
+button:active {
+    transform: scale(.98);
+}
+
+/* =========================
+   FORM CONTROLS
+========================= */
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: .85rem 1rem;
+
+    font: inherit;
+
+    color: var(--text);
+    background: var(--surface-2);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+
+    outline: none;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background-color var(--transition);
+      margin-bottom: 1em;
+}
+label{
+  display: inline;
+}
+input[type=checkbox]{
+  width: unset;
+}
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-muted);
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+    border-color: var(--border-hover);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+input:invalid {
+    border-color: var(--danger);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text);
+    -webkit-box-shadow: 0 0 0 1000px var(--surface-2) inset;
+}
+
+.field {
+    position: relative;
+}
+
+.field label, .field::before {
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    transform: translateY(-50%);
+    background: var(--surface);
+    padding: 0 .25rem;
+    color: var(--text-muted);
+    opacity: 0;
+    transition: .2s ease;
+}
+.field:not(:has(label))::before {
+    content: attr(input-label);
+}
+.field:has(input:not(:placeholder-shown)) label,
+.field:has(input:not(:placeholder-shown))::before,
+.field:has(select:not(:placeholder-shown)) label,
+.field:has(select:not(:placeholder-shown))::before,
+.field:has(textarea:not(:placeholder-shown)) label,
+.field:has(textarea:not(:placeholder-shown))::before {
+    opacity: 1;
+}
+
+/* Checkbox fields */
+.field:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    position: static;
+}
+
+.field:has(input[type="checkbox"]) label,.field:has(input[type="checkbox"])::before {
+    position: static;
+    transform: none;
+    background: none;
+    padding: 0;
+    opacity: 1;
+    color: var(--text);
+    cursor: pointer;
+    margin-bottom: 1em;
 }

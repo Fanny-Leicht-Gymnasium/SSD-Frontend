@@ -69,10 +69,14 @@ export class APIElement extends SSDElement {
   }
 
   async fetchByContext(input) {
-    // NEW: override point for complex components
+    // override point for complex components
     return null;
   }
-
+  async additionalLoading() {
+    // override point for complex components
+    // gets called at the end of every data loading.
+    return null;
+  }
   render(data) {
     return `<pre>${JSON.stringify(data, null, 2)}</pre>`;
   }
@@ -81,8 +85,8 @@ export class APIElement extends SSDElement {
     return `Loading...`;
   }
 
-  renderError(err) {
-    return `<ssd-error ${this.alertErrors || this.defaultAlertErrors ? 'alert' : ''}>${err.message}</ssd-error>`;
+  renderError(err, alert=false) {
+    return `<ssd-error ${this.alertErrors || this.defaultAlertErrors || alert? 'alert' : ''}>${err.message}</ssd-error>`;
   }
 
   postRender(){
@@ -154,6 +158,7 @@ export class APIElement extends SSDElement {
         return;
       }
       const data = await this.resolveData(input);
+      this.additionalLoading()
 
       if (!data) {
         throw new Error('No data returned');

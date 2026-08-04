@@ -58,7 +58,7 @@
 <script>
 let ws = null;
 
-const WS_URL = "ws://localhost:8080/system/gsm?key=gsm-secret-key";
+const WS_URL = "ws://localhost:8080/system/moduleWS?key=gsm-secret-key&client_type=Call";
 
 function log(msg, meta = null) {
     const logBox = document.getElementById("log");
@@ -106,7 +106,8 @@ function connect() {
             const response = {
                 type: "status_response",
                 timestamp: new Date().toISOString(),
-                thread_id: threadId
+                thread_id: threadId,
+                topic: "System"
             };
 
             ws.send(JSON.stringify(response));

@@ -12,8 +12,8 @@
     right: 4px;
     bottom: 4px;
 
-    width: 22px;
-    height: 22px;
+    /* width: 22px;
+    height: 22px; */
 
     border: none;
     border-radius: 4px;
@@ -29,4 +29,8 @@
 
 .add-slot-btn:hover {
     background: #444;
+}
+
+table{
+width: 100%;
 }

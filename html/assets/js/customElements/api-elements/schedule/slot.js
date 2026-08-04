@@ -19,8 +19,8 @@ class SlotElement extends APIElement {
         <p>Weekday: ${escapeHtml(slot.weekday)}</p>
         <p>Required: ${slot.required ? 'Yes' : 'No'}</p>
 
-        <p>Start: ${escapeHtml(slot.starttime)}</p>
-        <p>End: ${escapeHtml(slot.endtime)}</p>
+        <p>Start: <time-display show-date="never"> ${escapeHtml(slot.starttime)}</time-display></p>
+        <p>End: <time-display show-date="never">${escapeHtml(slot.endtime)}</time-display></p>
 
 
         ${isAdmin ? `

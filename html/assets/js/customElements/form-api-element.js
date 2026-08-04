@@ -111,6 +111,14 @@ export class FormAPIElement extends APIElement {
     let data = this.getFormData();
     const result = await this.handleSend(data);
 
+    if (result.success) {
+      this.dispatchEvent(new CustomEvent('form-success', {
+        bubbles: true,
+        composed: true,
+        detail: result
+      }));
+    }
+
     if (result.success && result.redirect !== false) {
       const redirectURL = result.redirect || this.getAttribute('redirectURL');
 
@@ -136,7 +144,7 @@ export class FormAPIElement extends APIElement {
   getFormData() {
     const data = {};
 
-    this.form.querySelectorAll('input, textarea').forEach(el => {
+    this.form.querySelectorAll('input, textarea, select').forEach(el => {
       if (!el.id) return;
 
       let value = el.value;
@@ -186,7 +194,7 @@ export class FormAPIElement extends APIElement {
 render(data) {
     if (!data) return;
 
-    this.form.querySelectorAll('input, textarea').forEach(el => {
+    this.form.querySelectorAll('input, textarea, select').forEach(el => {
         const name = el.id;
 
         if (data[name] === undefined || data[name] === null) return;

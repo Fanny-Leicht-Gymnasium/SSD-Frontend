@@ -1,11 +1,27 @@
 import { APIElement } from '../../api-element.js';
 import { escapeHtml } from '../../../util.js';
-import { getScheduleYearWeek } from '../../../api/api.generated.js';
+import { getScheduleYearWeek, getUserMe } from '../../../api/api.generated.js';
 class ScheduleElement extends APIElement {
   static get observedAttributes() {
     return ['data', 'year', 'week', 'isAdmin'];
   }
 
+  constructor() {
+    super();
+    this.init();
+  }
+
+  async init() {
+    try {
+      const me = await getUserMe();
+
+      if (me && me.role === "admin") {
+        this.setAttribute("isAdmin", "");
+      }
+    } catch (error) {
+      console.error("Failed to load user:", error);
+    }
+  }
 
   getCurrentWeek() {
     const now = new Date();
@@ -42,21 +58,21 @@ class ScheduleElement extends APIElement {
     // 2. use Base input system (FIXED)
     const input = this.getInput();
 
-    let year = input?.year;
-    let week = input?.week;
+    this.year = input?.year;
+    this.week = input?.week;
 
     // 3. fallback attributes
-    year = year || this.getAttribute('year');
-    week = week || this.getAttribute('week');
+    this.year = this.year || this.getAttribute('year');
+    this.week = this.week || this.getAttribute('week');
 
     // 4. fallback current week
-    if (!week || !year) {
+    if (!this.week || !this.year) {
       const current = this.getCurrentWeek();
-      year = year || current.year;
-      week = week || current.week;
+      this.year = this.year || current.year;
+      this.week = this.week || current.week;
     }
 
-    return await getScheduleYearWeek(year, week);
+    return await getScheduleYearWeek(this.year, this.week);
   }
 
   render(data) {
@@ -65,7 +81,7 @@ class ScheduleElement extends APIElement {
     // group by position -> weekday
     const grid = new Map();
 
-    let maxWeekday = 6;
+    let maxWeekday = 7;
     let maxPosition = 0;
 
     for (const entry of slots) {
@@ -75,7 +91,7 @@ class ScheduleElement extends APIElement {
       const weekday = slot.weekday ?? 0;
       const position = slot.slotPosition ?? 0;
 
-      maxWeekday = 6;
+      maxWeekday = 7;
       maxPosition = Math.max(maxPosition, position);
 
       if (!grid.has(position)) {
@@ -103,7 +119,7 @@ class ScheduleElement extends APIElement {
     `;
 
     // weekday headers
-    for (let d = 0; d <= maxWeekday; d++) {
+    for (let d = 1; d <= maxWeekday; d++) {
       html += `
             <th>
                 <x-trans>time.weekday.${d}</x-trans>
@@ -134,14 +150,14 @@ class ScheduleElement extends APIElement {
     for (let p = 0; p <= maxPosition; p++) {
       html += `<tr><td>${p}</td>`;
 
-      for (let d = 0; d <= maxWeekday; d++) {
+      for (let d = 1; d <= maxWeekday; d++) {
         const entry = grid.get(p)?.get(d);
 
         html += `<td class="schedule-cell">`;
 
         if (entry) {
           html += `
-                    <ssd-slot-wrapped data='${escapeHtml(JSON.stringify(entry))}' ${isAdmin?'isAdmin':''}></ssd-slot-wrapped>
+                    <ssd-slot-wrapped slot-id='${entry.slot.slotId}' data='${escapeHtml(JSON.stringify(entry))}' ${isAdmin ? 'isAdmin' : ''} week="${this.week}" year="${this.year}"></ssd-slot-wrapped>
                 `;
         } else {
           html += `<span class="empty-slot">-</span>`;
@@ -183,7 +199,7 @@ class ScheduleElement extends APIElement {
         form.setAttribute('asPopup', '');
         form.setAttribute('redirectURL', '/');
 
-        
+
         const data = {
           after: p,
           weekday: d,

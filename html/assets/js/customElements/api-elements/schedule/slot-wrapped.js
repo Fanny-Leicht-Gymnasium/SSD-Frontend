@@ -1,16 +1,32 @@
-import { APIElement } from '../../api-element.js';
+import { APIElement, } from '../../api-element.js';
 import { escapeHtml } from '../../../util.js';
-
+import { getScheduleYearWeekSlotSlotid } from '../../../api/api.generated.js';
 class SlotElementWrapped extends APIElement {
   static get observedAttributes() {
     return ['data'];
   }
+    async fetchById(id) {
+      const week = this.getAttribute("week")
+      const year = this.getAttribute("year")
+    return getScheduleYearWeekSlotSlotid(year, week, id);
+  }
 
+  getInput() {
+    const slotId = this.getAttribute('slot-id');
+    if (slotId) {
+      return {
+        source: 'api',
+        id: slotId
+      };
+    }
+
+    return super.getInput();
+  }
 
   render(slotWrapper) {
     const slot = slotWrapper?.slot ?? {};
     const isAdmin = this.hasAttribute('isAdmin');
-console.log(slotWrapper)
+    console.log(slotWrapper)
     return `
       <div class="slot">
 
@@ -21,10 +37,14 @@ console.log(slotWrapper)
         <p>Weekday: ${escapeHtml(slot.weekday)}</p>
         <p>Required: ${slot.required ? 'Yes' : 'No'}</p>
 
-        <p>Start: ${escapeHtml(slot.starttime)}</p>
-        <p>End: ${escapeHtml(slot.endtime)}</p>
+        <p>Start: <time-display show-date="never"> ${escapeHtml(slot.starttime)}</time-display></p>
+        <p>End: <time-display show-date="never">${escapeHtml(slot.endtime)}</time-display></p>
 
         <p>Additional: ${escapeHtml(slotWrapper.additionalInformation || 'N/A')}</p>
+
+      <button class="apply-btn" data-id="${escapeHtml(slot.slotId)}">
+            <ssd-icon name="apply"></ssd-icon>
+          </button>
 
         ${isAdmin ? `
           <button class="edit-btn" data-id="${escapeHtml(slot.slotId)}">
@@ -42,7 +62,7 @@ console.log(slotWrapper)
       }
           </div>
         </div>
-<div collapsable>
+      <div collapsable>
           <div class="header">Fallback User ${slotWrapper.fallbackusers.length}</div>
           <div class="content">
             ${Array.isArray(slotWrapper.fallbackusers)
@@ -70,7 +90,7 @@ console.log(slotWrapper)
           <div class="content">
             ${Array.isArray(slotWrapper.excuses)
         ? slotWrapper.excuses
-          .map(excusesId =>`<ssd-intra-excuse id="${escapeHtml(excusesId)}"}'></ssd-intra-excuse>`)
+          .map(excusesId => `<ssd-intra-excuse id="${escapeHtml(excusesId)}"}'></ssd-intra-excuse>`)
           .join('')
         : '<p>N/A</p>'
       }
@@ -92,7 +112,7 @@ console.log(slotWrapper)
           <div class="content">
             ${Array.isArray(slotWrapper.applications)
         ? slotWrapper.applications
-          .map(application => `<ssd-intra-application id="${escapeHtml(application.id)}" data='${JSON.stringify(application)}'></ssd-intra-application>`)
+          .map(application => `<ssd-intra-application id="${escapeHtml(application.id)}" data='${JSON.stringify(application)}' hideSlot></ssd-intra-application>`)
           .join('')
         : '<p>N/A</p>'
       }
@@ -102,6 +122,28 @@ console.log(slotWrapper)
     `;
   }
   postRender() {
+    this.root.querySelectorAll('.apply-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+
+        const form = document.createElement('ssd-application-apply');
+
+        form.setAttribute('asPopup', '');
+        form.setAttribute('redirectURL', 'close');
+
+        form.addEventListener('form-success', () => {
+          console.log('form-success');
+          this.removeAttribute('data');
+          this.load();
+        });
+
+        document.body.appendChild(form);
+        form.setAttribute('slot-id', id);
+        form.setAttribute('year', this.getAttribute('year'));
+        form.setAttribute('week', this.getAttribute('week'));
+
+      });
+    });
     if (!this.hasAttribute('isAdmin')) return;
 
     this.root.querySelectorAll('.edit-btn').forEach(btn => {
@@ -112,11 +154,19 @@ console.log(slotWrapper)
 
         form.setAttribute('asPopup', '');
         form.setAttribute('redirectURL', 'close');
+        form.setAttribute('id', id);
+        form.setAttribute('year', this.getAttribute('year'));
+        form.setAttribute('week', this.getAttribute('week'));
+        form.addEventListener('form-success', () => {
+          console.log('form-success');
+          this.removeAttribute('data');
+          this.load();
+        });
 
         document.body.appendChild(form);
-        form.setAttribute('id', id); // load by id
       });
     });
+
   }
 }
 

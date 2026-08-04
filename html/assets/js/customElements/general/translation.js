@@ -1,25 +1,48 @@
 // translation.js
 
-// Global cache for loaded languages
+// Cache for loaded translation data
 const translationsCache = new Map();
+
+// Cache for ongoing fetch requests
+const translationsLoading = new Map();
 
 // Global default language
 let globalLanguage = 'en';
 
-// Load language file
+// Load language file with caching
 async function loadLanguage(lang) {
+  // Return cached language
   if (translationsCache.has(lang)) {
     return translationsCache.get(lang);
   }
 
-  const res = await fetch(`/lang/${lang}.json`);
-  if (!res.ok) {
-    throw new Error(`Failed to load language: ${lang}`);
+  // Return existing request
+  if (translationsLoading.has(lang)) {
+    return translationsLoading.get(lang);
   }
 
-  const data = await res.json();
-  translationsCache.set(lang, data);
-  return data;
+  const request = fetch(`/lang/${lang}.json`)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`Failed to load language: ${lang}`);
+      }
+
+      return res.json();
+    })
+    .then(data => {
+      translationsCache.set(lang, data);
+      translationsLoading.delete(lang);
+
+      return data;
+    })
+    .catch(error => {
+      translationsLoading.delete(lang);
+      throw error;
+    });
+
+  translationsLoading.set(lang, request);
+
+  return request;
 }
 
 // Get value by dot notation (e.g. "user.name")
@@ -31,11 +54,13 @@ function getNested(obj, path) {
 class BaseTranslationElement extends HTMLElement {
   constructor() {
     super();
+
     this._key = this.textContent.trim();
+    this._originalKey = this._key;
   }
 
-  async connectedCallback() {
-    await this.update();
+  connectedCallback() {
+    this.update();
   }
 
   async update() {
@@ -43,28 +68,37 @@ class BaseTranslationElement extends HTMLElement {
       const lang = this.getAttribute('lang') || globalLanguage;
       const translations = await loadLanguage(lang);
 
-      const value = getNested(translations, this._key);
+      const value = getNested(translations, this._originalKey);
 
-      this.textContent = value ?? `[${this._key}]`;
-    } catch (e) {
-      console.error(e);
+      this.textContent = value ?? `[${this._originalKey}]`;
+    } catch (error) {
+      console.error(error);
       this.textContent = `[error]`;
     }
   }
 }
 
-// Global setter
+// Global language setter
 export async function setLanguage(lang) {
   globalLanguage = lang;
 
-  // preload language
   await loadLanguage(lang);
 
-  // update all elements
-  document.querySelectorAll('x-translation, x-trans').forEach(el => {
-    el.update();
-  });
+  document
+    .querySelectorAll('x-translation, x-trans')
+    .forEach(element => element.update());
+}
 
+// Clear cache if needed
+export function clearTranslationCache(lang = null) {
+  if (lang) {
+    translationsCache.delete(lang);
+    translationsLoading.delete(lang);
+    return;
+  }
+
+  translationsCache.clear();
+  translationsLoading.clear();
 }
 
 // Two separate elements
