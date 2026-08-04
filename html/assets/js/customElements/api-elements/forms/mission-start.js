@@ -9,10 +9,18 @@ class SSDMissionStart extends FormAPIElement {
 
   renderForm() {
     this.form.innerHTML = `
+            <div class="field" input-label="Injury">
             <input type="text" id="injury" placeholder="Injury (e.g. Broken leg)" required>
+            </div>
+            <div class="field" input-label="Location">
             <input type="text" id="location" placeholder="Location" required>
+            </div>
+            <div class="field" input-label="Author">
             <input type="text" id="author" placeholder="Author" required>
-            <textarea id="additionalInformation" placeholder="Additional info"></textarea>`;
+            </div>
+            <div class="field" input-label="Additional">
+            <textarea id="additionalInformation" placeholder="Additional info"></textarea>
+            </div>`;
     this.defaultSubmittext = 'Start Mission';
   }
   async load() {}

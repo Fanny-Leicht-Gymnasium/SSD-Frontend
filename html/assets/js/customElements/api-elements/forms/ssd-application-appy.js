@@ -13,17 +13,18 @@ class SSDApplicationApply extends FormAPIElement {
     // -------------------------
     renderForm() {
         this.form.innerHTML = `
-            <h1>Apply</h1>
-
-            <label>Reason</label>
-            <textarea id="reason" placeholder="Reason for application"></textarea>
-
-            <label>Type</label>
-            <select id="type" required>
-                <option value="">Select type</option>
-                <option value="BASE_USER">Base user</option>
-                <option value="FALLBACK_USER">Fallback user</option>
-            </select>
+            <h1>Apply</h1>         
+            <div class="field" input-label="Reason for application" translate>
+                <textarea id="reason" placeholder="Reason for application"></textarea>
+            </div>
+            <div class="field" input-label="Type" translate>
+                <select id="type" required>
+                    <option value="">Select type</option>
+                    <option value="BASE_USER">Base user</option>
+                    <option value="FALLBACK_USER">Fallback user</option>
+                </select>
+            </div>
+            
         `;
     }
 

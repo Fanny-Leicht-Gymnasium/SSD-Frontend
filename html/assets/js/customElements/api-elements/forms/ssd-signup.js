@@ -14,14 +14,24 @@ class SSDSignup extends FormAPIElement {
     renderForm() {
         this.form.innerHTML = `
             <h1>SSD Signup</h1>
-
+            <div class="field" input-label="Username">
             <input type="text" id="username" placeholder="Username" required>
+            </div>
+            <div class="field" input-label="Email">
             <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="field" input-label="Full Name">
             <input type="text" id="name" placeholder="Full Name" required>
+            </div>
+            <div class="field" input-label="Phone Number">
             <input type="text" id="phonenumber" placeholder="Phone Number">
+            </div>
+            <div class="field" input-label="Class">
             <input type="text" id="class" placeholder="Class">
-
+            </div>
+            <div class="field" input-label="Password">
             <input type="password" id="password" placeholder="Password" required>
+            </div>
         `;
     }
 

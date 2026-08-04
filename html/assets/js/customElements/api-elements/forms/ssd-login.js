@@ -14,8 +14,12 @@ class SSDLogin extends FormAPIElement {
     renderForm() {
         this.form.innerHTML = `
       <h1>SSD Login</h1>
-      <input type="text" id="username" placeholder="Username" required>
+      <div class="field" input-label="Email">
+      <input type="email" id="email" placeholder="Email" required>
+      </div>
+      <div class="field" input-label="Password">
       <input type="password" id="password" placeholder="Password" required>
+      </div>
     `;
 
         // submit button handled by base class (submittext attribute)
