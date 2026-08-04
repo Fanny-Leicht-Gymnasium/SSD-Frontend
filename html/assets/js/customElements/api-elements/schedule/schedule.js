@@ -110,7 +110,7 @@ class ScheduleElement extends APIElement {
   }
 
   renderSchedule(grid, maxWeekday, maxPosition, isAdmin) {
-    let html = `
+    let html = /*html*/`
         <div class="schedule-grid">
             <table>
                 <thead>
@@ -120,12 +120,12 @@ class ScheduleElement extends APIElement {
 
     // weekday headers
     for (let d = 1; d <= maxWeekday; d++) {
-      html += `
+      html += /*html*/`
             <th>
                 <x-trans>time.weekday.${d}</x-trans>
                 `
       if (isAdmin) {
-        html += `
+        html += /*html*/`
                     <button class="add-slot-btn"
                         data-p="-1"
                         data-d="${d}"
@@ -135,12 +135,12 @@ class ScheduleElement extends APIElement {
                 `;
       }
 
-      html += `
+      html += /*html*/`
             </th>
         `;
 
     }
-    html += `
+    html += /*html*/`
                     </tr>
                 </thead>
                 <tbody>
@@ -148,23 +148,23 @@ class ScheduleElement extends APIElement {
 
     // rows
     for (let p = 0; p <= maxPosition; p++) {
-      html += `<tr><td>${p}</td>`;
+      html += /*html*/`<tr><td>${p}</td>`;
 
       for (let d = 1; d <= maxWeekday; d++) {
         const entry = grid.get(p)?.get(d);
 
-        html += `<td class="schedule-cell">`;
+        html += /*html*/`<td class="schedule-cell">`;
 
         if (entry) {
-          html += `
+          html += /*html*/`
                     <ssd-slot-wrapped slot-id='${entry.slot.slotId}' data='${escapeHtml(JSON.stringify(entry))}' ${isAdmin ? 'isAdmin' : ''} week="${this.week}" year="${this.year}"></ssd-slot-wrapped>
                 `;
         } else {
-          html += `<span class="empty-slot">-</span>`;
+          html += /*html*/`<span class="empty-slot">-</span>`;
         }
 
         if (isAdmin) {
-          html += `
+          html += /*html*/`
                     <button class="add-slot-btn"
                         data-p="${p}"
                         data-d="${d}"
@@ -174,13 +174,13 @@ class ScheduleElement extends APIElement {
                 `;
         }
 
-        html += `</td>`;
+        html += /*html*/`</td>`;
       }
 
-      html += `</tr>`;
+      html += /*html*/`</tr>`;
     }
 
-    html += `
+    html += /*html*/`
                 </tbody>
             </table>
         </div>

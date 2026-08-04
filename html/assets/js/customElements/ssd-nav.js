@@ -10,7 +10,8 @@ export class SSDNavigation extends SSDElement {
         this.pages = [
             { id: 'home', label: 'Home', icon: 'home', url: '/' },
             { id: 'dashboard', label: 'Dashboard', icon: 'grid', url: '/dashboard/' },
-            { id: 'settings', label: 'Settings', icon: 'gear', url: '/settings/' }
+            { id: 'settings', label: 'Settings', icon: 'gear', url: '/settings/' },
+            { id: 'alerts', label: 'Alerts', icon: 'alert-triangle', url: '/alerts/' }
         ];
 
         this.buttons = {};
@@ -34,7 +35,7 @@ export class SSDNavigation extends SSDElement {
             btn.className = 'nav-button';
             btn.dataset.page = page.id;
 
-            btn.innerHTML = `
+            btn.innerHTML = /*html*/`
                 <ssd-icon name="${page.icon}"></ssd-icon>
                 <span class="label">${page.label}</span>
             `;

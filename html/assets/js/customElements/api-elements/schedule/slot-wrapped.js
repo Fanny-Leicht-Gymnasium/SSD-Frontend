@@ -27,7 +27,7 @@ class SlotElementWrapped extends APIElement {
     const slot = slotWrapper?.slot ?? {};
     const isAdmin = this.hasAttribute('isAdmin');
     console.log(slotWrapper)
-    return `
+    return /*html*/`
       <div class="slot">
 
         <h3>${escapeHtml(slot.slotName || 'Unnamed Slot')}</h3>
@@ -46,7 +46,7 @@ class SlotElementWrapped extends APIElement {
             <ssd-icon name="apply"></ssd-icon>
           </button>
 
-        ${isAdmin ? `
+        ${isAdmin ? /*html*/`
           <button class="edit-btn" data-id="${escapeHtml(slot.slotId)}">
             <ssd-icon name="edit"></ssd-icon>
           </button>
@@ -56,7 +56,7 @@ class SlotElementWrapped extends APIElement {
           <div class="content">
             ${Array.isArray(slotWrapper.baseUsers)
         ? slotWrapper.baseUsers
-          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
+          .map(user => /*html*/`<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
           .join('')
         : '<p>N/A</p>'
       }
@@ -67,7 +67,7 @@ class SlotElementWrapped extends APIElement {
           <div class="content">
             ${Array.isArray(slotWrapper.fallbackusers)
         ? slotWrapper.fallbackusers
-          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
+          .map(user => /*html*/`<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
           .join('')
         : '<p>N/A</p>'
       }
@@ -78,7 +78,7 @@ class SlotElementWrapped extends APIElement {
           <div class="content">
             ${Array.isArray(slotWrapper.replacementUser)
         ? slotWrapper.replacementUser
-          .map(user => `<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
+          .map(user => /*html*/`<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
           .join('')
         : '<p>N/A</p>'
       }
@@ -90,7 +90,7 @@ class SlotElementWrapped extends APIElement {
           <div class="content">
             ${Array.isArray(slotWrapper.excuses)
         ? slotWrapper.excuses
-          .map(excusesId => `<ssd-intra-excuse id="${escapeHtml(excusesId)}"}'></ssd-intra-excuse>`)
+          .map(excusesId => /*html*/`<ssd-intra-excuse id="${escapeHtml(excusesId)}"}'></ssd-intra-excuse>`)
           .join('')
         : '<p>N/A</p>'
       }
@@ -101,7 +101,7 @@ class SlotElementWrapped extends APIElement {
           <div class="content">
             ${Array.isArray(slotWrapper.alerts)
         ? slotWrapper.alerts
-          .map(id => `<ssd-intra-mission id="${escapeHtml(id)}"></ssd-intra-mission>`)
+          .map(id => /*html*/`<ssd-intra-mission id="${escapeHtml(id)}"></ssd-intra-mission>`)
           .join('')
         : '<p>N/A</p>'
       }
@@ -112,7 +112,7 @@ class SlotElementWrapped extends APIElement {
           <div class="content">
             ${Array.isArray(slotWrapper.applications)
         ? slotWrapper.applications
-          .map(application => `<ssd-intra-application id="${escapeHtml(application.id)}" data='${JSON.stringify(application)}' hideSlot></ssd-intra-application>`)
+          .map(application => /*html*/`<ssd-intra-application id="${escapeHtml(application.id)}" data='${JSON.stringify(application)}' hideSlot></ssd-intra-application>`)
           .join('')
         : '<p>N/A</p>'
       }

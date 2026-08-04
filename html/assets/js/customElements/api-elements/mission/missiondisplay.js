@@ -11,7 +11,7 @@ class MissionViewer extends APIElement {
   }
 
   render(mission) {
-    return `
+    return /*html*/`
       <h2>Alert: ${escapeHtml(mission.alertId || 'Unknown')}</h2>
 
       <p><x-translation>Author</x-translation>: ${escapeHtml(mission.author || 'N/A')}</p>
@@ -24,13 +24,13 @@ class MissionViewer extends APIElement {
               <ul>
         ${
           Array.isArray(mission.alertedUser)
-            ? mission.alertedUser.map(u => `
+            ? mission.alertedUser.map(u => /*html*/`
                 <li>
                   <ssd-intra-user id="${escapeHtml(u.userid ?? 'N/A')}"></ssd-intra-user>
                   Status: ${escapeHtml(u.status ?? 'N/A')}
                 </li>
               `).join('')
-            : '<li>N/A</li>'
+            : /*html*/`<li>N/A</li>`
         }
       </ul>
           </div>

@@ -8,7 +8,7 @@ class SSDMissionStart extends FormAPIElement {
   }
 
   renderForm() {
-    this.form.innerHTML = `
+    this.form.innerHTML = /*html*/`
             <div class="field" input-label="Injury">
             <input type="text" id="injury" placeholder="Injury (e.g. Broken leg)" required>
             </div>
@@ -23,7 +23,7 @@ class SSDMissionStart extends FormAPIElement {
             </div>`;
     this.defaultSubmittext = 'Start Mission';
   }
-  async load() {}
+  async load() { }
 
   async handleSend(data) {
     const missionData = {

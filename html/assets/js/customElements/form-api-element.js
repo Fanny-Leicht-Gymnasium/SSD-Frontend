@@ -10,7 +10,7 @@ export class FormAPIElement extends APIElement {
   }
   constructor() {
     super();
-    this.container.innerHTML = `
+    this.container.innerHTML = /*html*/`
     <form id="apiForm">
     <div id="customForm">
     </div>
@@ -305,6 +305,6 @@ render(data) {
   }
 
   renderError(err) {
-    return `<ssd-error ${(this.AlertErrors || this.defaultAlertErrors) ? "alert" : ""}>${err.message}</ssd-error>`;
+    return /*html*/`<ssd-error ${(this.AlertErrors || this.defaultAlertErrors) ? "alert" : ""}>${err.message}</ssd-error>`;
   }
 }

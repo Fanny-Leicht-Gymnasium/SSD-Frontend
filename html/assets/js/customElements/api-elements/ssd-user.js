@@ -11,7 +11,7 @@ class UserViewer extends APIElement {
   }
 
   render(user) {
-    return `
+    return /*html*/`
       <h2>User: ${escapeHtml(user.name || user.username ||'Unknown')}</h2>
       <p><x-translation>userid</x-translation>: ${escapeHtml(user.userid || 'N/A')}</p>
       <p><x-translation>username</x-translation>: ${escapeHtml(user.username || 'N/A')}</p>

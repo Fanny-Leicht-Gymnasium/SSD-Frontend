@@ -12,7 +12,7 @@ class SSDLogin extends FormAPIElement {
     // FORM STRUCTURE
     // -------------------------
     renderForm() {
-        this.form.innerHTML = `
+        this.form.innerHTML = /*html*/`
       <h1>SSD Login</h1>
       <div class="field" input-label="Email">
       <input type="email" id="email" placeholder="Email" required>
@@ -38,8 +38,7 @@ class SSDLogin extends FormAPIElement {
                 username: data.username,
                 password: data.password
             });
-            
-            // IMPORTANT: store token
+
             if (res?.Token) {
                 localStorage.setItem("jwt", res.Token);
                 console.log("login data stored")

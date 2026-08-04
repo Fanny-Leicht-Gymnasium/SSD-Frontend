@@ -1,6 +1,5 @@
 import { postScheduleYearWeekSlotSlotidApply } from '../../../api/api.generated.js';
 import { FormAPIElement } from '../../form-api-element.js';
-
 class SSDApplicationApply extends FormAPIElement {
     constructor() {
         super();
@@ -12,7 +11,7 @@ class SSDApplicationApply extends FormAPIElement {
     // FORM STRUCTURE
     // -------------------------
     renderForm() {
-        this.form.innerHTML = `
+        this.form.innerHTML = /*html*/`
             <h1>Apply</h1>         
             <div class="field" input-label="Reason for application" translate>
                 <textarea id="reason" placeholder="Reason for application"></textarea>

@@ -78,7 +78,7 @@ export class APIElement extends SSDElement {
     return null;
   }
   render(data) {
-    return `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    return /*html*/`<pre>${JSON.stringify(data, null, 2)}</pre>`;
   }
 
   renderLoading() {

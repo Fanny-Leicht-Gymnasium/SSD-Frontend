@@ -9,7 +9,7 @@ class SlotElement extends APIElement {
 
   render(slot) {
     const isAdmin = this.hasAttribute('isAdmin');
-    return `
+    return /*html*/`
       <div class="slot">
 
         <h3>${escapeHtml(slot.slotName || 'Unnamed Slot')}</h3>
@@ -23,7 +23,7 @@ class SlotElement extends APIElement {
         <p>End: <time-display show-date="never">${escapeHtml(slot.endtime)}</time-display></p>
 
 
-        ${isAdmin ? `
+        ${isAdmin ? /*html*/`
           <button class="edit-btn" data-id="${escapeHtml(slot.slotId)}">
             <ssd-icon name="edit"></ssd-icon>
           </button>

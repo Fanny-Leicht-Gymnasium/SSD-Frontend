@@ -12,7 +12,7 @@ class SSDSignup extends FormAPIElement {
     // FORM STRUCTURE
     // -------------------------
     renderForm() {
-        this.form.innerHTML = `
+        this.form.innerHTML = /*html*/`
             <h1>SSD Signup</h1>
             <div class="field" input-label="Username">
             <input type="text" id="username" placeholder="Username" required>

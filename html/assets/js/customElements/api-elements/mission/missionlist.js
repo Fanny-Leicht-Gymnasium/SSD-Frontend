@@ -53,11 +53,11 @@ setPage(newPage) {
     // naive page estimate (replace with backend total if available)
     const totalPages = missionList?.totalPages
 
-    return `
+    return /*html*/`
       <div class="mission-list">
-        ${missionList.missions.length === 0 ? '<p>No missions found</p>' : ''}
+        ${missionList.missions.length === 0 ? /*html*/`<p>No missions found</p>` : ''}
 
-        ${missionList.missions.map(m => `
+        ${missionList.missions.map(m => /*html*/`
           <ssd-intra-mission id="${m.alertId}"></ssd-intra-mission>
         `).join('')}
 

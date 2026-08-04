@@ -14,7 +14,7 @@ class SSDSlotForm extends FormAPIElement {
     renderForm() {
         const hasId = this.hasAttribute("id");
 
-        this.form.innerHTML = `
+        this.form.innerHTML = /*html*/`
         <h1>Slot Editor</h1>
         <div class="field" input-label="Name">
             <input type="text" id="slotName" placeholder="Name" required>
@@ -31,9 +31,9 @@ class SSDSlotForm extends FormAPIElement {
                 <option value="7"><x-trans>time.weekday.7</x-trans></option>
             </select>
         </div>
-        ${hasId ? `
+        ${hasId ? /*html*/`
         <input type="number" id="slotPosition" placeholder="Position" required>
-        ` : '<input type="number" id="after" placeholder="After" required>'}
+        ` : /*html*/`<input type="number" id="after" placeholder="After" required>`}
 
         <div class="field" input-label="Start time">
             <input type="time" id="starttime" required>
@@ -47,7 +47,7 @@ class SSDSlotForm extends FormAPIElement {
             <input type="checkbox" id="required">
         </div>
 
-        ${hasId ? `
+        ${hasId ? /*html*/`
             <button type="button" id="deleteBtn" class="danger-btn">
                 Delete
             </button>
