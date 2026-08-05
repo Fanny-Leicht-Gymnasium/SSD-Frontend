@@ -2,12 +2,12 @@ import { SSDElement } from './ssd-element.js';
 export class APIElement extends SSDElement {
   static get observedAttributes() {
     return [
-        ...(super.observedAttributes || []),
-        'data',
-        'id',
-        'alertErrors'
+      ...(super.observedAttributes || []),
+      'data',
+      'id',
+      'alertErrors'
     ];
-}  
+  }
 
   constructor() {
     super();
@@ -85,11 +85,11 @@ export class APIElement extends SSDElement {
     return `Loading...`;
   }
 
-  renderError(err, alert=false) {
-    return `<ssd-error ${this.alertErrors || this.defaultAlertErrors || alert? 'alert' : ''}>${err.message}</ssd-error>`;
+  renderError(err, alert = false) {
+    return `<ssd-error ${this.alertErrors || this.defaultAlertErrors || alert ? 'alert' : ''}>${err.message}</ssd-error>`;
   }
 
-  postRender(){
+  postRender() {
 
   }
   // =========================
@@ -165,12 +165,22 @@ export class APIElement extends SSDElement {
       }
 
       el.innerHTML = this.render(data);
-          el.classList.remove('loading');
+
+      el.getAttributeNames().forEach(attr => {
+        el.removeAttribute(attr);
+      });
+
+      this.getAttributeNames().forEach(attr => {
+        console.log(attr, this.getAttribute(attr));
+        el.setAttribute(attr, this.getAttribute(attr));
+      });
+
+      el.classList.remove('loading');
 
     } catch (err) {
       console.log('err:', err);
       el.innerHTML = this.renderError(err);
-                el.classList.remove('loading');
+      el.classList.remove('loading');
 
     }
     this.postRender()

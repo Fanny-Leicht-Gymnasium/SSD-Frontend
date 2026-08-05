@@ -1,12 +1,10 @@
-
-
 /* =========================
    GLOBAL RESET
 ========================= */
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -51,72 +49,69 @@ h6 {
    SCHEDULE SPECIFIC
 ========================= */
 ssd-schedule h2 {
-  font-size: 18px;
-  margin-bottom: 8px;
+    font-size: 18px;
+    margin-bottom: 8px;
 }
 
 .schedule {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 /* slot styling */
 ssd-slot {
-  display: block;
-  padding: 10px;
-  border-radius: 10px;
-  background: #1f2430;
-  border: 1px solid #2d3345;
+    display: block;
+    padding: 10px;
+    border-radius: 10px;
+    background: #1f2430;
+    border: 1px solid #2d3345;
 }
 
 /* =========================
    ALERT / MISSION ELEMENTS
 ========================= */
 ssd-intra-mission {
-  margin-top: 10px;
-    border: 1px solid #2d3345;
-
+    margin-top: 10px;
 }
 
 /* =========================
    ICONS
 ========================= */
 ssd-icon {
-  vertical-align: middle;
-  margin-left: 6px;
-  color: #7aa2ff;
+    vertical-align: middle;
+    margin-left: 6px;
+    color: #7aa2ff;
 }
 
 /* =========================
    User ELEMENTS
 ========================= */
 ssd-intra-user {
-  margin-top: 10px;
-  background: red;
-
+    margin-top: 10px;
 
 }
+
 /* =========================
    TRANSLATION ELEMENT
 ========================= */
 x-translation {
-  display: inline;
-  margin-bottom: 12px;
-  opacity: 0.8;
+    display: inline;
+    margin-bottom: 12px;
+    opacity: 0.8;
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 @media (max-width: 600px) {
-  nav {
-    flex-direction: column;
-  }
+    nav {
+        flex-direction: column;
+    }
 
-  nav button {
-    width: 100%;
-  }
+    nav button {
+        width: 100%;
+    }
 }
 
 
@@ -124,10 +119,10 @@ x-translation {
     navigation: auto;
 }
 
-.fullscreen-formbox{
+.fullscreen-formbox {
     position: absolute;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
     height: 100vh;
     width: 100vw;
     padding: 10vw;
@@ -190,14 +185,17 @@ select {
         border-color var(--transition),
         box-shadow var(--transition),
         background-color var(--transition);
-      margin-bottom: 1em;
+    margin-bottom: 1em;
 }
-label{
-  display: inline;
+
+label {
+    display: inline;
 }
-input[type=checkbox]{
-  width: unset;
+
+input[type=checkbox] {
+    width: unset;
 }
+
 input::placeholder,
 textarea::placeholder {
     color: var(--text-muted);
@@ -238,7 +236,8 @@ input:-webkit-autofill:focus {
     position: relative;
 }
 
-.field label, .field::before {
+.field label,
+.field::before {
     position: absolute;
     left: 1rem;
     top: 0;
@@ -249,9 +248,11 @@ input:-webkit-autofill:focus {
     opacity: 0;
     transition: .2s ease;
 }
+
 .field:not(:has(label))::before {
     content: attr(input-label);
 }
+
 .field:has(input:not(:placeholder-shown)) label,
 .field:has(input:not(:placeholder-shown))::before,
 .field:has(select:not(:placeholder-shown)) label,
@@ -269,7 +270,8 @@ input:-webkit-autofill:focus {
     position: static;
 }
 
-.field:has(input[type="checkbox"]) label,.field:has(input[type="checkbox"])::before {
+.field:has(input[type="checkbox"]) label,
+.field:has(input[type="checkbox"])::before {
     position: static;
     transform: none;
     background: none;

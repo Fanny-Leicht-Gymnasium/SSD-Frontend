@@ -1,0 +1,136 @@
+:host {
+  display: block;
+  font-family: Arial, sans-serif;
+}
+
+
+.mission-card {
+  border-radius: 12px;
+  border: 1px solid #d8dee8;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+}
+
+.mission-card[collapsable][open] .mission-closed-info {
+  max-height: 0;
+  opacity: 0;
+}
+
+.mission-closed-info {
+  max-height: 100vh;
+  transition: max-height 0.1s ease, opacity 0.1s ease;
+  ;
+}
+
+.mission-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  gap: 16px;
+}
+
+
+.mission-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #000;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 32px;
+  font-weight: bold;
+}
+
+
+.mission-title {
+  flex: 1;
+}
+
+
+.mission-title h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+
+.mission-id {
+  font-size: 13px;
+}
+
+
+.mission-toggle {
+  font-size: 28px;
+}
+
+
+.mission-body {
+  padding: 0 20px 20px 90px;
+}
+
+
+.mission-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 8px 0;
+
+  font-size: 17px;
+}
+
+.mission-row-header {
+  font-weight: bold;
+  margin-top: 12px;
+  margin-bottom: 0px;
+  font-size: 20px;
+}
+
+.icon {
+  width: 25px;
+  font-size: 22px;
+}
+
+
+.alert-users {
+  margin-top: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+
+.user-status {
+  padding: 12px 16px;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-weight: bold;
+  color: black;
+}
+
+
+.user-status.accepted {
+  background: #b7e4c7;
+}
+
+
+.user-status.denied, .user-status.notAnswered {
+  background: #ef9a9a;
+}
+
+
+.user-status.pending {
+  background: #f3d18b;
+}
+
+
+.user-status {
+  background: #e5e7eb;
+}

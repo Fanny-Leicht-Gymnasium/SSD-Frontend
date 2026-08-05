@@ -58,10 +58,16 @@ async function apiFetch(endpoint, options = {{}}, params = {{}}) {{
     const text = await res.text();
     throw new Error(text || `HTTP ${{res.status}}`);
   }}
-  if (res.status == 204 || res.status == 201){{
+  if (res.status == 204){{
     return {{}}
   }}
+  const contentType = res.headers.get("content-type");
+
+  if (contentType && contentType.includes("application/json")) {{
   return res.json();
+  }}
+
+  return {{}};
 }}
 """.strip()
 

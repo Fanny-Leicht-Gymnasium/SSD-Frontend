@@ -26,10 +26,16 @@ async function apiFetch(endpoint, options = {}, params = {}) {
     const text = await res.text();
     throw new Error(text || `HTTP ${res.status}`);
   }
-  if (res.status == 204 || res.status == 201){
+  if (res.status == 204){
     return {}
   }
+  const contentType = res.headers.get("content-type");
+
+  if (contentType && contentType.includes("application/json")) {
   return res.json();
+  }
+
+  return {};
 }
 
 
@@ -935,14 +941,14 @@ export async function getSystemHealth() {
 }
 
 
-export async function getSystemHealthGsm() {
+export async function getSystemHealthModule() {
   const pathParams = {};
   const queryParams = {};
 
   const queryString = buildQueryString(queryParams);
 
   const url = (p) => {
-    const base = `/system/health/gsm`;
+    const base = `/system/health/module`;
     return queryString ? `${base}?${queryString}` : base;
   };
 
@@ -998,14 +1004,14 @@ export async function getSystemHealthApi() {
 }
 
 
-export async function getSystemGsm() {
+export async function getSystemModulews() {
   const pathParams = {};
   const queryParams = {};
 
   const queryString = buildQueryString(queryParams);
 
   const url = (p) => {
-    const base = `/system/gsm`;
+    const base = `/system/moduleWS`;
     return queryString ? `${base}?${queryString}` : base;
   };
 

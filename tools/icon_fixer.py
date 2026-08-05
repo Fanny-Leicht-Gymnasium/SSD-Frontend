@@ -3,15 +3,11 @@ import requests
 import webbrowser
 
 from flask import Flask, render_template_string, request, redirect
+from urllib.parse import quote
 
 
 MISSING_FILE = "missing-icons.txt"
 ICON_OUTPUT_DIR = "./html/assets/icons"
-
-TABLER_API = (
-    "https://api.github.com/repos/tabler/"
-    "tabler-icons/contents/icons/outline"
-)
 
 TABLER_RAW = (
     "https://raw.githubusercontent.com/tabler/"
@@ -21,8 +17,12 @@ TABLER_RAW = (
 
 app = Flask(__name__)
 
+app.jinja_env.filters["urlencode"] = quote
+
+
 missing_icons = []
 tabler_icons = []
+
 
 def load_missing():
     global missing_icons
@@ -31,16 +31,27 @@ def load_missing():
         with open(MISSING_FILE, "r", encoding="utf-8") as file:
             missing_icons = sorted(set(
                 line.strip()
-                .split("/")[-1]
                 .replace(".svg", "")
+                .lstrip("/")
                 for line in file
                 if line.strip()
             ))
+
+
+def icon_filename(path):
+    path = path.replace(
+        "assets/icons/",
+        "",
+        1
+    )
+    return os.path.basename(path)
+
+
 def load_data():
-    global missing_icons, tabler_icons
+    global tabler_icons
 
     load_missing()
-    # Load complete Tabler icon database
+
     response = requests.get(
         "https://api.github.com/repos/tabler/tabler-icons/git/trees/main?recursive=1",
         timeout=30
@@ -73,8 +84,9 @@ def load_data():
         f"Loaded {len(tabler_icons)} Tabler icons"
     )
 
+
 def search_icons(query, limit=30):
-    query = query.lower()
+    query = query.strip().lower()
 
     parts = (
         query
@@ -85,10 +97,12 @@ def search_icons(query, limit=30):
     result = []
 
     for icon in tabler_icons:
+        filename = icon_filename(icon).lower()
+
         score = 0
 
         for part in parts:
-            if part in icon:
+            if part and part in filename:
                 score += 1
 
         if score:
@@ -109,15 +123,8 @@ def search_icons(query, limit=30):
     ]
 
 
-def direct_search(query, limit=50):
-    return [
-        icon
-        for icon in tabler_icons
-        if query.lower() in icon.lower()
-    ][:limit]
-
-
 def download_icon(icon_name, target_name):
+
     url = (
         TABLER_RAW
         + icon_name
@@ -130,23 +137,35 @@ def download_icon(icon_name, target_name):
     )
 
     if response.status_code != 200:
+        print(
+            "Download failed:",
+            url
+        )
         return False
 
 
-    os.makedirs(
-        ICON_OUTPUT_DIR,
-        exist_ok=True
+    # Remove frontend base path
+    target_name = target_name.replace(
+        "assets/icons/",
+        "",
+        1
     )
 
 
-    path = os.path.join(
+    target_path = os.path.join(
         ICON_OUTPUT_DIR,
         target_name + ".svg"
     )
 
 
+    os.makedirs(
+        os.path.dirname(target_path),
+        exist_ok=True
+    )
+
+
     with open(
-        path,
+        target_path,
         "w",
         encoding="utf-8"
     ) as file:
@@ -157,7 +176,7 @@ def download_icon(icon_name, target_name):
 
     print(
         "Saved:",
-        path
+        target_path
     )
 
     return True
@@ -182,13 +201,11 @@ body {
     padding:20px;
 }
 
-
 .grid {
     display:flex;
     flex-wrap:wrap;
     gap:15px;
 }
-
 
 .card {
     width:140px;
@@ -198,12 +215,10 @@ body {
     text-align:center;
 }
 
-
 .card img {
     width:70px;
     height:70px;
 }
-
 
 .name {
     font-size:12px;
@@ -225,9 +240,7 @@ Missing Icons
 
 {% for icon in icons %}
 
-
 <hr>
-
 
 <h2>
 {{icon}}
@@ -235,7 +248,6 @@ Missing Icons
 
 
 <form method="post" action="/use">
-
 
 <input
 type="hidden"
@@ -249,15 +261,11 @@ value="{{icon}}"
 
 {% for option in suggestions[icon] %}
 
-
 <div class="card">
-
 
 <img src="https://raw.githubusercontent.com/tabler/tabler-icons/main/icons/outline/{{option}}.svg">
 
-
 <br>
-
 
 <input
 type="radio"
@@ -265,14 +273,11 @@ name="icon"
 value="{{option}}"
 >
 
-
 <div class="name">
 {{option}}
 </div>
 
-
 </div>
-
 
 {% endfor %}
 
@@ -281,7 +286,6 @@ value="{{option}}"
 
 
 <br>
-
 
 <button>
 Use selected
@@ -294,7 +298,7 @@ Use selected
 <br>
 
 
-<a href="/search/{{icon}}">
+<a href="/search/{{icon|urlencode}}">
 No match? Search manually
 </a>
 
@@ -324,19 +328,18 @@ Search Icons
 <style>
 
 .card {
-display:inline-block;
-width:140px;
-border:1px solid #aaa;
-border-radius:8px;
-padding:10px;
-margin:10px;
-text-align:center;
+    display:inline-block;
+    width:140px;
+    border:1px solid #aaa;
+    border-radius:8px;
+    padding:10px;
+    margin:10px;
+    text-align:center;
 }
 
-
 .card img {
-width:70px;
-height:70px;
+    width:70px;
+    height:70px;
 }
 
 </style>
@@ -349,12 +352,11 @@ height:70px;
 
 
 <h1>
-Search icon for {{target}}
+Search icon for {{filename}}
 </h1>
 
 
-<form>
-
+<form method="get" action="/search/{{target|urlencode}}">
 
 <input
 name="q"
@@ -362,11 +364,9 @@ value="{{query}}"
 placeholder="Search Tabler icons"
 >
 
-
 <button>
 Search
 </button>
-
 
 </form>
 
@@ -394,14 +394,17 @@ value="{{target}}"
 <br>
 
 
+<label>
+
 <input
 type="radio"
 name="icon"
 value="{{icon}}"
 >
 
-
 {{icon}}
+
+</label>
 
 
 </div>
@@ -414,7 +417,7 @@ value="{{icon}}"
 
 
 <button>
-Use selected
+Use selected icon
 </button>
 
 
@@ -430,40 +433,44 @@ Use selected
 
 @app.route("/")
 def index():
+
     load_missing()
+
     return render_template_string(
         MAIN_PAGE,
         icons=missing_icons,
         suggestions={
-            icon: search_icons(icon)
+            icon: search_icons(icon_filename(icon))
             for icon in missing_icons
         }
     )
 
 
 
-@app.route(
-    "/search/<target>"
-)
+@app.route("/search/<path:target>")
 def search_page(target):
+
+    filename = icon_filename(target)
 
     query = request.args.get(
         "q",
-        ""
+        filename
     )
 
+    results = search_icons(
+        query
+    )
 
-    results = []
-
-    if query:
-        results = direct_search(
-            query
-        )
-
+    print(
+        "Search:",
+        query,
+        results
+    )
 
     return render_template_string(
         SEARCH_PAGE,
         target=target,
+        filename=filename,
         query=query,
         results=results
     )
@@ -493,10 +500,22 @@ def use_icon():
 
     return redirect("/")
 
+
+
 def save_missing_icons():
-    with open(MISSING_FILE, "w", encoding="utf-8") as file:
+
+    with open(
+        MISSING_FILE,
+        "w",
+        encoding="utf-8"
+    ) as file:
+
         for icon in missing_icons:
-            file.write(icon + "\n")
+            file.write(
+                icon + "\n"
+            )
+
+
 
 if __name__ == "__main__":
 

@@ -19,8 +19,8 @@ class SSDApplicationApply extends FormAPIElement {
             <div class="field" input-label="Type" translate>
                 <select id="type" required>
                     <option value="">Select type</option>
-                    <option value="BASE_USER">Base user</option>
-                    <option value="FALLBACK_USER">Fallback user</option>
+                    <option value="base">Base user</option>
+                    <option value="fallback">Fallback user</option>
                 </select>
             </div>
             

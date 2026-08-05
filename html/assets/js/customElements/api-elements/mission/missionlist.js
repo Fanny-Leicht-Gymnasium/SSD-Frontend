@@ -52,13 +52,13 @@ setPage(newPage) {
 
     // naive page estimate (replace with backend total if available)
     const totalPages = missionList?.totalPages
-
+    const hasData = missionList?.missions && missionList.missions[0].author? true : false;
     return /*html*/`
       <div class="mission-list">
         ${missionList.missions.length === 0 ? /*html*/`<p>No missions found</p>` : ''}
 
         ${missionList.missions.map(m => /*html*/`
-          <ssd-intra-mission id="${m.alertId}"></ssd-intra-mission>
+          <ssd-intra-mission id="${m.alertId}" ${hasData?/*html*/`data=${ JSON.stringify(m)}`:""}></ssd-intra-mission>
         `).join('')}
 
         <ssd-pagination
