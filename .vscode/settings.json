@@ -1,0 +1,25 @@
+{
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "entity.name.tag.html",
+        "settings": {
+          "background": "#DCDCDC",
+          "fontStyle": "italic bold"        }
+      },
+      {
+        "scope": "entity.other.attribute-name.html",
+        "settings": {
+          "background": "#DCDCDC",
+          "fontStyle": "italic bold"
+        }
+      },
+      {
+        "scope": "string.quoted.double.html",
+        "settings": {
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  }
+}
