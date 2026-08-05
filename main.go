@@ -14,23 +14,25 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
 
-		// // -----------------------------
-		// // JS fallback rewrite logic
-		// // -----------------------------
-		// if (!strings.HasSuffix(path, ".js") && strings.HasSuffix(path, "Api")) ||
-		// 	(strings.Contains(path, "/src/") && !strings.HasSuffix(path, ".js")) {
+		// -----------------------------
+		// Dev mode: create missing icon files
+		// -----------------------------
+		if devMode && strings.HasPrefix(path, "/assets/icons/") {
+			fullPath := "./html" + path
 
-		// 	pathNew := path + ".js"
-		// 	fullPath := "./html" + pathNew
+			if _, err := os.Stat(fullPath); os.IsNotExist(err) {
+				f, err := os.OpenFile(
+					"missing-icons.txt",
+					os.O_APPEND|os.O_CREATE|os.O_WRONLY,
+					0644,
+				)
 
-		// 	f, err := os.Open(fullPath)
-		// 	if err == nil {
-		// 		defer f.Close()
-		// 		http.ServeContent(w, r, pathNew, time.Time{}, f)
-		// 		return
-		// 	}
-		// }
-
+				if err == nil {
+					defer f.Close()
+					f.WriteString(path + "\n")
+				}
+			}
+		}
 		// -----------------------------
 		// CSS fallback for custom elements
 		// -----------------------------
