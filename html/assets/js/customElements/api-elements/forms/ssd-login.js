@@ -14,8 +14,8 @@ class SSDLogin extends FormAPIElement {
     renderForm() {
         this.form.innerHTML = /*html*/`
       <h1>SSD Login</h1>
-      <div class="field" input-label="Email">
-      <input type="email" id="email" placeholder="Email" required>
+      <div class="field" input-label="Username">
+      <input type="text" id="username" placeholder="Username" required>
       </div>
       <div class="field" input-label="Password">
       <input type="password" id="password" placeholder="Password" required>
