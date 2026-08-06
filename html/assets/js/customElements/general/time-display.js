@@ -64,23 +64,23 @@ class TimeDisplay extends HTMLElement {
     this._targetDate = date;
   }
 
-start() {
-  if (!this._targetDate) return;
+  start() {
+    if (!this._targetDate) return;
 
-  this._lastRendered = "";
+    this._lastRendered = "";
 
-  this.observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) {
-        this.startTicker();
-      } else {
-        this.stopTicker();
+    this.observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          this.startTicker();
+        } else {
+          this.stopTicker();
+        }
       }
-    }
-  });
+    });
 
-  this.observer.observe(this);
-}
+    this.observer.observe(this);
+  }
   startTicker() {
     if (this._timer) return;
 
@@ -126,7 +126,7 @@ start() {
       result = this.formatDateTime(isToday);
     }
 
-    this.textContent = result;
+    this.innerHTML = result;
   }
 
   // =========================
@@ -152,7 +152,7 @@ start() {
 
     const showDate =
       this.showDate === "always" ||
-      ((this.showDate === "nottoday" || this.showDate === "notToday")&& !isToday);
+      ((this.showDate === "nottoday" || this.showDate === "notToday") && !isToday);
 
     if (showDate) parts.push(dateStr);
 
@@ -192,25 +192,33 @@ start() {
   }
 
   formatCountdown(ms) {
-  const isPast = ms < 0;
-  const abs = Math.abs(ms);
+    const isPast = ms < 0;
+    const abs = Math.abs(ms);
 
-  const totalSeconds = Math.floor(abs / 1000);
+    const totalSeconds = Math.floor(abs / 1000);
 
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
 
-  let parts = [];
+    const parts = [];
 
-  if (hours > 0) parts.push(`${hours}h`);
-  if (minutes > 0) parts.push(`${minutes}m`);
-  if (hours === 0 && minutes === 0) parts.push(`${seconds}s`);
+    if (hours > 0) parts.push(`${hours}h`);
+    if (minutes > 0) parts.push(`${minutes}m`);
+    if (hours === 0 && minutes === 0) parts.push(`${seconds}s`);
 
-  const text = parts.join(" ");
+    const value = parts.join(" ");
 
-  return isPast ? `${text} ago` : `in ${text}`;
-}
+    const key = isPast
+      ? "time.countdown.past"
+      : "time.countdown.future";
+
+    return `
+    <x-trans value="${value}">
+      ${key}
+    </x-trans>
+  `;
+  }
 }
 
 customElements.define("time-display", TimeDisplay);

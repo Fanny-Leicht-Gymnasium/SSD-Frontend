@@ -1,5 +1,30 @@
 // translation.js
-
+// HTML global attributes that should be ignored
+const defaultAttributes = new Set([
+  "id",
+  "class",
+  "style",
+  "title",
+  "lang",
+  "dir",
+  "hidden",
+  "tabindex",
+  "slot",
+  "role",
+  "draggable",
+  "contenteditable",
+  "spellcheck",
+  "translate",
+  "accesskey",
+  "autocapitalize",
+  "autofocus",
+  "enterkeyhint",
+  "inputmode",
+  "nonce",
+  "part",
+  "popover",
+  "inert"
+]);
 // Cache for loaded translation data
 const translationsCache = new Map();
 
@@ -57,27 +82,70 @@ class BaseTranslationElement extends HTMLElement {
 
     this._key = this.textContent.trim();
     this._originalKey = this._key;
+    this._usedPlaceholders = new Set();
+  }
+ static get observedAttributes() {
+    // Observe all attributes
+    return [];
   }
 
   connectedCallback() {
+    this._observer = new MutationObserver(mutations => {
+      for (const mutation of mutations) {
+        if (
+          mutation.type === "attributes" &&
+          this._usedPlaceholders.has(mutation.attributeName)
+        ) {
+          this.update();
+          break;
+        }
+      }
+    });
+
+    this._observer.observe(this, { attributes: true });
+
     this.update();
   }
 
+  disconnectedCallback() {
+    this._observer?.disconnect();
+  }
   async update() {
     try {
       const lang = this.getAttribute('lang') || globalLanguage;
       const translations = await loadLanguage(lang);
 
-      const value = getNested(translations, this._originalKey);
+      var value = getNested(translations, this._originalKey);
+      value ??= buildFallback(this._originalKey, this);
+      this._usedPlaceholders = new Set(
+        [...value.matchAll(/\{([^}]+)\}/g)].map(match => match[1])
+      );
 
-      this.textContent = value ?? `[${this._originalKey}]`;
+      value = replacePlaceholders(value, this);
+      this.textContent = value;
     } catch (error) {
       console.error(error);
       this.textContent = `[error]`;
     }
   }
+  
 }
+function replacePlaceholders(text, element) {
+  return text.replace(/\{([^}]+)\}/g, (_, key) => {
+    const value = element.getAttribute(key);
+    return value ?? `{${key}}`;
+  });
+}
+function buildFallback(key, element) {
+  const attributes = [...element.attributes]
+    .filter(attr => !defaultAttributes.has(attr.name.toLowerCase()))
+    .map(attr => `${attr.name}="${attr.value}"`)
+    .join(" ");
 
+  return attributes
+    ? `[${key} ${attributes}]`
+    : `[${key}]`;
+}
 // Global language setter
 export async function setLanguage(lang) {
   globalLanguage = lang;
