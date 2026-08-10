@@ -162,7 +162,7 @@
   :host(.bottem) .nav-container {
     display: grid;
     grid-template-columns: repeat(
-      4,
+    auto-fit,
       minmax(0, 1fr)
     );
 

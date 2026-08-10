@@ -8,10 +8,10 @@ export class SSDNavigation extends SSDElement {
         super();
 
         this.pages = [
-            { id: 'home', label: 'Home', icon: 'home', url: '/' },
-            { id: 'dashboard', label: 'Dashboard', icon: 'grid', url: '/dashboard/' },
-            { id: 'settings', label: 'Settings', icon: 'gear', url: '/settings/' },
-            { id: 'alerts', label: 'Alerts', icon: 'alert-triangle', url: '/alerts/' }
+            { id: 'dashboard', label: 'Dashboard', icon: 'grid', url: '/intra/' },
+            { id: 'excuses', label: 'Excuses', icon: 'virus', url: '/intra/excuses/' },
+            { id: 'alerts', label: 'Alerts', icon: 'alert-triangle', url: '/intra/alerts/' },
+            { id: 'settings', label: 'Settings', icon: 'gear', url: '/intra/settings/' }
         ];
 
         this.buttons = {};
