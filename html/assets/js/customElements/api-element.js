@@ -158,7 +158,7 @@ export class APIElement extends SSDElement {
         return;
       }
       const data = await this.resolveData(input);
-      this.additionalLoading()
+      await this.additionalLoading()
 
       if (!data) {
         throw new Error('No data returned');

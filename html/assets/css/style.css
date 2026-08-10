@@ -112,6 +112,11 @@ x-translation {
     nav button {
         width: 100%;
     }
+
+    body {
+        padding: 0px;
+
+    }
 }
 
 

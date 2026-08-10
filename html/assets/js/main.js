@@ -8,3 +8,8 @@ document.addEventListener('click', (e) => {
 
     container.toggleAttribute('open');
 });
+      (async () => {
+        const me = await getUserMe();
+        localStorage.setItem("me", JSON.stringify(me));
+        console.log("----------------------------------------------------------------------------------------------------------------- Updeded ME")
+      })();

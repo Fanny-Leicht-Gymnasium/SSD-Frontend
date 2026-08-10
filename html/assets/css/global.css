@@ -1,7 +1,7 @@
-/* =========================
-   THEME
-========================= */
 :root {
+    /* =========================
+       THEME
+    ========================= */
     --bg: #0f1115;
     --surface: #151922;
     --surface-2: #1f2430;
@@ -22,12 +22,70 @@
     --radius: 12px;
     --radius-small: 8px;
 
-    --shadow: 0 10px 30px rgba(0,0,0,.35);
+    --shadow: 0 10px 30px rgba(0, 0, 0, .35);
 
     --transition: .2s ease;
+
+
+    /* =========================
+       COLOR PALETTE
+    ========================= */
+
+    /* Gray */
+    --gray: #6b7280;
+    --gray-light: #9ca3af;
+    --gray-dark: #374151;
+
+    /* Red */
+    --red: #ef4444;
+    --red-light: #f87171;
+    --red-dark: #b91c1c;
+
+    /* Orange */
+    --orange: #f97316;
+    --orange-light: #fb923c;
+    --orange-dark: #c2410c;
+
+    /* Yellow */
+    --yellow: #eab308;
+    --yellow-light: #facc15;
+    --yellow-dark: #a16207;
+
+    /* Green */
+    --green: #22c55e;
+    --green-light: #4ade80;
+    --green-dark: #15803d;
+
+    /* Blue */
+    --blue: #3b82f6;
+    --blue-light: #60a5fa;
+    --blue-dark: #1d4ed8;
+
+    /* Cyan */
+    --cyan: #06b6d4;
+    --cyan-light: #22d3ee;
+    --cyan-dark: #0e7490;
+
+    /* Purple */
+    --purple: #8b5cf6;
+    --purple-light: #a78bfa;
+    --purple-dark: #6d28d9;
+
+    /* Pink */
+    --pink: #ec4899;
+    --pink-light: #f472b6;
+    --pink-dark: #be185d;
+
+    /* Indigo */
+    --indigo: #6366f1;
+    --indigo-light: #818cf8;
+    --indigo-dark: #4338ca;
+
+    /* Teal */
+    --teal: #14b8a6;
+    --teal-light: #2dd4bf;
+    --teal-dark: #0f766e;
 }
-
-
 
 /* backdrop */
 [asPopup] {
@@ -64,7 +122,7 @@
 }
 
 /* visible state */
-[asPopup].show > * {
+[asPopup] > * {
   transform: scale(1);
   opacity: 1;
 }
@@ -92,6 +150,7 @@
   justify-content: center;
 
   transition: 0.2s ease;
+  z-index: 99999999999;
 }
 
 .popup-close:hover {

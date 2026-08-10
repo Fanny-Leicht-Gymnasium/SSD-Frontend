@@ -81,7 +81,7 @@ class ScheduleElement extends APIElement {
     // group by position -> weekday
     const grid = new Map();
 
-    let maxWeekday = 7;
+    let maxWeekday = 5;
     let maxPosition = 0;
 
     for (const entry of slots) {
@@ -91,7 +91,7 @@ class ScheduleElement extends APIElement {
       const weekday = slot.weekday ?? 0;
       const position = slot.slotPosition ?? 0;
 
-      maxWeekday = 7;
+      maxWeekday = Math.max(maxWeekday, weekday);
       maxPosition = Math.max(maxPosition, position);
 
       if (!grid.has(position)) {
@@ -101,7 +101,13 @@ class ScheduleElement extends APIElement {
       grid.get(position).set(weekday, entry);
     }
 
+
     const isAdmin = this.hasAttribute("isAdmin");
+
+    if (isAdmin){
+      maxPosition +=1
+    }
+
     return this.renderSchedule(grid, maxWeekday, maxPosition, isAdmin);
   }
   postRender() {
@@ -112,10 +118,9 @@ class ScheduleElement extends APIElement {
   renderSchedule(grid, maxWeekday, maxPosition, isAdmin) {
     let html = /*html*/`
         <div class="schedule-grid">
-            <table>
+            <table class="schedule-table">
                 <thead>
                     <tr>
-                        <th>Position</th>
     `;
 
     // weekday headers
@@ -148,7 +153,7 @@ class ScheduleElement extends APIElement {
 
     // rows
     for (let p = 0; p <= maxPosition; p++) {
-      html += /*html*/`<tr><td>${p}</td>`;
+      html += /*html*/`<tr>`;
 
       for (let d = 1; d <= maxWeekday; d++) {
         const entry = grid.get(p)?.get(d);
@@ -157,22 +162,25 @@ class ScheduleElement extends APIElement {
 
         if (entry) {
           html += /*html*/`
-                    <ssd-slot-wrapped slot-id='${entry.slot.slotId}' data='${escapeHtml(JSON.stringify(entry))}' ${isAdmin ? 'isAdmin' : ''} week="${this.week}" year="${this.year}"></ssd-slot-wrapped>
+                    <slot-wrapped-inschedule slot-id='${entry.slot.slotId}' data='${escapeHtml(JSON.stringify(entry))}' ${isAdmin ? 'isAdmin' : ''} week="${this.week}" year="${this.year}"></slot-wrapped-inschedule>
                 `;
         } else {
-          html += /*html*/`<span class="empty-slot">-</span>`;
-        }
-
-        if (isAdmin) {
+          html += /*html*/`<span class="empty-slot">`
+          if (isAdmin) {
           html += /*html*/`
                     <button class="add-slot-btn"
-                        data-p="${p}"
+                        data-p="${p-1}"
                         data-d="${d}"
                         data-action="open-slot-form">
                         +
                     </button>
                 `;
         }
+        /*html*/`</span>`;
+          
+        }
+
+        
 
         html += /*html*/`</td>`;
       }

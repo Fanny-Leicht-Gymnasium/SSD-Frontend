@@ -1,6 +1,6 @@
 // AUTO GENERATED FILE - DO NOT EDIT
 
-const API_BASE = "http://localhost:8080";
+const API_BASE = `${window.location.protocol}//${window.location.hostname}:8080`;
 
 async function apiFetch(endpoint, options = {}, params = {}) {
   const token = localStorage.getItem("jwt");
