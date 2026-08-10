@@ -54,19 +54,19 @@ class SlotElementWrapped extends APIElement {
 
     const slotName = escapeHtml(slot.slotName || 'Unnamed Slot');
     const additionalInformation = escapeHtml(
-      slotWrapper?.additionalInformation || 'N/A'
+      slotWrapper?.additionalInformation || ''
     );
 
     const slotId = escapeHtml(String(slot.slotId ?? ''));
 
 
-    console.log(this.me)
     const isFallbackUser = fallbackUsers.some(
       user => user.userid === this.me?.userid
     );
     const isBaseUser = baseUsers.some(
       user => user.userid === this.me?.userid
     );
+
     return /*html*/`
       <div class="slot ${slot.required ? 'required' : ''} ${fallbackUsers.length + baseUsers.length <= 0 ? 'unfulfilled' : ''} ${isFallbackUser || isBaseUser ? 'your' : ''}">
 
@@ -79,45 +79,46 @@ class SlotElementWrapped extends APIElement {
             ` : ''}
           </div>
 
-          <p class="slot-additional">
-            ${additionalInformation}
-          </p>
+         <p class="slot-additional ${additionalInformation ? '' : 'empty'}">
+              <ssd-icon name="info"></ssd-icon>
+              <span class="data">${escapeHtml(additionalInformation || 'N/A')}</span>
+            </p>
 
           <div class="slot-meta">
             <div class="slot-meta">
-              <span class="slot-meta-item">
+              <span class="slot-meta-item" type="base">
                 <ssd-icon name="user"></ssd-icon>
                 <x-trans class="lable">Base</x-trans> <span class="data">${baseUsers.length}</span>
               </span>
 
-              <span class="slot-meta-item">
+              <span class="slot-meta-item" type="fallback">
                 <ssd-icon name="users"></ssd-icon>
                 <x-trans class="lable">Fallback</x-trans> <span class="data">${fallbackUsers.length}</span>
               </span>
 
               ${replacementUsers.length > 0 ? /*html*/`
-                <span class="slot-meta-item">
+                <span class="slot-meta-item" type="replacement">
                   <ssd-icon name="replace-user"></ssd-icon>
                   <x-trans class="lable">Replacement</x-trans> <span class="data">${replacementUsers.length}</span>
                 </span>
               ` : ''}
 
               ${excuses.length > 0 ? /*html*/`
-                <span class="slot-meta-item">
-                  <ssd-icon name="calendar-off"></ssd-icon>
+                <span class="slot-meta-item" type="excuses">
+                  <ssd-icon name="virus"></ssd-icon>
                   <x-trans class="lable">Excuses</x-trans> <span class="data">${excuses.length}</span>
                 </span>
               ` : ''}
 
               ${alerts.length > 0 ? /*html*/`
-                <span class="slot-meta-item slot-meta-alert">
+                <span class="slot-meta-item slot-meta-alert" type="alerts">
                   <ssd-icon name="alert-triangle"></ssd-icon>
                   <x-trans class="lable">Alerts</x-trans> <span class="data">${alerts.length}</span>
                 </span>
               ` : ''}
 
               ${isAdmin && openApplications.length > 0 ? /*html*/`
-                <span class="slot-meta-item">
+                <span class="slot-meta-item" type="applications">
                   <ssd-icon name="clipboard"></ssd-icon>
                   <x-trans class="lable">Applications</x-trans> <span class="data">${openApplications.length}</span>
                 </span>
@@ -149,8 +150,17 @@ class SlotElementWrapped extends APIElement {
     if (this.hasAttribute('isAdmin')) {
       this.bindEditButtons();
     }
-    this.container.onclick = () => {
+    this.container.onclick = (event) => {
       const form = document.createElement('ssd-slot-wrapped');
+      const slotMetaItem = event.target.closest('.slot-meta-item');
+
+      if (slotMetaItem && this.container.contains(slotMetaItem)) {
+        const type = slotMetaItem.getAttribute('type');
+
+        if (type !== null) {
+          form.setAttribute('open', type);
+        }
+      }
 
       form.setAttribute('asPopup', '');
       form.setAttribute('redirectURL', 'close');
@@ -158,6 +168,8 @@ class SlotElementWrapped extends APIElement {
       form.setAttribute('year', this.getAttribute('year'));
       form.setAttribute('week', this.getAttribute('week'));
       form.setAttribute('data', this.getAttribute('data'));
+
+
       if (this.hasAttribute("isAdmin")) {
         form.setAttribute("isAdmin", "")
       }

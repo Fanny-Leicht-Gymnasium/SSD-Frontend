@@ -1,3 +1,5 @@
+import { getUserMe } from "./api/api.generated.js";
+
 document.addEventListener('click', (e) => {
     const header = e.target.closest('[collapsable] > .header');
 

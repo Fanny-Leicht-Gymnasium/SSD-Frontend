@@ -104,8 +104,8 @@ class ScheduleElement extends APIElement {
 
     const isAdmin = this.hasAttribute("isAdmin");
 
-    if (isAdmin){
-      maxPosition +=1
+    if (isAdmin) {
+      maxPosition += 1
     }
 
     return this.renderSchedule(grid, maxWeekday, maxPosition, isAdmin);
@@ -167,20 +167,20 @@ class ScheduleElement extends APIElement {
         } else {
           html += /*html*/`<span class="empty-slot">`
           if (isAdmin) {
-          html += /*html*/`
+            html += /*html*/`
                     <button class="add-slot-btn"
-                        data-p="${p-1}"
+                        data-p="${p - 1}"
                         data-d="${d}"
                         data-action="open-slot-form">
                         +
                     </button>
                 `;
-        }
+          }
         /*html*/`</span>`;
-          
+
         }
 
-        
+
 
         html += /*html*/`</td>`;
       }

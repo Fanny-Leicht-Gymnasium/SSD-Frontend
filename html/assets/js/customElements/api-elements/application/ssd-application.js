@@ -4,7 +4,7 @@ import {
   getUserMe,
   postApplicationIdAction
 } from '../../../api/api.generated.js';
-import { escapeHtml } from '../../../util.js';
+import { escapeHtml, getStoredUser, waitForStoredUser } from '../../../util.js';
 
 class ApplicationViewer extends APIElement {
 
@@ -23,8 +23,20 @@ class ApplicationViewer extends APIElement {
     return await getApplicationId(id);
   }
 
-  async additionalLoading() {
-    this.me = await getUserMe();
+  additionalLoading() {
+    // Try to load the user immediately
+    this.me = getStoredUser();
+
+    // Wait up to 3 seconds if the user is not available yet
+    if (!this.me) {
+      (async () => {
+        this.me = await waitForStoredUser(3000);
+        this.load()
+      })();
+    }
+
+    // Use the loaded user
+    this.userId = this.me?.id ?? null;
   }
 
   async doAction(action) {

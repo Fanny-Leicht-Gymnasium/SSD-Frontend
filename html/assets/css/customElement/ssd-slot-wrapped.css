@@ -1,0 +1,328 @@
+:host {
+  --slot-icon-size: 17px;
+  --slot-meta-icon-size: 20px;
+}
+
+/* =========================================================
+   Popup container
+   ========================================================= */
+
+.slot {
+  position: relative;
+
+  width: 100%;
+  max-height: 88vh;
+
+  box-sizing: border-box;
+  padding: 20px;
+
+  overflow-y: auto;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius);
+
+  color: var(--text);
+
+  box-shadow: var(--shadow);
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hover) transparent;
+}
+
+.slot::-webkit-scrollbar {
+  width: 7px;
+}
+
+.slot::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.slot::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border-radius: 999px;
+}
+
+/* Required / unfulfilled / user states */
+
+.slot.required {
+  border-left-color: var(--primary);
+}
+
+.slot.required.unfulfilled {
+  border-left-color: var(--red-dark);
+}
+
+.slot.your {
+  border-left-color: var(--orange-dark);
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+.slot-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.slot-title-row h3 {
+  min-width: 0;
+
+  margin: 0;
+
+  color: var(--text);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.25;
+
+  overflow-wrap: anywhere;
+}
+
+.slot-required {
+  flex-shrink: 0;
+
+  padding: 3px 8px;
+
+  background: color-mix(
+    in srgb,
+    var(--primary) 10%,
+    var(--surface-2)
+  );
+
+  border: 1px solid color-mix(
+    in srgb,
+    var(--primary) 40%,
+    var(--border)
+  );
+
+  border-radius: 999px;
+
+  color: var(--primary);
+
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+
+  text-transform: uppercase;
+}
+
+.slot-time {
+  margin: 6px 0 0;
+
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.slot-time x-trans {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* =========================================================
+   Admin information
+   ========================================================= */
+
+.slot-admin-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  margin-bottom: 14px;
+}
+
+.slot-admin-info-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 4px 8px;
+
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.slot-admin-info-item .value {
+  color: var(--text);
+}
+
+/* =========================================================
+   Additional information
+   ========================================================= */
+.slot-additional.empty{
+    display:none;
+}
+.slot-additional {
+  margin: 0 0 16px;
+  padding: 11px 13px;
+
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+
+  color: var(--text-muted);
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+.slot-additional ssd-icon {
+    color: var(--warning) !important;
+}
+
+
+
+
+/* =========================================================
+   Collapsible header
+   ========================================================= */
+
+.slot-meta-item > .header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  min-height: 42px;
+  box-sizing: border-box;
+
+  padding: 9px 11px;
+
+  background: var(--surface-2);
+
+  color: var(--text-muted);
+
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.slot-meta-item > .header:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.slot-meta-item[collapsable][open] > .header {
+  color: var(--text);
+}
+
+/* Icons */
+
+.slot-meta-item > .header ssd-icon {
+  flex-shrink: 0;
+
+  width: var(--slot-meta-icon-size);
+  height: var(--slot-meta-icon-size);
+
+  margin: 0;
+
+  color: currentColor;
+}
+
+/* Label */
+
+.slot-meta-item > .header .lable {
+  color: currentColor;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Count */
+
+.slot-meta-item > .header .data {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 20px;
+  height: 20px;
+
+  padding: 0 6px;
+  box-sizing: border-box;
+
+  margin-left: auto;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  color: var(--text-muted);
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   Section-specific colors
+   ========================================================= */
+
+.slot-meta-item[type="base"] > .header {
+  color: var(--blue-light);
+}
+
+.slot-meta-item[type="fallback"] > .header {
+  color: var(--cyan-light);
+}
+
+.slot-meta-item[type="replacement"] > .header {
+  color: var(--purple-light);
+}
+
+.slot-meta-item[type="excuses"] > .header {
+  color: var(--orange-light);
+}
+
+.slot-meta-item[type="alerts"] > .header {
+  color: var(--warning);
+}
+
+.slot-meta-item[type="applications"] > .header {
+  color: var(--green-light);
+}
+
+/* =========================================================
+   Collapsible content
+   ========================================================= */
+
+.slot-meta-item > .content {
+  box-sizing: border-box;
+  background: var(--surface);
+}
+
+/* =========================================================
+   User / content lists
+   ========================================================= */
+
+.slot-meta-item > .content > ssd-intra-user,
+.slot-meta-item > .content > ssd-intra-excuse,
+.slot-meta-item > .content > ssd-intra-mission,
+.slot-meta-item > .content > ssd-intra-application {
+  display: block;
+
+  padding: 7px 0;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.slot-meta-item > .content > :last-child {
+  border-bottom: 0;
+}
+
+.slot-meta-item > .content > p {
+  margin: 0;
+
+  color: var(--text-muted);
+
+  font-size: 11px;
+}

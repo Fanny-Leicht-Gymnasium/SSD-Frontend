@@ -171,7 +171,7 @@ export class APIElement extends SSDElement {
       });
 
       this.getAttributeNames().forEach(attr => {
-        console.log(attr, this.getAttribute(attr));
+        if (attr == "aspopup")return;
         el.setAttribute(attr, this.getAttribute(attr));
       });
 

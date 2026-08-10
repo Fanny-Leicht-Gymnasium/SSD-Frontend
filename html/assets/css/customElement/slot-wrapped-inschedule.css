@@ -116,18 +116,58 @@
 /* =========================================================
    Additional information
    ========================================================= */
-
 .slot-additional {
-  margin: 4px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin: 0 0 16px;
+  padding: 11px 13px;
+
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.slot-additional ssd-icon {
+  flex: 0 0 auto;
+
+  width: 17px;
+  height: 17px;
+
+  margin-top: 1px;
+
+  color: var(--warning) !important;
+}
+
+.slot-additional .data {
+  min-width: 0;
+  max-width: 100%;
+
+  margin: 0;
 
   overflow: hidden;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  line-clamp: 2;
+
+  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 
   color: var(--text-muted);
   font-size: 11px;
   line-height: 1.4;
+}
 
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.slot-additional.empty {
+  display: none;
 }
 
 
@@ -249,66 +289,9 @@
    Mobile
    ========================================================= */
 
-@media (max-width: 600px) {
-  .slot {
-    min-height: 0;
-
-    padding: 10px;
-
-    border-left-width: 3px;
-
-  }
-
-  .slot-title-row {
-    gap: 6px;
-  }
-
-  .slot-title-row h3 {
-    font-size: 14px;
-  }
-
-  .slot-required {
-    padding: 2px 6px;
-    font-size: 8px;
-  }
-
-  .slot-additional {
-    margin-bottom: 8px;
-
-    font-size: 10px;
-  }
-
-  .slot-meta {
-    gap: 4px;
-  }
-
-  .slot-meta-item {
-    padding: 4px 6px;
-
-    font-size: 9px;
-  }
-
-  .slot-meta-item ssd-icon {
-    --slot-meta-icon-size: 12px;
-  }
-
-  .slot-action {
-    width: 34px;
-    height: 34px;
-  }
-
-  .slot-action ssd-icon {
-    --slot-icon-size: 16px;
-  }
-}
-
 :host {
   container-type: inline-size;
 }
-
-/* =========================================================
-   Very small phones
-   ========================================================= */
 
 @container (max-width: 200px) {
   .slot {
@@ -358,4 +341,32 @@
   .slot-title-row {
     flex-direction: column;
   }
+}
+
+/* =========================================================
+   Section-specific colors
+   ========================================================= */
+
+.slot-meta-item[type="base"] {
+  color: var(--blue-light);
+}
+
+.slot-meta-item[type="fallback"]  {
+  color: var(--cyan-light);
+}
+
+.slot-meta-item[type="replacement"] {
+  color: var(--purple-light);
+}
+
+.slot-meta-item[type="excuses"]  {
+  color: var(--orange-light);
+}
+
+.slot-meta-item[type="alerts"]  {
+  color: var(--warning);
+}
+
+.slot-meta-item[type="applications"] {
+  color: var(--green-light);
 }

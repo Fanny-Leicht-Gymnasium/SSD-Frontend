@@ -1,13 +1,13 @@
 import { APIElement, } from '../../api-element.js';
-import { escapeHtml } from '../../../util.js';
+import { escapeHtml, getStoredUser, waitForStoredUser } from '../../../util.js';
 import { getScheduleYearWeekSlotSlotid } from '../../../api/api.generated.js';
 class SlotElementWrapped extends APIElement {
   static get observedAttributes() {
     return ['data'];
   }
-    async fetchById(id) {
-      const week = this.getAttribute("week")
-      const year = this.getAttribute("year")
+  async fetchById(id) {
+    const week = this.getAttribute("week")
+    const year = this.getAttribute("year")
     return getScheduleYearWeekSlotSlotid(year, week, id);
   }
 
@@ -22,104 +22,171 @@ class SlotElementWrapped extends APIElement {
 
     return super.getInput();
   }
+  additionalLoading() {
+    // Try to load the user immediately
+    this.me = getStoredUser();
 
+    // Wait up to 3 seconds if the user is not available yet
+    if (!this.me) {
+      (async () => {
+        this.me = await waitForStoredUser(3000);
+        this.load()
+      })();
+    }
+
+    // Use the loaded user
+    this.userId = this.me?.id ?? null;
+  }
   render(slotWrapper) {
     const slot = slotWrapper?.slot ?? {};
     const isAdmin = this.hasAttribute('isAdmin');
-    console.log(slotWrapper)
+
+
+    const baseUsers = slotWrapper?.baseUsers ?? [];
+    const fallbackUsers = slotWrapper?.fallbackusers ?? [];
+    const replacementUsers = slotWrapper?.replacementUser ?? [];
+    const excuses = slotWrapper?.excuses ?? [];
+    const alerts = slotWrapper?.alerts ?? [];
+    const applications = slotWrapper?.applications ?? [];
+
+    const openApplications = applications.filter(
+      application => application.status === 'open'
+    );
+
+    const slotName = escapeHtml(slot.slotName || 'Unnamed Slot');
+    const additionalInformation = escapeHtml(
+      slotWrapper?.additionalInformation || ''
+    );
+
+    const slotId = escapeHtml(String(slot.slotId ?? ''));
+
+    const isFallbackUser = fallbackUsers.some(
+      user => user.userid === this.me?.userid
+    );
+    const isBaseUser = baseUsers.some(
+      user => user.userid === this.me?.userid
+    );
+
     return /*html*/`
-      <div class="slot">
+          <div class="slot ${slot.required ? 'required' : ''} ${fallbackUsers.length + baseUsers.length <= 0 ? 'unfulfilled' : ''} ${isFallbackUser || isBaseUser ? 'your' : ''}">
+            <div class="slot-title-row">
+              <h3>${escapeHtml(slot.slotName || 'Unnamed Slot')}</h3>
+              ${slot.required ? /*html*/`
+                <span class="slot-required">Required</span>
+                ` : ''}
 
-        <h3>${escapeHtml(slot.slotName || 'Unnamed Slot')}</h3>
+            </div>
+            <p class="slot-time"><x-trans>time.weekday.${escapeHtml(slot.weekday)}</x-trans> <time-display show-date="never">${escapeHtml(slot.starttime)}</time-display> - <time-display show-date="never">${escapeHtml(slot.endtime)}</time-display></p>
+            ${isAdmin ? /*html*/`
+                  <p>ID: ${escapeHtml(slot.slotId)}</p>
+                  <p>Position: ${escapeHtml(slot.slotPosition)}</p>
+                  ` : ''}
 
-        <p>ID: ${escapeHtml(slot.slotId)}</p>
-        <p>Position: ${escapeHtml(slot.slotPosition)}</p>
-        <p>Weekday: ${escapeHtml(slot.weekday)}</p>
-        <p>Required: ${slot.required ? 'Yes' : 'No'}</p>
+            <p class="slot-additional ${additionalInformation ? '' : 'empty'}">
+              <ssd-icon name="info"></ssd-icon>
+              <span class="data">${additionalInformation || 'N/A'}</span>
+            </p>
+            <button class="apply-btn slot-action" data-id="${escapeHtml(slot.slotId)}">
+              <ssd-icon name="apply"></ssd-icon>
+            </button>
 
-        <p>Start: <time-display show-date="never"> ${escapeHtml(slot.starttime)}</time-display></p>
-        <p>End: <time-display show-date="never">${escapeHtml(slot.endtime)}</time-display></p>
-
-        <p>Additional: ${escapeHtml(slotWrapper.additionalInformation || 'N/A')}</p>
-
-      <button class="apply-btn" data-id="${escapeHtml(slot.slotId)}">
-            <ssd-icon name="apply"></ssd-icon>
-          </button>
-
-        ${isAdmin ? /*html*/`
-          <button class="edit-btn" data-id="${escapeHtml(slot.slotId)}">
-            <ssd-icon name="edit"></ssd-icon>
-          </button>
-        ` : ''}
-        <div collapsable>
-          <div class="header">Base User ${slotWrapper.baseUsers.length}</div>
-          <div class="content">
-            ${Array.isArray(slotWrapper.baseUsers)
+            ${isAdmin ? /*html*/`
+              <button class="edit-btn slot-action" data-id="${escapeHtml(slot.slotId)}">
+                <ssd-icon name="edit"></ssd-icon>
+              </button>
+            ` : ''}
+            
+            
+            <div collapsable ${this.getAttribute("open") == "base" ? "open" : ""} class="slot-meta-item" type="base">
+              <div class="header">
+                  <ssd-icon name="user"></ssd-icon>
+                  <x-trans class="lable">Base</x-trans> <span class="data">${baseUsers.length}</span>
+              </div>
+              <div class="content">
+                  ${Array.isArray(slotWrapper.baseUsers)
         ? slotWrapper.baseUsers
           .map(user => /*html*/`<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
           .join('')
         : '<p>N/A</p>'
       }
-          </div>
-        </div>
-      <div collapsable>
-          <div class="header">Fallback User ${slotWrapper.fallbackusers.length}</div>
-          <div class="content">
-            ${Array.isArray(slotWrapper.fallbackusers)
+              </div>
+            </div>
+
+            <div collapsable ${this.getAttribute("open") == "fallback" ? "open" : ""}  class="slot-meta-item" type="fallback">
+              <div class="header">
+                <ssd-icon name="users"></ssd-icon>
+                <x-trans class="lable">Fallback</x-trans> <span class="data">${fallbackUsers.length}</span>
+              </div>
+              <div class="content">
+                ${Array.isArray(slotWrapper.fallbackusers)
         ? slotWrapper.fallbackusers
           .map(user => /*html*/`<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
           .join('')
         : '<p>N/A</p>'
       }
-          </div>
-        </div>
-        <div collapsable>
-          <div class="header">Replacement User ${slotWrapper.replacementUser.length}</div>
-          <div class="content">
-            ${Array.isArray(slotWrapper.replacementUser)
+              </div>
+            </div>
+            <div collapsable  ${this.getAttribute("open") == "replacement" ? "open" : ""}  class="slot-meta-item" type="replacement">
+              <div class="header">
+                <ssd-icon name="replace-user"></ssd-icon>
+                <x-trans class="lable">Replacement</x-trans> <span class="data">${replacementUsers.length}</span>
+              </div>
+              <div class="content">
+                ${Array.isArray(slotWrapper.replacementUser)
         ? slotWrapper.replacementUser
           .map(user => /*html*/`<ssd-intra-user id="${escapeHtml(user.id)}" data='${JSON.stringify(user)}'></ssd-intra-user>`)
           .join('')
         : '<p>N/A</p>'
       }
-          </div>
-        </div>
-        
-                <div collapsable>
-          <div class="header">Excuses ${slotWrapper.excuses.length}</div>
-          <div class="content">
-            ${Array.isArray(slotWrapper.excuses)
+              </div>
+            </div>
+
+            <div collapsable ${this.getAttribute("open") == "excuses" ? "open" : ""}  class="slot-meta-item" type="excuses">
+              <div class="header">
+                <ssd-icon name="virus"></ssd-icon>
+                <x-trans class="lable">Excuses</x-trans> <span class="data">${excuses.length}</span>
+              </div>
+              <div class="content">
+                ${Array.isArray(slotWrapper.excuses)
         ? slotWrapper.excuses
-          .map(excusesId => /*html*/`<ssd-intra-excuse id="${escapeHtml(excusesId)}"}'></ssd-intra-excuse>`)
+          .map(excusesId => /*html*/`<ssd-intra-excuse id="${escapeHtml(excusesId)}"></ssd-intra-excuse>`)
           .join('')
         : '<p>N/A</p>'
       }
-          </div>
-        </div>
-        <div collapsable>
-          <div class="header">Alerts ${slotWrapper.alerts.length}</div>
-          <div class="content">
-            ${Array.isArray(slotWrapper.alerts)
+              </div>
+            </div>
+            <div collapsable ${this.getAttribute("open") == "alerts" ? "open" : ""} class="slot-meta-item" type="alerts">
+              <div class="header">
+                <ssd-icon name="alert-triangle"></ssd-icon>
+                <x-trans class="lable">Alerts</x-trans> <span class="data">${alerts.length}</span>
+              </div>
+              <div class="content">
+                ${Array.isArray(slotWrapper.alerts)
         ? slotWrapper.alerts
           .map(id => /*html*/`<ssd-intra-mission id="${escapeHtml(id)}"></ssd-intra-mission>`)
           .join('')
         : '<p>N/A</p>'
       }
-          </div>
-        </div>
-              <div collapsable>
-          <div class="header">Applications ${slotWrapper.applications.length}</div>
-          <div class="content">
-            ${Array.isArray(slotWrapper.applications)
+              </div>
+            </div>
+            <div collapsable ${this.getAttribute("open") == "applications" ? "open" : ""}  class="slot-meta-item" type="applications">
+              <div class="header">
+                <ssd-icon name="clipboard"></ssd-icon>
+                <x-trans class="lable">Applications</x-trans> <span class="data">${openApplications.length}</span>
+              </div>
+              <div class="content">
+                ${
+                  /*TODO: Sort open first*/
+                  Array.isArray(slotWrapper.applications)
         ? slotWrapper.applications
           .map(application => /*html*/`<ssd-intra-application id="${escapeHtml(application.id)}" data='${JSON.stringify(application)}' hideSlot></ssd-intra-application>`)
           .join('')
         : '<p>N/A</p>'
       }
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    `;
+          `;
   }
   postRender() {
     this.root.querySelectorAll('.apply-btn').forEach(btn => {
