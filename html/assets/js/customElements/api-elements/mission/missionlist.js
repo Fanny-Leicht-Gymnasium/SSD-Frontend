@@ -1,5 +1,6 @@
 import { APIElement } from '../../api-element.js';
 import { getMissionList } from '../../../api/api.generated.js';
+import { escapeHtml } from '../../../util.js';
 
 class MissionList extends APIElement {
   static get observedAttributes() {
@@ -58,7 +59,7 @@ setPage(newPage) {
         ${missionList.missions.length === 0 ? /*html*/`<p>No missions found</p>` : ''}
 
         ${missionList.missions.map(m => /*html*/`
-          <ssd-intra-mission id="${m.alertId}" ${hasData?/*html*/`data=${ JSON.stringify(m)}`:""}></ssd-intra-mission>
+          <ssd-intra-mission id="${m.alertId}" ${hasData?/*html*/`data="${JSON.stringify(m).replaceAll("\"", "'")}"`:""}></ssd-intra-mission>
         `).join('')}
 
         <ssd-pagination
