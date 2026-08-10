@@ -156,11 +156,6 @@
 .popup-close:hover {
   background: rgba(255,255,255,0.25);
 }
-#container {
-    position: relative;
-  min-height: 100px;
-  min-width: 100px;
-}
 
 /* lock interaction only inside container */
 #container.loading {
@@ -262,3 +257,9 @@
 
 
 
+@media (max-width: 600px) {
+  main {
+    padding-bottom: calc(70px + env(safe-area-inset-bottom));
+    min-height: 100vh;
+  }
+}

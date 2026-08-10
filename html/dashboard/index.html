@@ -9,26 +9,27 @@
     <meta name="view-transition" content="same-origin">
 </head>
 <body>
-    <h1>SSD Dashboard</h1>
-    <nav>
-        <button onclick="loadSubpage('login/')">Login</button>
-        <button onclick="loadSubpage('signup/')">Signup (Admin)</button>
-        <button onclick="loadSubpage('whoami/')">Who Am I</button>
+    <ssd-nav class="top"></ssd-nav>
+    <main>
+        <h1>SSD Dashboard</h1>
+        <nav>
+            <button onclick="loadSubpage('login/')">Login</button>
+            <button onclick="loadSubpage('signup/')">Signup (Admin)</button>
+            <button onclick="loadSubpage('whoami/')">Who Am I</button>
 
-        <button onclick="loadSubpage('mission-start/')">Mission Start</button>
-        <button onclick="loadSubpage('missions/')">Active Missions</button>
-        <button onclick="logout()">Logout</button>
-    </nav>
+            <button onclick="loadSubpage('mission-start/')">Mission Start</button>
+            <button onclick="loadSubpage('missions/')">Active Missions</button>
+            <button onclick="logout()">Logout</button>
+        </nav>
 
-    <x-translation>welcome_message</x-translation>
-    <ssd-icon name="user">user</ssd-icon>
+        <x-translation>welcome_message</x-translation>
+        <ssd-icon name="user">user</ssd-icon>
 
-    <ssd-intra-mission-list page_size="5"></ssd-intra-mission-list>
-    <time-display show-countdown="true" show-date="nottoday">2026-04-01T18:10:00</time-display>
+        <ssd-intra-mission-list page_size="5"></ssd-intra-mission-list>
+        <time-display show-countdown="true" show-date="nottoday">2026-04-01T18:10:00</time-display>
 
-
-    <ssd-nav></ssd-nav>
-
+    </main>
+    <ssd-nav class="bottem"></ssd-nav>
     <!-- <ssd-schedule></ssd-schedule> -->
     <script type="module" src="./assets/js/main.js"></script>
     <script type="module" src="/assets/js/api/api.generated.js"></script>

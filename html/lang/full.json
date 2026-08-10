@@ -1,0 +1,78 @@
+{
+    "${key}": "${key}",
+    "Author": "Author",
+    "application": {
+        "button": {
+            "approve": "Approve",
+            "approveLeave": "Approve Leave",
+            "deny": "Deny",
+            "denyLeave": "deny Leave",
+            "leaveRequest": "Request To Leave"
+        },
+        "enddate": "End date",
+        "id": "Application ID",
+        "reason": "Reason",
+        "startdate": "Start date",
+        "status": {
+            "${escapeHtml(status)}": "application.status.${escapeHtml(status)}",
+            "approved": "Approved",
+            "denied": "Denied",
+            "inactive": "Inactive",
+            "leaveDenied": "Leave Denied",
+            "leaveRequest": "Leave Request",
+            "leaved": "Leaved",
+            "open": "Open",
+            "redraw": "Redraw",
+            "status": "Status"
+        },
+        "type": {
+            "${escapeHtml(String(type))}": "application.type.${escapeHtml(String(type))}",
+            "base": "Base",
+            "fallback": "Fallback",
+            "type": "Type"
+        }
+    },
+    "lang": "English",
+    "slot": {
+        "lable": {
+            "alerts": "Alerts",
+            "applications": "Applications",
+            "base": "Base",
+            "excuses": "Excuses",
+            "fallback": "Fallback",
+            "replacement": "Replacement",
+            "required": "required"
+        }
+    },
+    "time": {
+        "countdown": {
+            "future": "in {value}",
+            "past": "{value} ago"
+        },
+        "weekday": {
+            "${d}": "time.weekday.${d}",
+            "${escapeHtml(slot": {
+                "weekday)}": "time.weekday.${escapeHtml(slot.weekday)}"
+            },
+            "0": "Sunday",
+            "1": "Monday",
+            "2": "Tuesday",
+            "3": "Wednesday",
+            "4": "Thursday",
+            "5": "Friday",
+            "6": "Saturday",
+            "7": "Sunday"
+        }
+    },
+    "user": {
+        "${escapeHtml(label)}": "user.${escapeHtml(label)}",
+        "class": "Class",
+        "email": "E-Mail",
+        "name": "Name",
+        "phonenumber": "Phone number",
+        "role": "Role",
+        "userid": "User ID",
+        "username": "Username"
+    },
+    "welcome_message": "welcome_message"
+}
