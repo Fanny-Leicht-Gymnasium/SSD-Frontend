@@ -1,0 +1,410 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* =========================================================
+   Application card
+   ========================================================= */
+
+.application-viewer {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 14px;
+
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gray);
+
+  border-radius: var(--radius-small);
+
+  color: var(--text);
+
+  transition:
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+.application-viewer:hover {
+  background: var(--surface);
+  border-color: var(--border-hover);
+}
+
+/* =========================================================
+   Status
+   ========================================================= */
+
+.application-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 13px;
+  padding-bottom: 11px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.application-status ssd-icon {
+  flex: 0 0 auto;
+
+  width: 24px;
+  height: 24px;
+
+  margin: 0;
+}
+
+.application-status .status-label {
+  color: var(--text);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.application-status .status-value {
+  display: inline-flex;
+  align-items: center;
+
+  margin-left: auto;
+  padding: 4px 8px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  color: var(--text-muted);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   Information
+   ========================================================= */
+
+.application-info {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 8px;
+
+  margin-bottom: 12px;
+}
+
+.application-field {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+
+  min-width: 0;
+
+  padding: 5px 7px;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.application-field .label {
+  flex: 0 0 auto;
+
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.application-field .value {
+  min-width: 0;
+
+  overflow: hidden;
+
+  color: var(--text);
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.application-id .value {
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.application-type .value {
+  color: var(--blue-light);
+}
+
+/* =========================================================
+   Date fields
+   ========================================================= */
+
+.application-date {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.application-date .label {
+  font-size: 9px;
+}
+
+.application-date time-display {
+  color: var(--text);
+}
+
+/* =========================================================
+   Reason
+   ========================================================= */
+
+.application-reason {
+  margin-bottom: 12px;
+  padding: 9px 11px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+
+  color: var(--text-muted);
+
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.application-reason .label {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: var(--text);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.application-reason .value {
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   Slot
+   ========================================================= */
+
+.application-slot {
+  margin: 12px 0;
+
+  padding-top: 12px;
+
+  border-top: 1px solid var(--border);
+}
+
+.application-slot > ssd-slot {
+  display: block;
+}
+
+/* =========================================================
+   User
+   ========================================================= */
+
+.application-user {
+  margin: 12px 0;
+
+  padding-top: 12px;
+
+  border-top: 1px solid var(--border);
+}
+
+.application-user > ssd-intra-user {
+  display: block;
+}
+
+/* =========================================================
+   Actions
+   ========================================================= */
+
+.application-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+
+  margin-top: 13px;
+  padding-top: 12px;
+
+  border-top: 1px solid var(--border);
+}
+
+.application-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 34px;
+
+  padding: 7px 11px;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    transform var(--transition);
+}
+
+.application-actions button:hover {
+  background: var(--surface-2);
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
+.application-actions button:active {
+  transform: scale(.97);
+}
+
+/* Approve */
+
+.application-actions .approve-btn,
+.application-actions .approve-leave-btn {
+  border-color: color-mix(
+    in srgb,
+    var(--success) 40%,
+    var(--border)
+  );
+
+  color: var(--success);
+}
+
+.application-actions .approve-btn:hover,
+.application-actions .approve-leave-btn:hover {
+  background: color-mix(
+    in srgb,
+    var(--success) 10%,
+    var(--surface)
+  );
+
+  border-color: var(--success);
+}
+
+/* Deny */
+
+.application-actions .deny-btn,
+.application-actions .deny-leave-btn {
+  border-color: color-mix(
+    in srgb,
+    var(--danger) 40%,
+    var(--border)
+  );
+
+  color: var(--danger);
+}
+
+.application-actions .deny-btn:hover,
+.application-actions .deny-leave-btn:hover {
+  background: color-mix(
+    in srgb,
+    var(--danger) 10%,
+    var(--surface)
+  );
+
+  border-color: var(--danger);
+}
+
+/* Leave */
+
+.application-actions .leave-btn {
+  border-color: color-mix(
+    in srgb,
+    var(--warning) 40%,
+    var(--border)
+  );
+
+  color: var(--warning);
+}
+
+.application-actions .leave-btn:hover {
+  background: color-mix(
+    in srgb,
+    var(--warning) 10%,
+    var(--surface)
+  );
+
+  border-color: var(--warning);
+}
+
+/* =========================================================
+   Error
+   ========================================================= */
+
+.errorarea {
+  margin-top: 10px;
+}
+
+.errorarea:empty {
+  display: none;
+}
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (max-width: 500px) {
+  .application-viewer {
+    padding: 11px;
+  }
+
+  .application-info {
+    grid-template-columns: 1fr;
+  }
+
+  .application-status {
+    margin-bottom: 10px;
+    padding-bottom: 9px;
+  }
+
+  .application-status ssd-icon {
+    width: 21px;
+    height: 21px;
+  }
+
+  .application-actions {
+    flex-direction: column;
+  }
+
+  .application-actions button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   Very small containers
+   ========================================================= */
+
+@container (max-width: 300px) {
+  .application-info {
+    grid-template-columns: 1fr;
+  }
+
+  .application-actions {
+    flex-direction: column;
+  }
+
+  .application-actions button {
+    width: 100%;
+  }
+}

@@ -73,182 +73,302 @@ class ApplicationViewer extends APIElement {
     this.container.querySelector('.leave-btn')?.addEventListener('click', () => { this.doAction('leaveRequest'); });
   }
 
-  render(application) {
-    this.id = application.id
-    let isAdmin = false;
-    let isMe = false;
+render(application) {
+  this.id = application.id;
 
-    let canLeave = false;
-    let canApprove = false;
-    let canApproveLeave = false;
+  let isAdmin = false;
+  let isMe = false;
 
+  let canLeave = false;
+  let canApprove = false;
+  let canApproveLeave = false;
 
-    if (this.me) {
-      isAdmin = this.me.role === 'admin';
+  if (this.me) {
+    isAdmin = this.me.role === 'admin';
 
-      isMe = (
-        this.me.userid === application.user?.userid
-      );
-    }
-
-
-    if (isMe) {
-      if (application.status === 'open'||application.status === 'approved'||application.status === 'leaveDenied'  ) {
-        canLeave = true;
-      }
-    }
-
-
-    if (isAdmin) {
-
-      if (application.status === 'open') {
-        canApprove = true;
-      }
-
-      if (application.status === 'leaveRequest') {
-        canApproveLeave = true;
-      }
-    }
-    var statusColor = ""
-    switch (application.status) {
-      case "approved":
-        statusColor = "green"
-        break;
-      case "denied":
-        statusColor = "red"
-        break;
-      case "inactive":
-        statusColor = "gray"
-        break;
-      case "leaveDenied":
-        statusColor = "red"
-        break;
-      case "leaveRequest":
-        statusColor = "orange"
-        break;
-      case "leaved":
-        statusColor = "gray"
-        break;
-      case "open":
-        statusColor = "orange"
-        break;
-      case "redraw":
-        statusColor = "gray"
-        break;
-      default:
-        break;
-    }
-    return `
-
-      <p>
-        <ssd-icon color="${statusColor}" size=100 name="status/${escapeHtml(application.status || 'N/A')}">
-          status-${escapeHtml(application.status || 'N/A')}
-        </ssd-icon>
-      </p>
-
-
-      <p>
-        <x-translation>ApplicationID</x-translation>:
-        ${escapeHtml(application.id || 'N/A')}
-      </p>
-
-
-      <p>
-        <x-translation>Startdate</x-translation>:
-        <time-display 
-          show-countdown="false" 
-          show-date="always">
-          ${escapeHtml(application.startdate || 'N/A')}
-        </time-display>
-      </p>
-
-
-      <p>
-        <x-translation>Enddate</x-translation>:
-        <time-display 
-          show-countdown="false" 
-          show-date="always">
-          ${escapeHtml(application.enddate || 'N/A')}
-        </time-display>
-      </p>
-
-
-      ${!this.hasAttribute('hideslot')
-        ?
-        `<ssd-slot data='${JSON.stringify(application.slot)}'></ssd-slot>`
-        :
-        ''
-      }
-
-
-      <p>
-        <x-translation>reason</x-translation>:
-        ${escapeHtml(application.reason || 'N/A')}
-      </p>
-
-
-      <ssd-intra-user 
-        data='${JSON.stringify(application.user)}'>
-      </ssd-intra-user>
-
-
-      <p>
-        <x-translation>type</x-translation>:
-        ${escapeHtml(application.type || 'N/A')}
-      </p>
-
-
-      <p>
-        <x-translation>status</x-translation>:
-        ${escapeHtml(application.status || 'N/A')}
-      </p>
-
-
-      ${canApprove
-        ?
-        `
-        <button class="approve-btn">
-          <x-translation>approve</x-translation>
-        </button>
-
-        <button class="deny-btn">
-          <x-translation>deny</x-translation>
-        </button>
-        `
-        :
-        ''
-      }
-
-
-      ${canApproveLeave
-        ?
-        `
-        <button class="approve-leave-btn">
-          <x-translation>approveLeave</x-translation>
-        </button>
-
-        <button class="deny-leave-btn">
-          <x-translation>denyLeave</x-translation>
-        </button>
-        `
-        :
-        ''
-      }
-
-
-      ${canLeave
-        ?
-        `
-        <button class="leave-btn">
-          <x-translation>leaveRequest</x-translation>
-        </button>
-        `
-        :
-        ''
-      }
-      <div class="errorarea"></div>
-    `;
+    isMe = this.me.userid === application.user?.userid;
   }
+
+  if (isMe) {
+    if (
+      application.status === 'open' ||
+      application.status === 'approved' ||
+      application.status === 'leaveDenied'
+    ) {
+      canLeave = true;
+    }
+  }
+
+  if (isAdmin) {
+    if (application.status === 'open') {
+      canApprove = true;
+    }
+
+    if (application.status === 'leaveRequest') {
+      canApproveLeave = true;
+    }
+  }
+
+  let statusColor = '';
+
+  switch (application.status) {
+    case 'approved':
+      statusColor = 'green';
+      break;
+
+    case 'denied':
+    case 'leaveDenied':
+      statusColor = 'red';
+      break;
+
+    case 'inactive':
+    case 'leaved':
+    case 'redraw':
+      statusColor = 'gray';
+      break;
+
+    case 'leaveRequest':
+    case 'open':
+      statusColor = 'orange';
+      break;
+
+    default:
+      statusColor = 'gray';
+      break;
+  }
+
+  const hasValue = value =>
+    value !== null &&
+    value !== undefined &&
+    String(value).trim() !== '';
+
+  const status = hasValue(application.status)
+    ? application.status
+    : null;
+
+  const applicationId = hasValue(application.id)
+    ? application.id
+    : null;
+
+  const startDate = hasValue(application.startdate)
+    ? application.startdate
+    : null;
+
+  const endDate = hasValue(application.enddate)
+    ? application.enddate
+    : null;
+
+  const reason = hasValue(application.reason)
+    ? application.reason
+    : null;
+
+  const type = hasValue(application.type)
+    ? application.type
+    : null;
+
+  return /*html*/`
+    <div class="application-viewer">
+
+      <!-- =================================================
+           Status
+           ================================================= -->
+
+      ${status ? /*html*/`
+        <div class="application-status">
+
+          <ssd-icon
+            color="${statusColor}"
+            name="status/${escapeHtml(status)}">
+          </ssd-icon>
+
+          <span class="status-label">
+            <x-translation>application.status.status</x-translation>
+          </span>
+
+          <span class="status-value">
+              <x-translation>application.status.${escapeHtml(status)}</x-translation>
+          </span>
+
+        </div>
+      ` : ''}
+
+
+      <!-- =================================================
+           Application information
+           ================================================= -->
+
+      <div class="application-info">
+
+        ${applicationId ? /*html*/`
+          <div class="application-field application-id">
+            <span class="label">
+              <x-translation>application.id</x-translation>
+            </span>
+
+            <span class="value">
+              ${escapeHtml(String(applicationId))}
+            </span>
+          </div>
+        ` : ''}
+
+
+        ${type ? /*html*/`
+          <div class="application-field application-type">
+            <span class="label">
+              <x-translation>application.type.type</x-translation>
+            </span>
+
+            <span class="value">
+            <x-translation>application.type.${escapeHtml(String(type))}</x-translation>
+            </span>
+          </div>
+        ` : ''}
+
+
+        ${startDate ? /*html*/`
+          <div class="application-field application-date">
+            <span class="label">
+              <x-translation>application.startdate</x-translation>
+            </span>
+
+            <time-display
+              show-countdown="false"
+              show-date="always">
+              ${escapeHtml(String(startDate))}
+            </time-display>
+          </div>
+        ` : ''}
+
+
+        ${endDate ? /*html*/`
+          <div class="application-field application-date">
+            <span class="label">
+              <x-translation>application.enddate</x-translation>
+            </span>
+
+            <time-display
+              show-countdown="false"
+              show-date="always">
+              ${escapeHtml(String(endDate))}
+            </time-display>
+          </div>
+        ` : ''}
+
+      </div>
+
+
+      <!-- =================================================
+           Reason
+           ================================================= -->
+
+      ${reason ? /*html*/`
+        <div class="application-reason">
+
+          <span class="label">
+            <x-translation>application.reason</x-translation>
+          </span>
+
+          <span class="value">
+            ${escapeHtml(String(reason))}
+          </span>
+
+        </div>
+      ` : ''}
+
+
+      <!-- =================================================
+           Slot
+           ================================================= -->
+
+      ${!this.hasAttribute('hideslot') && application.slot
+        ? /*html*/`
+          <div class="application-slot">
+            <ssd-slot
+              data='${JSON.stringify(application.slot)}'>
+            </ssd-slot>
+          </div>
+        `
+        : ''
+      }
+
+
+      <!-- =================================================
+           User
+           ================================================= -->
+
+      ${application.user
+        ? /*html*/`
+          <div class="application-user">
+            <ssd-intra-user
+              data='${JSON.stringify(application.user)}'>
+            </ssd-intra-user>
+          </div>
+        `
+        : ''
+      }
+
+
+      <!-- =================================================
+           Actions
+           ================================================= -->
+
+      ${canApprove || canApproveLeave || canLeave
+        ? /*html*/`
+          <div class="application-actions">
+
+            ${canApprove ? /*html*/`
+              <button
+                class="approve-btn"
+                type="button">
+                <x-translation>application.button.approve</x-translation>
+              </button>
+
+              <button
+                class="deny-btn"
+                type="button">
+                <x-translation>application.button.deny</x-translation>
+              </button>
+            ` : ''}
+
+
+            ${canApproveLeave ? /*html*/`
+              <button
+                class="approve-leave-btn"
+                type="button">
+                <x-translation>application.button.approveLeave</x-translation>
+              </button>
+
+              <button
+                class="deny-leave-btn"
+                type="button">
+                <x-translation>application.button.denyLeave</x-translation>
+              </button>
+            ` : ''}
+
+
+            ${canLeave ? /*html*/`
+              <button
+                class="leave-btn"
+                type="button">
+                <x-translation>application.button.leaveRequest</x-translation>
+              </button>
+            ` : ''}
+
+          </div>
+        `
+        : ''
+      }
+
+
+      <!-- =================================================
+           Errors
+           ================================================= -->
+
+      <div class="errorarea"></div>
+
+    </div>
+  `;
+}
 
 
   postRender() {
