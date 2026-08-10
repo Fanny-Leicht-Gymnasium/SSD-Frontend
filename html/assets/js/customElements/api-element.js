@@ -166,15 +166,6 @@ export class APIElement extends SSDElement {
 
       el.innerHTML = this.render(data);
 
-      el.getAttributeNames().forEach(attr => {
-        el.removeAttribute(attr);
-      });
-
-      this.getAttributeNames().forEach(attr => {
-        if (attr == "aspopup")return;
-        el.setAttribute(attr, this.getAttribute(attr));
-      });
-
       el.classList.remove('loading');
 
     } catch (err) {

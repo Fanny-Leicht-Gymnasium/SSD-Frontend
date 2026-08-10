@@ -79,7 +79,7 @@ class MissionViewer extends APIElement {
               <div class="user-status ${escapeHtml(u.status || 'unknown')}">
                 <ssd-icon color ="red" name="status/${u.status||"N_A"}"></ssd-icon>
   
-              <ssd-intra-user alert-status
+              <ssd-intra-user class="alert-status"
                   id="${escapeHtml(u.userid ?? 'N/A')}">
                 </ssd-intra-user>
 

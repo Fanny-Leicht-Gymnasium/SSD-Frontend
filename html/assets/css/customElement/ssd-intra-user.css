@@ -1,4 +1,4 @@
-[alert-status]{
+:host(.alert-status){
     .user-userid, .user-username, .user-email, .user-role, .user-class, .user-name {
         display: none;
     }
