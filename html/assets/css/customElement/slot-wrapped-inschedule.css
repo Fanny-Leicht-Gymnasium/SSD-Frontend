@@ -24,16 +24,17 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-left: 4px solid var(--primary);
+
   .slot-main {
     /*for centering the content again*/
     padding-left: 4px;
   }
+
   border-radius: var(--radius-small);
 
-  transition:
-    border-color var(--transition),
-    background-color var(--transition),
-    box-shadow var(--transition);
+  transition: border-color var(--transition),
+  background-color var(--transition),
+  box-shadow var(--transition);
 }
 
 .slot:hover {
@@ -58,7 +59,7 @@
    Main content
    ========================================================= */
 
-.slot-main{
+.slot-main {
   min-width: 18px;
 }
 
@@ -68,6 +69,9 @@
   gap: 7px;
 
   min-width: 0;
+
+  margin-bottom: 0.5em;
+
 }
 
 .slot-title-row h3 {
@@ -105,8 +109,8 @@
   font-weight: 700;
   line-height: 1;
   text-transform: uppercase;
-  
-  overflow:hidden;
+
+  overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
 
@@ -312,9 +316,6 @@
     display: none;
   }
 
-  .slot-title-row {
-    margin-bottom: 0.5em;
-  }
 
   .slot-meta-item ssd-icon {
     --slot-meta-icon-size: 24px;
@@ -326,17 +327,15 @@
   }
 
 }
-@container (max-width: 60px) {
-  .slot-title-row {
-    margin-bottom: 0.5em;
-  }
 
+@container (max-width: 60px) {
   .slot-meta-item ssd-icon {
     --slot-meta-icon-size: 12px;
   }
 
 
 }
+
 @container (max-width: 250px) {
   .slot-title-row {
     flex-direction: column;
@@ -351,7 +350,7 @@
   color: var(--blue-light);
 }
 
-.slot-meta-item[type="fallback"]  {
+.slot-meta-item[type="fallback"] {
   color: var(--cyan-light);
 }
 
@@ -359,11 +358,11 @@
   color: var(--purple-light);
 }
 
-.slot-meta-item[type="excuses"]  {
+.slot-meta-item[type="excuses"] {
   color: var(--orange-light);
 }
 
-.slot-meta-item[type="alerts"]  {
+.slot-meta-item[type="alerts"] {
   color: var(--warning);
 }
 

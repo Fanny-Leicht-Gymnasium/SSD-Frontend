@@ -72,7 +72,7 @@ class SlotElementWrapped extends APIElement {
             <div class="slot-title-row">
               <h3>${escapeHtml(slot.slotName || 'Unnamed Slot')}</h3>
               ${slot.required ? /*html*/`
-                <span class="slot-required">Required</span>
+                <span class="slot-required"><x-trans>slot.lable.required</x-trans></span>
                 ` : ''}
 
             </div>
@@ -100,7 +100,7 @@ class SlotElementWrapped extends APIElement {
             <div collapsable ${this.getAttribute("open") == "base" ? "open" : ""} class="slot-meta-item" type="base">
               <div class="header">
                   <ssd-icon name="user"></ssd-icon>
-                  <x-trans class="lable">Base</x-trans> <span class="data">${baseUsers.length}</span>
+                  <x-trans class="lable">slot.lable.base</x-trans> <span class="data">${baseUsers.length}</span>
               </div>
               <div class="content">
                   ${Array.isArray(slotWrapper.baseUsers)
@@ -115,7 +115,7 @@ class SlotElementWrapped extends APIElement {
             <div collapsable ${this.getAttribute("open") == "fallback" ? "open" : ""}  class="slot-meta-item" type="fallback">
               <div class="header">
                 <ssd-icon name="users"></ssd-icon>
-                <x-trans class="lable">Fallback</x-trans> <span class="data">${fallbackUsers.length}</span>
+                <x-trans class="lable">slot.lable.fallback</x-trans> <span class="data">${fallbackUsers.length}</span>
               </div>
               <div class="content">
                 ${Array.isArray(slotWrapper.fallbackusers)
@@ -129,7 +129,7 @@ class SlotElementWrapped extends APIElement {
             <div collapsable  ${this.getAttribute("open") == "replacement" ? "open" : ""}  class="slot-meta-item" type="replacement">
               <div class="header">
                 <ssd-icon name="replace-user"></ssd-icon>
-                <x-trans class="lable">Replacement</x-trans> <span class="data">${replacementUsers.length}</span>
+                <x-trans class="lable">slot.lable.replacement</x-trans> <span class="data">${replacementUsers.length}</span>
               </div>
               <div class="content">
                 ${Array.isArray(slotWrapper.replacementUser)
@@ -144,7 +144,7 @@ class SlotElementWrapped extends APIElement {
             <div collapsable ${this.getAttribute("open") == "excuses" ? "open" : ""}  class="slot-meta-item" type="excuses">
               <div class="header">
                 <ssd-icon name="virus"></ssd-icon>
-                <x-trans class="lable">Excuses</x-trans> <span class="data">${excuses.length}</span>
+                <x-trans class="lable">slot.lable.excuses</x-trans> <span class="data">${excuses.length}</span>
               </div>
               <div class="content">
                 ${Array.isArray(slotWrapper.excuses)
@@ -158,7 +158,7 @@ class SlotElementWrapped extends APIElement {
             <div collapsable ${this.getAttribute("open") == "alerts" ? "open" : ""} class="slot-meta-item" type="alerts">
               <div class="header">
                 <ssd-icon name="alert-triangle"></ssd-icon>
-                <x-trans class="lable">Alerts</x-trans> <span class="data">${alerts.length}</span>
+                <x-trans class="lable">slot.lable.alerts</x-trans> <span class="data">${alerts.length}</span>
               </div>
               <div class="content">
                 ${Array.isArray(slotWrapper.alerts)
@@ -172,7 +172,7 @@ class SlotElementWrapped extends APIElement {
             <div collapsable ${this.getAttribute("open") == "applications" ? "open" : ""}  class="slot-meta-item" type="applications">
               <div class="header">
                 <ssd-icon name="clipboard"></ssd-icon>
-                <x-trans class="lable">Applications</x-trans> <span class="data">${openApplications.length}</span>
+                <x-trans class="lable">slot.lable.applications</x-trans> <span class="data">${openApplications.length}</span>
               </div>
               <div class="content">
                 ${

@@ -75,7 +75,7 @@ class SlotElementWrapped extends APIElement {
             <h3>${slotName}</h3>
 
             ${slot.required ? /*html*/`
-              <span class="slot-required">Required</span>
+              <span class="slot-required"><x-trans>slot.lable.required</x-trans></span>
             ` : ''}
           </div>
 
@@ -88,39 +88,39 @@ class SlotElementWrapped extends APIElement {
             <div class="slot-meta">
               <span class="slot-meta-item" type="base">
                 <ssd-icon name="user"></ssd-icon>
-                <x-trans class="lable">Base</x-trans> <span class="data">${baseUsers.length}</span>
+                <x-trans class="lable">slot.lable.base</x-trans> <span class="data">${baseUsers.length}</span>
               </span>
 
               <span class="slot-meta-item" type="fallback">
                 <ssd-icon name="users"></ssd-icon>
-                <x-trans class="lable">Fallback</x-trans> <span class="data">${fallbackUsers.length}</span>
+                <x-trans class="lable">slot.lable.fallback</x-trans> <span class="data">${fallbackUsers.length}</span>
               </span>
 
               ${replacementUsers.length > 0 ? /*html*/`
                 <span class="slot-meta-item" type="replacement">
                   <ssd-icon name="replace-user"></ssd-icon>
-                  <x-trans class="lable">Replacement</x-trans> <span class="data">${replacementUsers.length}</span>
+                  <x-trans class="lable">slot.lable.replacement</x-trans> <span class="data">${replacementUsers.length}</span>
                 </span>
               ` : ''}
 
               ${excuses.length > 0 ? /*html*/`
                 <span class="slot-meta-item" type="excuses">
                   <ssd-icon name="virus"></ssd-icon>
-                  <x-trans class="lable">Excuses</x-trans> <span class="data">${excuses.length}</span>
+                  <x-trans class="lable">slot.lable.excuses</x-trans> <span class="data">${excuses.length}</span>
                 </span>
               ` : ''}
 
               ${alerts.length > 0 ? /*html*/`
                 <span class="slot-meta-item slot-meta-alert" type="alerts">
                   <ssd-icon name="alert-triangle"></ssd-icon>
-                  <x-trans class="lable">Alerts</x-trans> <span class="data">${alerts.length}</span>
+                  <x-trans class="lable">slot.lable.alerts</x-trans> <span class="data">${alerts.length}</span>
                 </span>
               ` : ''}
 
               ${isAdmin && openApplications.length > 0 ? /*html*/`
                 <span class="slot-meta-item" type="applications">
                   <ssd-icon name="clipboard"></ssd-icon>
-                  <x-trans class="lable">Applications</x-trans> <span class="data">${openApplications.length}</span>
+                  <x-trans class="lable">slot.lable.applications</x-trans> <span class="data">${openApplications.length}</span>
                 </span>
               ` : ''}
              ${isAdmin ? /*html*/`
