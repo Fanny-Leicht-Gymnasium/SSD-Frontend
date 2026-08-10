@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const login = document.createElement('ssd-login');
 
         login.setAttribute('aspopup', '');
-        login.setAttribute('redirectURL', '/');
+        login.setAttribute('redirectURL', './');
 
         document.body.appendChild(login);
     }
