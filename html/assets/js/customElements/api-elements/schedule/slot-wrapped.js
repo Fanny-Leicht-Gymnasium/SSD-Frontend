@@ -34,8 +34,6 @@ class SlotElementWrapped extends APIElement {
       })();
     }
 
-    // Use the loaded user
-    this.userId = this.me?.id ?? null;
   }
   render(slotWrapper) {
     const slot = slotWrapper?.slot ?? {};
@@ -50,7 +48,7 @@ class SlotElementWrapped extends APIElement {
     const applications = slotWrapper?.applications ?? [];
 
     const openApplications = applications.filter(
-      application => application.status === 'open'
+      application => (isAdmin?['open', 'leaveRequest'].includes(application.status):application.user.userid==this.me.userid)
     );
 
     const slotName = escapeHtml(slot.slotName || 'Unnamed Slot');

@@ -49,7 +49,7 @@ class SlotElementWrapped extends APIElement {
     const applications = slotWrapper?.applications ?? [];
 
     const openApplications = applications.filter(
-      application => application.status === 'open'
+      application => ['open', 'leaveRequest'].includes(application.status)
     );
 
     const slotName = escapeHtml(slot.slotName || 'Unnamed Slot');
