@@ -6,20 +6,54 @@ class UserViewer extends APIElement {
   static get observedAttributes() {
     return ['id', 'data', 'collapsed'];
   }
+
   async fetchById(id) {
     return await getUserUserid(id);
   }
 
   render(user) {
+    const fields = [
+      ['userid', 'userid'],
+      ['username', 'username'],
+      ['email', 'email'],
+      ['role', 'role'],
+      ['phonenumber', 'phonenumber'],
+      ['class', 'class'],
+      ['name', 'name'],
+    ];
+
+    const availableFields = fields.filter(([key]) => {
+      const value = user?.[key];
+
+      return value !== null &&
+        value !== undefined &&
+        String(value).trim() !== '';
+    });
+
     return /*html*/`
-      <h2>User: ${escapeHtml(user.name || user.username ||'Unknown')}</h2>
-      <p class="user-id"><x-translation>userid</x-translation>: ${escapeHtml(user.userid || 'N/A')}</p>
-      <p class="user-name"><x-translation>username</x-translation>: ${escapeHtml(user.username || 'N/A')}</p>
-      <p class="user-email"><x-translation>email</x-translation>: ${escapeHtml(user.email || 'N/A')}</p>
-      <p class="user-role"><x-translation>role</x-translation>: ${escapeHtml(user.role || 'N/A')}</p>
-      <p class="user-phonenumber"><x-translation>phonenumber</x-translation>: ${escapeHtml(user.phonenumber || 'N/A')}</p>
-      <p class="user-class"><x-translation>class</x-translation>: ${escapeHtml(user.class || 'N/A')}</p>
-      <p class="user-name"><x-translation>name</x-translation>: ${escapeHtml(user.name || 'N/A')}</p>
+      <div class="user-viewer">
+        <div class="user-header">
+          <ssd-icon name="user"></ssd-icon>
+
+          <h2>
+            ${escapeHtml(user?.name || user?.username || 'Unknown')}
+          </h2>
+        </div>
+
+        <div class="user-fields">
+          ${availableFields.map(([key, label]) => /*html*/`
+            <div class="user-field user-${escapeHtml(key)}">
+              <span class="user-label">
+                <x-translation>${escapeHtml(label)}</x-translation>
+              </span>
+
+              <span class="user-value">
+                ${escapeHtml(String(user[key]))}
+              </span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
     `;
   }
 }
