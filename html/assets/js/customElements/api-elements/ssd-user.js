@@ -44,7 +44,7 @@ class UserViewer extends APIElement {
           ${availableFields.map(([key, label]) => /*html*/`
             <div class="user-field user-${escapeHtml(key)}">
               <span class="user-label">
-                <x-translation>${escapeHtml(label)}</x-translation>
+                <x-translation>user.${escapeHtml(label)}</x-translation>
               </span>
 
               <span class="user-value">
