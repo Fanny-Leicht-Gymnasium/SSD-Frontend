@@ -163,7 +163,7 @@ def generate():
     output.append("// AUTO GENERATED FILE - DO NOT EDIT\n")
 
     # API BASE constant
-    output.append(f"const API_BASE = \"{API_BASE_VALUE}\";\n")
+    output.append(f"const API_BASE = `{API_BASE_VALUE}`;\n")
 
     # apiFetch
     output.append(generate_api_fetch())

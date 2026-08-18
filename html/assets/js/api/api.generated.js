@@ -1,6 +1,6 @@
 // AUTO GENERATED FILE - DO NOT EDIT
 
-const API_BASE = "{APIENDPOINT}";
+const API_BASE = `{APIENDPOINT}`;
 
 async function apiFetch(endpoint, options = {}, params = {}) {
   const token = localStorage.getItem("jwt");
