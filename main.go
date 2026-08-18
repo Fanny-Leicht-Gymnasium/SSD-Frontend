@@ -14,6 +14,14 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
 
+		// Health endpoint for Docker/container orchestration.
+		if path == "/health" {
+			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte("OK"))
+			return
+		}
+
 		// -----------------------------
 		// Dev mode: create missing icon files
 		// -----------------------------
