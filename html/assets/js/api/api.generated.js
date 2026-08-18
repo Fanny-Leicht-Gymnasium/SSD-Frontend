@@ -660,12 +660,14 @@ export async function postExcuse(body) {
 }
 
 
-export async function getExcuseList(startdate, enddate, filter) {
+export async function getExcuseList(startdate, enddate, filter, page, page_size) {
   const pathParams = {};
   const queryParams = {
     startdate,
     enddate,
     filter,
+    page,
+    page_size,
   };
 
   const queryString = buildQueryString(queryParams);
@@ -685,13 +687,15 @@ export async function getExcuseList(startdate, enddate, filter) {
 }
 
 
-export async function getExcuseListAdmin(startdate, enddate, filter, users) {
+export async function getExcuseListAdmin(startdate, enddate, filter, users, page, page_size) {
   const pathParams = {};
   const queryParams = {
     startdate,
     enddate,
     filter,
     users,
+    page,
+    page_size,
   };
 
   const queryString = buildQueryString(queryParams);
