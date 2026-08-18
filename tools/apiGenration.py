@@ -4,7 +4,7 @@ from pathlib import Path
 
 INPUT_FILE = "./SSD-Docs/swagger.yml"
 OUTPUT_FILE = "html/assets/js/api/api.generated.js"
-API_BASE_VALUE = "http://localhost:8080"  # you can replace or inject env usage
+API_BASE_VALUE = "{APIENDPOINT}"  # you can replace or inject env usage
 
 def extract_query_params(operation: dict):
     params = operation.get("parameters", [])

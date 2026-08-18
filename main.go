@@ -22,6 +22,32 @@ func main() {
 			return
 		}
 
+		if path == "/assets/js/api/api.generated.js" {
+			// Read the API endpoint from the environment.
+			EnvApiEndpoint := os.Getenv("API_ENDPOINT")
+			if EnvApiEndpoint != "" {
+				ApiEndpoint = EnvApiEndpoint
+			}
+			// Read the generated JavaScript file.
+			data, err := os.ReadFile("./html/assets/js/api/api.generated.js")
+			if err != nil {
+				http.NotFound(w, r)
+				return
+			}
+
+			// Replace the placeholder with the configured API endpoint.
+			content := strings.Replace(
+				string(data),
+				"{APIENDPOINT}",
+				ApiEndpoint,
+				1,
+			)
+
+			w.Header().Set("Content-Type", "application/javascript")
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(content))
+			return
+		}
 		// -----------------------------
 		// Dev mode: create missing icon files
 		// -----------------------------
