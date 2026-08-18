@@ -89,7 +89,7 @@ jobs:
 
           # Healthcheck loop
           for i in {1..30}; do
-            if curl -fs http://localhost:8080/system/health > /dev/null; then
+            if curl -fs http://localhost:8081/health > /dev/null; then
               kill $LOG_PID || true
               exit 0
             fi
