@@ -19,7 +19,6 @@ class ApplicationViewer extends APIElement {
   }
 
   async fetchById(id) {
-    this.me = await getUserMe();
     return await getApplicationId(id);
   }
 

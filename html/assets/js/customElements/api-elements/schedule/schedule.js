@@ -1,5 +1,5 @@
 import { APIElement } from '../../api-element.js';
-import { escapeHtml } from '../../../util.js';
+import { escapeHtml, getStoredUser } from '../../../util.js';
 import { getScheduleYearWeek, getUserMe } from '../../../api/api.generated.js';
 class ScheduleElement extends APIElement {
   static get observedAttributes() {
@@ -13,7 +13,7 @@ class ScheduleElement extends APIElement {
 
   async init() {
     try {
-      const me = await getUserMe();
+      const me = getStoredUser();
 
       if (me && me.role === "admin") {
         this.setAttribute("isAdmin", "");
