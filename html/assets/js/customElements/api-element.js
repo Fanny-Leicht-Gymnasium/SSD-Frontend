@@ -32,7 +32,12 @@ export class APIElement extends SSDElement {
     console.log('APIElement alertErrors:', this.alertErrors);
     this.defaultAlertErrors = false;
   }
-
+  get errorArea() {
+    if (!this._errorArea) {
+      this._errorArea = this.root.getElementById('errorArea');
+    }
+    return this._errorArea || this.root.getElementById('errorArea');
+  }
   connectedCallback() {
     // Start observing visibility
     this.observer.observe(this);
@@ -85,8 +90,21 @@ export class APIElement extends SSDElement {
     return `Loading...`;
   }
 
-  renderError(err, alert = false) {
-    return `<ssd-error ${this.alertErrors || this.defaultAlertErrors || alert ? 'alert' : ''}>${err.message}</ssd-error>`;
+  renderError(err, alert = false, toErrorArea = true, replace=true) {
+    const alertAttribute =
+      this.alertErrors || this.defaultAlertErrors || alert ? 'alert' : '';
+
+    const errorHtml = `<ssd-error ${alertAttribute}>${err.message}</ssd-error>`;
+
+    if (toErrorArea) {
+      if (replace){
+        this.errorArea.innerHTML=errorHtml
+      }else{
+        this.errorArea.insertAdjacentHTML('beforeend', errorHtml);
+      }
+    }
+
+    return errorHtml;
   }
 
   postRender() {
@@ -170,7 +188,7 @@ export class APIElement extends SSDElement {
 
     } catch (err) {
       console.log('err:', err);
-      el.innerHTML = this.renderError(err);
+      el.innerHTML = this.renderError(err,alert=false,toErrorArea=false);
       el.classList.remove('loading');
 
     }

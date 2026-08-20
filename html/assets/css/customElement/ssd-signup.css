@@ -35,7 +35,7 @@ button {
     margin-top: 1.5rem;
 }
 
-#result {
+#errorArea {
     margin-top: 1rem;
     text-align: center;
     color: var(--text-muted);

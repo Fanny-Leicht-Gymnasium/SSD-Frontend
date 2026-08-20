@@ -53,7 +53,7 @@ class ApplicationViewer extends APIElement {
       await this.load();
     } catch (err) {
       console.log('err:', err);
-      this.container.querySelector(".errorarea").innerHTML = this.renderError(err, alert = true);
+      this.renderError(err, alert = true);
 
 
     }
