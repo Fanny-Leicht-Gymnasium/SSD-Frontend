@@ -119,7 +119,7 @@ export class FormAPIElement extends APIElement {
       }));
     }
 
-    if (result.success && result.redirect !== false) {
+    if (result.success && result.redirect != false) {
       const redirectURL = result.redirect || this.getAttribute('redirectURL');
 
       if (this.hasAttribute('redirectURL') || result.redirect) {

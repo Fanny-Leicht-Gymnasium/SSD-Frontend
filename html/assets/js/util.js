@@ -69,3 +69,12 @@ export function waitForStoredUser(timeout = 3000) {
     check();
   });
 }
+export function getMondayOfWeek(year, week) {
+  const january4 = new Date(year, 0, 4);
+  const day = january4.getDay() || 7;
+
+  const monday = new Date(january4);
+  monday.setDate(january4.getDate() - day + 1 + (week - 1) * 7);
+
+  return monday;
+}

@@ -39,6 +39,7 @@ class SlotElementWrapped extends APIElement {
     const slot = slotWrapper?.slot ?? {};
     const isAdmin = this.hasAttribute('isAdmin');
 
+    this.slotName = slot.slotName;
 
     const baseUsers = slotWrapper?.baseUsers ?? [];
     const fallbackUsers = slotWrapper?.fallbackusers ?? [];
@@ -201,11 +202,11 @@ class SlotElementWrapped extends APIElement {
           this.removeAttribute('data');
           this.load();
         });
-
-        document.body.appendChild(form);
         form.setAttribute('slot-id', id);
         form.setAttribute('year', this.getAttribute('year'));
-        form.setAttribute('week', this.getAttribute('week'));
+        form.setAttribute('slot-name', this.slotName);
+        document.body.appendChild(form);
+
 
       });
     });

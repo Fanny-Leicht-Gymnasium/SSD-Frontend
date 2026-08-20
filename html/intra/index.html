@@ -1,51 +1,59 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SSD Dashboard</title>
-    <link rel="stylesheet" href="/assets/css/style.css" />
-    <link rel="stylesheet" href="/assets/css/global.css" />
-    <meta name="view-transition" content="same-origin" />
-  </head>
-  <body>
-    <ssd-nav class="top"></ssd-nav>
-    <main>
-      <h1>SSD Dashboard</h1>
-      <ssd-schedule></ssd-schedule>
-    </main>
 
-    <ssd-nav class="bottem"></ssd-nav>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SSD Dashboard</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  <meta name="view-transition" content="same-origin" />
+</head>
 
-    <script type="module" src="/assets/js/main.js"></script>
+<body>
+  <ssd-nav class="top"></ssd-nav>
+  <main>
+    <h1>SSD Dashboard</h1>
+    <ssd-week-switch id="weekswitcher"></ssd-week-switch>
+    <ssd-schedule date-src="weekswitcher"></ssd-schedule>
+  </main>
 
-    <script src="/assets/js/pages/intra/index/main.js" type="module"></script>
-    <script src="/assets/js/pages/intra/main.js" type="module"></script>
+  <ssd-nav class="bottem"></ssd-nav>
 
-    <script type="module" src="/assets/js/api/api.generated.js"></script>
-    <script type="module" src="/assets/js/util.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
 
-    <script type="module" src="/assets/js/customElements/general/icon.js"></script>
-    <script type="module" src="/assets/js/customElements/general/SimplePagination.js"></script>
-    <script type="module" src="/assets/js/customElements/general/translation.js"></script>
-    <script type="module" src="/assets/js/customElements/general/time-display.js"></script>
-    <script type="module" src="/assets/js/customElements/ssd-alert/ssd-error.js"></script>
-    <script type="module" src="/assets/js/customElements/ssd-alert/ssd-warning.js"></script>
-    <script type="module" src="/assets/js/customElements/ssd-alert/ssd-ok.js"></script>
+  <script src="/assets/js/pages/intra/index/main.js" type="module"></script>
+  <script src="/assets/js/pages/intra/main.js" type="module"></script>
 
-    <script type="module" src="/assets/js/customElements/ssd-nav.js"></script>
+  <script type="module" src="/assets/js/api/api.generated.js"></script>
+  <script type="module" src="/assets/js/util.js"></script>
 
-    <script type="module" src="/assets/js/customElements/api-elements/mission/missiondisplay.js"></script>
-    <script type="module" src="/assets/js/customElements/api-elements/mission/missionlist.js"></script>
-    <script type="module" src="/assets/js/customElements/api-elements/schedule/schedule.js"></script>
-    <script type="module" src="/assets/js/customElements/api-elements/schedule/slot.js"></script>
-    <script type="module" src="/assets/js/customElements/api-elements/schedule/slot-wrapped.js"></script>
-    <script type="module" src="/assets/js/customElements/api-elements/schedule/slot-wrapped-inschedule.js"></script>
-    <script type="module" src="/assets/js/customElements/api-elements/application/ssd-application.js"></script>
-    <script type="module" src="/assets/js/customElements/api-elements/forms/ssd-application-appy.js"></script>
+  <script type="module" src="/assets/js/customElements/general/icon.js"></script>
+  <script type="module" src="/assets/js/customElements/general/SimplePagination.js"></script>
+  <script type="module" src="/assets/js/customElements/general/translation.js"></script>
+  <script type="module" src="/assets/js/customElements/general/time-display.js"></script>
+  <script type="module" src="/assets/js/customElements/ssd-alert/ssd-error.js"></script>
+  <script type="module" src="/assets/js/customElements/ssd-alert/ssd-warning.js"></script>
+  <script type="module" src="/assets/js/customElements/ssd-alert/ssd-ok.js"></script>
 
-    <script type="module" src="/assets/js/customElements/api-elements/ssd-user.js"></script>
-    <script type="module" src="/assets/js/customElements/api-elements/forms/ssd-login.js"></script>
-    <script type="module" src="/assets/js/customElements/api-elements/forms/ssd-slot-form.js"></script>
-  </body>
+  <script type="module" src="/assets/js/customElements/ssd-elements/weekswitcher.js"></script>
+
+
+
+  <script type="module" src="/assets/js/customElements/ssd-nav.js"></script>
+
+  <script type="module" src="/assets/js/customElements/api-elements/mission/missiondisplay.js"></script>
+  <script type="module" src="/assets/js/customElements/api-elements/mission/missionlist.js"></script>
+  <script type="module" src="/assets/js/customElements/api-elements/schedule/schedule.js"></script>
+  <script type="module" src="/assets/js/customElements/api-elements/schedule/slot.js"></script>
+  <script type="module" src="/assets/js/customElements/api-elements/schedule/slot-wrapped.js"></script>
+  <script type="module" src="/assets/js/customElements/api-elements/schedule/slot-wrapped-inschedule.js"></script>
+  <script type="module" src="/assets/js/customElements/api-elements/application/ssd-application.js"></script>
+  <script type="module" src="/assets/js/customElements/api-elements/forms/ssd-application-appy.js"></script>
+
+  <script type="module" src="/assets/js/customElements/api-elements/ssd-user.js"></script>
+  <script type="module" src="/assets/js/customElements/api-elements/forms/ssd-login.js"></script>
+  <script type="module" src="/assets/js/customElements/api-elements/forms/ssd-slot-form.js"></script>
+</body>
+
 </html>

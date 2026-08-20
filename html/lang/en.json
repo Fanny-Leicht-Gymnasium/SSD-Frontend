@@ -43,6 +43,9 @@
             "type": "Type",
             "base": "Base",
             "fallback": "Fallback"
+        },
+        "apply":{
+            "ApplyTO":"Apply for {slotname} starting on {startdate}."
         }
     },
     "user": {
