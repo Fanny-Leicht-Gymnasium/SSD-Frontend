@@ -3,14 +3,27 @@ import { escapeHtml, getStoredUser } from '../../../util.js';
 import { getScheduleYearWeek, getUserMe } from '../../../api/api.generated.js';
 class ScheduleElement extends APIElement {
   static get observedAttributes() {
-    return ['data', 'year', 'week', 'isAdmin'];
+    return ['data', 'year', 'week', 'isAdmin', 'date-src'];
   }
 
   constructor() {
     super();
     this.init();
   }
-
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name==="date-src"){
+      if (this.dateListener){
+        this.dateListener.removeEventlistenr
+      }
+      this.dateListener = document.getElementById(newValue)
+      this.dateListener.addEventListener("date-change", (event)=>{
+        console.log(event)
+        this.setAttribute("week", event.detail.week);
+        this.setAttribute("year", event.detail.year)
+      })
+    }
+    super.attributeChangedCallback(name, oldValue, newValue)
+  }
   async init() {
     try {
       const me = getStoredUser();
@@ -203,9 +216,11 @@ class ScheduleElement extends APIElement {
         const d = Number(e.currentTarget.dataset.d);
 
         const form = document.createElement('ssd-slot-form');
-
+        form.addEventListener("form-success", ()=>{
+          this.load();
+        })
         form.setAttribute('asPopup', '');
-        form.setAttribute('redirectURL', '/');
+        form.setAttribute('redirectURL', 'close');
 
 
         const data = {
