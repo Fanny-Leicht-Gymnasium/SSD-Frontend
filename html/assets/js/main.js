@@ -1,17 +1,11 @@
-import { getUserMe } from "./api/api.generated.js";
 
 document.addEventListener('click', (e) => {
-    const header = e.target.closest('[collapsable] > .header');
+  const header = e.target.closest('[collapsable] > .header');
 
-    if (!header) return;
+  if (!header) return;
 
-    const container = header.closest('[collapsable]');
-    if (!container) return;
+  const container = header.closest('[collapsable]');
+  if (!container) return;
 
-    container.toggleAttribute('open');
+  container.toggleAttribute('open');
 });
-      (async () => {
-        const me = await getUserMe();
-        localStorage.setItem("me", JSON.stringify(me));
-        console.log("----------------------------------------------------------------------------------------------------------------- Updeded ME")
-      })();

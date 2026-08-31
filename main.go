@@ -1,16 +1,58 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 )
+const htmlRoot = "./html"
 
 func main() {
-	fs := http.FileServer(http.Dir("./html"))
+	fs := http.FileServer(http.Dir(htmlRoot))
 
+	http.HandleFunc("/__cache-manifest", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		var files []string
+
+		err := filepath.Walk(htmlRoot, func(path string, info os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+
+			if info.IsDir() {
+				return nil
+			}
+
+			relativePath, err := filepath.Rel(htmlRoot, path)
+			if err != nil {
+				return err
+			}
+
+			// Convert Windows paths to URL paths.
+			urlPath := "/" + filepath.ToSlash(relativePath)
+
+			files = append(files, urlPath)
+
+			return nil
+		})
+
+		if err != nil {
+			http.Error(w, "Failed to build cache manifest", http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(files)
+	})
+	
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
 
@@ -50,6 +92,12 @@ func main() {
 
 			defer f.Close()
 			http.ServeContent(w, r, path, time.Time{}, f)
+			return
+		}
+
+		if strings.HasSuffix(path, "/manifest.webmanifest") {
+			w.Header().Set("Content-Type", "application/manifest+json")
+			http.ServeFile(w, r, "./html/manifest.webmanifest")
 			return
 		}
 
