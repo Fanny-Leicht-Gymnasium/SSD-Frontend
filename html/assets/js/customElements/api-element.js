@@ -188,7 +188,7 @@ export class APIElement extends SSDElement {
 
     } catch (err) {
       console.log('err:', err);
-      el.innerHTML = this.renderError(err,alert=false,toErrorArea=false);
+      el.innerHTML = this.renderError(err,false,false);
       el.classList.remove('loading');
 
     }
