@@ -210,6 +210,8 @@ class SlotElementWrapped extends APIElement {
         });
         form.setAttribute('slot-id', id);
         form.setAttribute('year', this.getAttribute('year'));
+        form.setAttribute('week', this.getAttribute('week'));
+
         form.setAttribute('slot-name', this.slotName);
         document.body.appendChild(form);
 
