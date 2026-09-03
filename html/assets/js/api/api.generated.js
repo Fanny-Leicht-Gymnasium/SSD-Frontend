@@ -133,6 +133,97 @@ export async function getUserMeAlerts() {
 }
 
 
+export async function getUserMeSetting() {
+  const pathParams = {};
+  const queryParams = {};
+
+  const queryString = buildQueryString(queryParams);
+
+  const url = (p) => {
+    const base = `/user/me/setting/`;
+    return queryString ? `${base}?${queryString}` : base;
+  };
+
+  return apiFetch(
+    url,
+    {
+      method: 'GET',
+    },
+    pathParams
+  );
+}
+
+
+export async function getUserMeSettingSetting(setting) {
+  const pathParams = {
+    setting,
+  };
+  const queryParams = {};
+
+  const queryString = buildQueryString(queryParams);
+
+  const url = (p) => {
+    const base = `/user/me/setting/${p.setting}`;
+    return queryString ? `${base}?${queryString}` : base;
+  };
+
+  return apiFetch(
+    url,
+    {
+      method: 'GET',
+    },
+    pathParams
+  );
+}
+
+
+export async function postUserMeSettingSetting(setting, body) {
+  const pathParams = {
+    setting,
+  };
+  const queryParams = {};
+
+  const queryString = buildQueryString(queryParams);
+
+  const url = (p) => {
+    const base = `/user/me/setting/${p.setting}`;
+    return queryString ? `${base}?${queryString}` : base;
+  };
+
+  return apiFetch(
+    url,
+    {
+      method: 'POST',
+      body,
+    },
+    pathParams
+  );
+}
+
+
+export async function deleteUserMeSettingSetting(setting) {
+  const pathParams = {
+    setting,
+  };
+  const queryParams = {};
+
+  const queryString = buildQueryString(queryParams);
+
+  const url = (p) => {
+    const base = `/user/me/setting/${p.setting}`;
+    return queryString ? `${base}?${queryString}` : base;
+  };
+
+  return apiFetch(
+    url,
+    {
+      method: 'DELETE',
+    },
+    pathParams
+  );
+}
+
+
 export async function postUser(body) {
   const pathParams = {};
   const queryParams = {};
@@ -263,6 +354,102 @@ export async function getUserUseridTestcall(userID) {
     url,
     {
       method: 'GET',
+    },
+    pathParams
+  );
+}
+
+
+export async function getUserUseridSetting(userID) {
+  const pathParams = {
+    userID,
+  };
+  const queryParams = {};
+
+  const queryString = buildQueryString(queryParams);
+
+  const url = (p) => {
+    const base = `/user/${p.userID}/setting/`;
+    return queryString ? `${base}?${queryString}` : base;
+  };
+
+  return apiFetch(
+    url,
+    {
+      method: 'GET',
+    },
+    pathParams
+  );
+}
+
+
+export async function getUserUseridSettingSetting(userID, setting) {
+  const pathParams = {
+    userID,
+    setting,
+  };
+  const queryParams = {};
+
+  const queryString = buildQueryString(queryParams);
+
+  const url = (p) => {
+    const base = `/user/${p.userID}/setting/${p.setting}`;
+    return queryString ? `${base}?${queryString}` : base;
+  };
+
+  return apiFetch(
+    url,
+    {
+      method: 'GET',
+    },
+    pathParams
+  );
+}
+
+
+export async function postUserUseridSettingSetting(userID, setting, body) {
+  const pathParams = {
+    userID,
+    setting,
+  };
+  const queryParams = {};
+
+  const queryString = buildQueryString(queryParams);
+
+  const url = (p) => {
+    const base = `/user/${p.userID}/setting/${p.setting}`;
+    return queryString ? `${base}?${queryString}` : base;
+  };
+
+  return apiFetch(
+    url,
+    {
+      method: 'POST',
+      body,
+    },
+    pathParams
+  );
+}
+
+
+export async function deleteUserUseridSettingSetting(userID, setting) {
+  const pathParams = {
+    userID,
+    setting,
+  };
+  const queryParams = {};
+
+  const queryString = buildQueryString(queryParams);
+
+  const url = (p) => {
+    const base = `/user/${p.userID}/setting/${p.setting}`;
+    return queryString ? `${base}?${queryString}` : base;
+  };
+
+  return apiFetch(
+    url,
+    {
+      method: 'DELETE',
     },
     pathParams
   );

@@ -65,10 +65,8 @@ class ExcuseViewer extends APIElement {
             <span>
               <b><x-translation>excuse.start</x-translation></b>
               <time-display
-                show-time="never"
-                show-date="always"
               >
-                ${escapeHtml(excuse.startdate || 'N/A')}
+                ${escapeHtml(excuse.starttimestamp || 'N/A')}
               </time-display>
             </span>
           </div>
@@ -77,11 +75,8 @@ class ExcuseViewer extends APIElement {
             <ssd-icon name="date-time"></ssd-icon>
             <span>
               <b><x-translation>excuse.end</x-translation></b>
-              <time-display
-                show-time="never"
-                show-date="always"
-              >
-                ${escapeHtml(excuse.enddate || 'N/A')}
+              <time-display              >
+                ${escapeHtml(excuse.endtimestamp || 'N/A')}
               </time-display>
             </span>
           </div>

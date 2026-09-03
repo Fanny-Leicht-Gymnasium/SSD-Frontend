@@ -20,7 +20,7 @@ class SSDExcuseForm extends FormAPIElement {
             <div class="field" input-label="Start date">
                 <input
                     type="datetime-local"
-                    id="startdate"
+                    id="starttimestamp"
                     required
                 >
             </div>
@@ -28,7 +28,7 @@ class SSDExcuseForm extends FormAPIElement {
             <div class="field" input-label="End date">
                 <input
                     type="datetime-local"
-                    id="enddate"
+                    id="endtimestamp"
                     required
                 >
             </div>
@@ -51,13 +51,13 @@ class SSDExcuseForm extends FormAPIElement {
     // -------------------------
     async handleSend(data) {
         try {
-            const startdate = this.form.querySelector('#startdate')?.value;
-            const enddate = this.form.querySelector('#enddate')?.value;
+            const starttimestamp = this.form.querySelector('#starttimestamp')?.value;
+            const endtimestamp = this.form.querySelector('#endtimestamp')?.value;
             const reason = this.form.querySelector('#reason')?.value;
 
             const payload = {
-                startdate: this.toISOString(startdate),
-                enddate: this.toISOString(enddate),
+                starttimestamp: this.toISOString(starttimestamp),
+                endtimestamp: this.toISOString(endtimestamp),
                 reason
             };
 
