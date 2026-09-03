@@ -232,7 +232,8 @@ render(application) {
 
             <time-display
               show-countdown="false"
-              show-date="always">
+              show-date="always"
+              show-time="never">
               ${escapeHtml(String(startDate))}
             </time-display>
           </div>
@@ -247,7 +248,8 @@ render(application) {
 
             <time-display
               show-countdown="false"
-              show-date="always">
+              show-date="always"
+              show-time="never">
               ${escapeHtml(String(endDate))}
             </time-display>
           </div>

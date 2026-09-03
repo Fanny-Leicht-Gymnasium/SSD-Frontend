@@ -47,9 +47,7 @@ class ExcuseViewer extends APIElement {
         <div class="excuse-body content">
 
           <div class="excuse-row">
-            <ssd-icon name="user"></ssd-icon>
             <span>
-              <b><x-translation>excuse.user</x-translation></b>
               <ssd-intra-user id="${escapeHtml(excuse.userid ?? 'N/A')}">${escapeHtml(excuse.userid ?? 'N/A')}<ssd-intra-user>
             </span>
           </div>
@@ -57,7 +55,7 @@ class ExcuseViewer extends APIElement {
           <div class="excuse-row">
             <ssd-icon name="paperclip"></ssd-icon>
             <span>
-              <b><x-translation>Reason</x-translation></b>
+              <b><x-translation>excuse.reason</x-translation></b>
               ${escapeHtml(excuse.reason || 'No reason provided')}
             </span>
           </div>
@@ -67,8 +65,8 @@ class ExcuseViewer extends APIElement {
             <span>
               <b><x-translation>excuse.start</x-translation></b>
               <time-display
-                show-countdown
-                show-date="nottoday"
+                show-time="never"
+                show-date="always"
               >
                 ${escapeHtml(excuse.startdate || 'N/A')}
               </time-display>
@@ -80,8 +78,8 @@ class ExcuseViewer extends APIElement {
             <span>
               <b><x-translation>excuse.end</x-translation></b>
               <time-display
-                show-countdown
-                show-date="nottoday"
+                show-time="never"
+                show-date="always"
               >
                 ${escapeHtml(excuse.enddate || 'N/A')}
               </time-display>
@@ -91,7 +89,7 @@ class ExcuseViewer extends APIElement {
           <div class="excuse-row">
             <ssd-icon name="status/${escapeHtml(excuse.status || 'pending')}"></ssd-icon>
             <span>
-              <b><x-translation>Status</x-translation></b>
+              <b><x-translation>excuse.status</x-translation></b>
               ${escapeHtml(excuse.status || 'pending')}
             </span>
           </div>
