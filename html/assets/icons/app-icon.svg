@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="SSD app icon">
+  <rect width="512" height="512" rx="96" fill="#0f172a"/>
+  <path d="M144 138h224c18 0 32 14 32 32v172c0 18-14 32-32 32H144c-18 0-32-14-32-32V170c0-18 14-32 32-32z" fill="#f8fafc"/>
+  <path d="M172 210h168v28H172zm0 56h112v28H172z" fill="#2563eb"/>
+  <circle cx="372" cy="220" r="28" fill="#38bdf8"/>
+</svg>

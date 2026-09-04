@@ -75,20 +75,23 @@ export class SSDNavigation extends SSDElement {
             this.buttons[pageId].classList.add('active');
         }
     }
-_initTransitionOverlay() {
-    this._overlay = document.createElement('div');
-    this._overlay.className = 'page-transition-overlay';
-    document.body.appendChild(this._overlay);
-}
+    _initTransitionOverlay() {
+        this._overlay = document.createElement('div');
+        this._overlay.className = 'page-transition-overlay';
+        document.body.appendChild(this._overlay);
+    }
     async _navigate(page) {
         // start animation
         this._overlay.classList.add('active');
 
-        // small delay for smooth fade
-        await new Promise(r => setTimeout(r, 250));
+        if(!document.startViewTransition) {
+            window.location.href = page.url;
+            return;
+        }
 
-        // redirect
-        window.location.href = page.url;
+        document.startViewTransition(() => {
+            window.location.href = page.url;
+        });
     }
 }
 customElements.define('ssd-nav', SSDNavigation);

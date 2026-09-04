@@ -19,8 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set image + branch
+      - name: Set build variables
         id: vars
+        shell: bash
         run: |
           OWNER_REPO="${GITHUB_REPOSITORY,,}"
           OWNER="${OWNER_REPO%%/*}"
@@ -30,23 +31,47 @@ jobs:
 
           if [[ "${GITHUB_REF}" == refs/heads/* ]]; then
             BRANCH="${GITHUB_REF#refs/heads/}"
-          else
+            BUILD_VERSION="${BRANCH}"
+            VERSION_FILE="${GITHUB_SHA}"
+          elif [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/}"
             BRANCH="release"
+            BUILD_VERSION="release"
+            VERSION_FILE="${VERSION}"
+          else
+            BRANCH="unknown"
+            BUILD_VERSION="unknown"
+            VERSION_FILE="${GITHUB_SHA}"
           fi
 
           BRANCH="${BRANCH,,}"
           BRANCH="${BRANCH//\//-}"
 
-          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
-          echo "BRANCH=$BRANCH" >> $GITHUB_ENV
+          echo "IMAGE=${IMAGE}" >> "$GITHUB_ENV"
+          echo "BRANCH=${BRANCH}" >> "$GITHUB_ENV"
+          echo "BUILD_VERSION=${BUILD_VERSION}" >> "$GITHUB_ENV"
+          echo "VERSION_FILE=${VERSION_FILE}" >> "$GITHUB_ENV"
 
-          echo "image=${IMAGE}:${BRANCH}" >> $GITHUB_OUTPUT
-          echo "docker_repository=${IMAGE}" >> $GITHUB_OUTPUT
-          echo "branch=${BRANCH}" >> $GITHUB_OUTPUT
+          echo "image=${IMAGE}:${BRANCH}" >> "$GITHUB_OUTPUT"
+          echo "docker_repository=${IMAGE}" >> "$GITHUB_OUTPUT"
+          echo "branch=${BRANCH}" >> "$GITHUB_OUTPUT"
+          echo "build_version=${BUILD_VERSION}" >> "$GITHUB_OUTPUT"
+
+          echo "Image:         ${IMAGE}:${BRANCH}"
+          echo "Build version: ${BUILD_VERSION}"
+          echo "Version file:  ${VERSION_FILE}"
+
+      - name: Create version file
+        run: |
+          mkdir -p html
+          printf '%s\n' "${VERSION_FILE}" > html/.version
 
       - name: Build image (no push)
         run: |
-          docker build -t ${{ steps.vars.outputs.image }} .
+          docker build \
+            --build-arg BUILD_VERSION="${BUILD_VERSION}" \
+            -t "${{ steps.vars.outputs.image }}" \
+            .
 
       - name: Save docker image
         run: |
@@ -134,10 +159,8 @@ jobs:
           BRANCH=${{ needs.build.outputs.branch }}
 
           docker tag ${IMAGE}:${BRANCH} ${IMAGE}:${BRANCH}
-          docker tag ${IMAGE}:${BRANCH} ${IMAGE}:${BRANCH}-stable
 
           docker push ${IMAGE}:${BRANCH}
-          docker push ${IMAGE}:${BRANCH}-stable
 
   full-release:
     runs-on: ubuntu-latest

@@ -1,4 +1,4 @@
-import { getUserMe } from "./api/api.generated.js"
+import { getUserMe, getUserMeSetting, getUserMeSettingSetting } from "./api/api.generated.js"
 
 // Escape HTML (XSS protection)
 export function escapeHtml(str) {
