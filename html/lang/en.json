@@ -110,6 +110,9 @@
     "setting":{
         "Theme":"Theme",
         "language":"Language",
-        "error":"Error"
+        "error":"Error",
+        "edit":{
+            "user": "Edit User"
+        }
     }
 }

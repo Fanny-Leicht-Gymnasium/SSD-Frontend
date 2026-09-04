@@ -19,24 +19,27 @@
     <main>
       <h1>SSD Settings</h1>
 
-  <ssd-setting
-    storagekey="html-frontend-theme"
-    trans-name="setting.Theme"
-    name="Theme"
-    type="select"
-    options="System Default;Light;Dark"
-    saveButton
-    refreshButton
-  >System Default</ssd-setting>
-    <ssd-setting
-    trans-name="setting.language"
-    storagekey="html-lang"
-    name="Sprache"
-    type="select"
-    options="en;de"
-    saveButton
-    refreshButton
-  >System Default</ssd-setting>
+      <ssd-user-edit></ssd-user-edit>
+      <br>
+      <ssd-setting
+        storagekey="html-frontend-theme"
+        trans-name="setting.Theme"
+        name="Theme"
+        type="select"
+        options="System Default;Light;Dark"
+        saveButton
+        refreshButton
+      >System Default</ssd-setting>
+      
+        <ssd-setting
+        trans-name="setting.language"
+        storagekey="html-lang"
+        name="Sprache"
+        type="select"
+        options="en;de"
+        saveButton
+        refreshButton
+      >de</ssd-setting>
   </main>
 
     <ssd-nav class="bottom"></ssd-nav>
@@ -73,6 +76,7 @@
 
     <script type="module" src="/assets/js/customElements/api-elements/ssd-user.js"></script>
     <script type="module" src="/assets/js/customElements/api-elements/forms/ssd-login.js"></script>
+    <script type="module" src="/assets/js/customElements/api-elements/forms/ssd-user-edit.js"></script>
     <script type="module" src="/assets/js/customElements/api-elements/forms/ssd-slot-form.js"></script>
   </body>
 </html>

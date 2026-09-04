@@ -110,6 +110,9 @@
     "setting":{
         "Theme":"Theme",
         "language":"Sprache",
-        "error":"Fehler"
+        "error":"Fehler",
+        "edit":{
+            "user": "Benutzer Bearbeiten"
+        }
     }
 }
