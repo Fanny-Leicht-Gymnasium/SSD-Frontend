@@ -9,7 +9,8 @@ class SSDSetting extends FormAPIElement {
       ...(super.observedAttributes || []),
       'name',
       'storagekey',
-      'x-translation',
+      'trans-name',
+      'trans-placeholder',
       'refreshButton',
       'saveButton',
 
@@ -114,7 +115,8 @@ class SSDSetting extends FormAPIElement {
     const storagekey = this.getAttribute('storagekey') || '';
     const name = this.getAttribute('name') || storagekey;
     const placeholder = this.getAttribute('placeholder') || name;
-    const x_translation = this.getAttribute('x-translation') || '';
+    const transName = this.getAttribute('trans-name') || '';
+    const transPlaceholder = this.getAttribute('trans-placeholder') || '';
     const type = this.getAttribute('type') || 'text';
     const hidden = this.getAttribute('hidden') || '';
 
@@ -165,6 +167,8 @@ class SSDSetting extends FormAPIElement {
         <div
           class="field"
           input-label="${escapeHtml(name)}"
+          ${transName ? `trans-lable="${escapeHtml(transName)}"` : ''}
+          ${transPlaceholder ? `trans-placeholder="${escapeHtml(transPlaceholder)}"` : ''}
           ${hidden ? 'hidden' : ''}
         >
           <input
@@ -185,6 +189,8 @@ class SSDSetting extends FormAPIElement {
         <div
           class="field"
           input-label="${escapeHtml(name)}"
+          ${transName ? `trans-lable="${escapeHtml(transName)}"` : ''}
+          ${transPlaceholder ? `trans-placeholder="${escapeHtml(transPlaceholder)}"` : ''}
           ${hidden ? 'hidden' : ''}
         >
           <textarea
@@ -217,6 +223,8 @@ class SSDSetting extends FormAPIElement {
     <div
       class="field"
       input-label="${escapeHtml(name)}"
+      ${transName ? `trans-lable="${escapeHtml(transName)}"` : ''}
+      ${transPlaceholder ? `trans-placeholder="${escapeHtml(transPlaceholder)}"` : ''}
       ${hidden ? 'hidden' : ''}
     >
       <select
@@ -263,7 +271,7 @@ class SSDSetting extends FormAPIElement {
     try {
       const storagekey = this.getAttribute('storagekey') || '';
       const name = this.getAttribute('name') || storagekey;
-
+      console.log(data[storagekey])
       const result = await postUserMeSettingSetting(storagekey, data[storagekey]);
 
       setStoredSetting(storagekey, data[storagekey]);

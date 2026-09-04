@@ -1,4 +1,5 @@
 import { APIElement } from './api-element.js';
+import { translate, translateEl } from './general/translation.js';
 export class FormAPIElement extends APIElement {
 
   static get observedAttributes() {
@@ -32,7 +33,13 @@ export class FormAPIElement extends APIElement {
     }
     this.renderForm()
     this.postRender()
+    this.updateLang()
     this.addStylesheet('/assets/css/forms.css');
+    this._languageChangedHandler = () => this.updateLang();
+    document.addEventListener(
+      "language-changed",
+      this._languageChangedHandler
+    );
   }
   set defaultSubmittext(text) {
     this._defaultSubmittext = text;
@@ -53,6 +60,20 @@ export class FormAPIElement extends APIElement {
     return this._defaultSubmitOnInput;
   }
 
+  updateLang(){
+    this.container.querySelectorAll("div.field").forEach(el =>{
+      const transLable = el.getAttribute("trans-lable")
+      const transPlaceholder = el.getAttribute("trans-placeholder")
+      console.log(translateEl(transLable, el))
+      if (transLable){
+        el.setAttribute("input-label", translateEl(transLable, el))
+      }
+      if (transPlaceholder){
+        el.querySelector("input, textarea, select").setAttribute("placeholder", translateEl(transPlaceholder, el))
+      }
+    })
+  }
+  
   //TODO: implement that this function is called on input change if submitoninput is set
   async onInputHandleSubmit(e) {
     if (this.hasSubmitOnInput && this.SubmitOnInput === "false") {
@@ -192,37 +213,37 @@ export class FormAPIElement extends APIElement {
   // INPUT LAYER (clean priority chain)
   // =========================
   /** updates the form values */
-render(data) {
+  render(data) {
     if (!data) return;
 
     this.form.querySelectorAll('input, textarea, select').forEach(el => {
-        const name = el.id;
+      const name = el.id;
 
-        if (data[name] === undefined || data[name] === null) return;
+      if (data[name] === undefined || data[name] === null) return;
 
-        let value = data[name];
+      let value = data[name];
 
-        // Handle time inputs (HH:mm)
-        if (el.type === 'time') {
-            const date = new Date(value);
+      // Handle time inputs (HH:mm)
+      if (el.type === 'time') {
+        const date = new Date(value);
 
-            if (!isNaN(date.getTime())) {
-                const hours = String(date.getHours()).padStart(2, '0');
-                const minutes = String(date.getMinutes()).padStart(2, '0');
+        if (!isNaN(date.getTime())) {
+          const hours = String(date.getHours()).padStart(2, '0');
+          const minutes = String(date.getMinutes()).padStart(2, '0');
 
-                value = `${hours}:${minutes}`;
-            }
+          value = `${hours}:${minutes}`;
         }
+      }
 
-        // Handle checkbox
-        if (el.type === 'checkbox') {
-            el.checked = !!value;
-            return;
-        }
+      // Handle checkbox
+      if (el.type === 'checkbox') {
+        el.checked = !!value;
+        return;
+      }
 
-        el.value = value;
+      el.value = value;
     });
-}
+  }
   getInput() {
     // 1. attribute JSON override
     const json = this.getAttribute('data');
@@ -294,6 +315,7 @@ render(data) {
         return
       }
       this.render(data);
+      this.updateLang()
       this.postRender();
       el.classList.remove('loading');
 

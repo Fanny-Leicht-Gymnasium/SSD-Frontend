@@ -1,6 +1,6 @@
 import { getUserMe } from "../api/api.generated.js";
 import { setLanguage } from "../customElements/general/translation.js";
-import { getStoredSetting, getStoredSettings, updateSettingsToDOM } from "../util.js";
+import { fetchSettings, getStoredSetting, getStoredSettings, updateSettingsToDOM } from "../util.js";
 
 const BUILD_VERSION_URL = "/__build-version";
 const INSTALLED_VERSION_KEY = "installed-build-version";

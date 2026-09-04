@@ -87,7 +87,15 @@ export function setStoredSetting(settingKey, value) {
     json[settingKey] = value;
     localStorage.setItem("settings", JSON.stringify(json));
     updateSettingsToDOM(json);
-
+    window.dispatchEvent(
+      new CustomEvent('setting-changed', {
+        detail: {
+          key: settingKey,
+          value: value,
+          settings: json
+        }
+      })
+    );
   } catch (error) {
     console.error('Failed to store settings:', error);
     return null;

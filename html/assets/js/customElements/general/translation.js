@@ -35,7 +35,7 @@ const translationsCache = new Map();
 const translationsLoading = new Map();
 
 // Global default language
-let globalLanguage = getStoredSetting('html-lang')||"en";
+let globalLanguage = getStoredSetting('html-lang') || "en";
 
 // Load language file with caching
 async function loadLanguage(lang) {
@@ -86,8 +86,14 @@ class BaseTranslationElement extends HTMLElement {
     this._key = this.textContent.trim();
     this._originalKey = this._key;
     this._usedPlaceholders = new Set();
+    this._languageChangedHandler = () => this.update();
+    document.addEventListener(
+      "language-changed",
+      this._languageChangedHandler
+    );
+
   }
- static get observedAttributes() {
+  static get observedAttributes() {
     // Observe all attributes
     return [];
   }
@@ -131,7 +137,47 @@ class BaseTranslationElement extends HTMLElement {
       this.textContent = `[error]`;
     }
   }
-  
+
+}
+
+export function translate(key, attr = {}, el) {
+  const lang = attr.lang || globalLanguage;
+  const translations = translationsCache.get(lang);
+
+  if (!translations) {
+    return `[${key}]`;
+  }
+
+  let value = getNested(translations, key);
+
+  if (value == null) {
+    return `[${key}]`;
+  }
+
+  return value.replace(/\{([^}]+)\}/g, (_, placeholder) => {
+    if (typeof attr === "object" && attr[placeholder] != null) {
+      return attr[placeholder];
+    }
+
+    return `{${placeholder}}`;
+  });
+}
+
+export function translateEl(key, el) {
+  const lang = el.getAttribute("lang") || globalLanguage;
+  const translations = translationsCache.get(lang);
+
+  if (!translations) {
+    return buildFallback(key, el);
+  }
+
+  let value = getNested(translations, key);
+
+  if (value == null) {
+    value = buildFallback(key, el);
+  }
+
+  return replacePlaceholders(value, el);
 }
 function replacePlaceholders(text, element) {
   return text.replace(/\{([^}]+)\}/g, (_, key) => {
@@ -158,6 +204,11 @@ export async function setLanguage(lang) {
   document
     .querySelectorAll('x-translation, x-trans')
     .forEach(element => element.update());
+  document.dispatchEvent(
+    new CustomEvent("language-changed", {
+      detail: { lang }
+    })
+  );
 }
 
 // Clear cache if needed
@@ -171,10 +222,16 @@ export function clearTranslationCache(lang = null) {
   translationsCache.clear();
   translationsLoading.clear();
 }
+window.addEventListener('setting-changed', (event) => {
+  const { key, value, settings } = event.detail;
+  if (key == "html-lang") {
+    setLanguage(value)
+  }
+});
 
 // Two separate elements
-class XTranslation extends BaseTranslationElement {}
-class XTrans extends BaseTranslationElement {}
+class XTranslation extends BaseTranslationElement { }
+class XTrans extends BaseTranslationElement { }
 
 customElements.define('x-translation', XTranslation);
 customElements.define('x-trans', XTrans);
