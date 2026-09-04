@@ -80,7 +80,7 @@ func main() {
 			// Example:
 
 			w.Write([]byte(BuildVersion))
-			fmt.Fprintf(w, "-%x", version)
+			fmt.Fprintf(w, "-%s", version)
 			return
 		} else {
 
