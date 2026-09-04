@@ -47,6 +47,357 @@ function buildQueryString(queryParams) {
 }
 
 
+// ---- Request/response body type definitions ----
+
+/**
+ * @typedef {Object} PostLoginBody
+ * @property {string} [username]
+ * @property {string} [password]
+ */
+/**
+ * @typedef {Object} PostUserBody
+ * @property {User} user
+ * @property {string} password
+ */
+/**
+ * @typedef {Object} User
+ * @property {number} userid
+ * @property {string} username
+ * @property {string} [email]
+ * @property {UserRole} role
+ * @property {string} [phonenumber]
+ * @property {string} [class]
+ * @property {string} [name]
+ */
+/**
+ * @typedef {Object} UserRole
+ */
+/**
+ * @typedef {Object} PutUserUseridBody
+ * @property {string} [username]
+ * @property {string} [email]
+ * @property {UserRole} [role]
+ * @property {string} [phonenumber]
+ * @property {string} [class]
+ * @property {string} [name]
+ */
+/**
+ * @typedef {Object} PutScheduleYearWeekSlotSlotidInfoBody
+ * @property {string} [info]
+ */
+/**
+ * @typedef {Object} PostScheduleYearWeekSlotSlotidReplacementApplyBody
+ * @property {string} [reason]
+ */
+/**
+ * @typedef {Object} PostScheduleYearWeekSlotSlotidReplacementRedrawBody
+ * @property {string} [reason]
+ */
+/**
+ * @typedef {Object} PostScheduleYearWeekSlotSlotidApplyBody
+ * @property {string} [reason]
+ * @property {ApplicationType} [type]
+ */
+/**
+ * @typedef {Object} ApplicationType
+ */
+/**
+ * @typedef {Object} PostScheduleYearWeekSlotSlotidLeaveBody
+ * @property {string} [reason]
+ */
+/**
+ * @typedef {Object} PostApplicationIdActionBody
+ * @property {string} [reason]
+ */
+/**
+ * @typedef {Object} PostScheduleSlotBody
+ * @property {number} weekday
+ * @property {number} after - index where to insert (-1 for start)
+ * @property {string} starttime
+ * @property {string} endtime
+ * @property {boolean} required
+ * @property {string} slotName
+ */
+/**
+ * @typedef {Object} Slot
+ * @property {number} [slotId]
+ * @property {number} [slotPosition]
+ * @property {string} [starttime]
+ * @property {string} [endtime]
+ * @property {number} [weekday] - 0-7 (Mo-So)
+ * @property {boolean} [required]
+ * @property {string} [slotName]
+ */
+/**
+ * @typedef {Object} PostExcuseBody
+ * @property {string} [starttimestamp]
+ * @property {string} [endtimestamp]
+ * @property {string} [reason]
+ */
+/**
+ * @typedef {Object} PostMissionSubscribeBody
+ * @property {string} [userid]
+ */
+/**
+ * @typedef {Object} PostMissionStartBody
+ * @property {string} [Injury]
+ * @property {string} [location]
+ * @property {string} [Author]
+ * @property {string} [additionalInformation]
+ */
+
+
+// ---- Request body scaffolds (call to get an editable object) ----
+
+/**
+ * Generates request body: {@link PostLoginBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {string} [params.username]
+ * @param {string} [params.password]
+ * @returns {PostLoginBody}
+ */
+export function createPostLoginBodyTemplate({
+  username = "", // optional (string)
+  password = "", // optional (string)
+} = {}) {
+  return { username: (username == null ? username : String(username)), password: (password == null ? password : String(password)) };
+}
+/**
+ * Generates request body: {@link string}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @returns {string}
+ */
+export function createStringTemplate(params = {}) {
+  return {};
+}
+/**
+ * Generates request body: {@link PostUserBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {User} params.user
+ * @param {string} params.password
+ * @returns {PostUserBody}
+ */
+export function createPostUserBodyTemplate({
+  user, // required (User)
+  password, // required (string)
+} = {}) {
+  return { user, password: (password == null ? password : String(password)) };
+}
+/**
+ * Generates request body: {@link PutUserUseridBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {string} [params.username]
+ * @param {string} [params.email]
+ * @param {UserRole} [params.role]
+ * @param {string} [params.phonenumber]
+ * @param {string} [params.class]
+ * @param {string} [params.name]
+ * @returns {PutUserUseridBody}
+ */
+export function createPutUserUseridBodyTemplate({
+  username = "", // optional (string)
+  email = "", // optional (string, email)
+  role = "user", // optional (UserRole)
+  phonenumber = "", // optional (string)
+  class: class_ = "", // optional (string)
+  name = "", // optional (string)
+} = {}) {
+  return { username: (username == null ? username : String(username)), email: (email == null ? email : String(email)), role, phonenumber: (phonenumber == null ? phonenumber : String(phonenumber)), class: (class_ == null ? class_ : String(class_)), name: (name == null ? name : String(name)) };
+}
+/**
+ * Generates request body: {@link PutScheduleYearWeekSlotSlotidInfoBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {string} [params.info]
+ * @returns {PutScheduleYearWeekSlotSlotidInfoBody}
+ */
+export function createPutScheduleYearWeekSlotSlotidInfoBodyTemplate({
+  info = "", // optional (string)
+} = {}) {
+  return { info: (info == null ? info : String(info)) };
+}
+/**
+ * Generates request body: {@link PostScheduleYearWeekSlotSlotidReplacementApplyBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {string} [params.reason]
+ * @returns {PostScheduleYearWeekSlotSlotidReplacementApplyBody}
+ */
+export function createPostScheduleYearWeekSlotSlotidReplacementApplyBodyTemplate({
+  reason = "", // optional (string)
+} = {}) {
+  return { reason: (reason == null ? reason : String(reason)) };
+}
+/**
+ * Generates request body: {@link PostScheduleYearWeekSlotSlotidReplacementRedrawBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {string} [params.reason]
+ * @returns {PostScheduleYearWeekSlotSlotidReplacementRedrawBody}
+ */
+export function createPostScheduleYearWeekSlotSlotidReplacementRedrawBodyTemplate({
+  reason = "", // optional (string)
+} = {}) {
+  return { reason: (reason == null ? reason : String(reason)) };
+}
+/**
+ * Generates request body: {@link PostScheduleYearWeekSlotSlotidApplyBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {string} [params.reason]
+ * @param {ApplicationType} [params.type]
+ * @returns {PostScheduleYearWeekSlotSlotidApplyBody}
+ */
+export function createPostScheduleYearWeekSlotSlotidApplyBodyTemplate({
+  reason = "", // optional (string)
+  type = "base", // optional (ApplicationType)
+} = {}) {
+  return { reason: (reason == null ? reason : String(reason)), type };
+}
+/**
+ * Generates request body: {@link PostScheduleYearWeekSlotSlotidLeaveBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {string} [params.reason]
+ * @returns {PostScheduleYearWeekSlotSlotidLeaveBody}
+ */
+export function createPostScheduleYearWeekSlotSlotidLeaveBodyTemplate({
+  reason = "", // optional (string)
+} = {}) {
+  return { reason: (reason == null ? reason : String(reason)) };
+}
+/**
+ * Generates request body: {@link PostApplicationIdActionBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {string} [params.reason]
+ * @returns {PostApplicationIdActionBody}
+ */
+export function createPostApplicationIdActionBodyTemplate({
+  reason = "", // optional (string)
+} = {}) {
+  return { reason: (reason == null ? reason : String(reason)) };
+}
+/**
+ * Generates request body: {@link PostScheduleSlotBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {number} params.weekday
+ * @param {number} params.after
+ * @param {string} params.starttime
+ * @param {string} params.endtime
+ * @param {boolean} params.required
+ * @param {string} params.slotName
+ * @returns {PostScheduleSlotBody}
+ */
+export function createPostScheduleSlotBodyTemplate({
+  weekday, // required (integer)
+  after, // required (integer)
+  starttime, // required (string, date-time)
+  endtime, // required (string, date-time)
+  required, // required (boolean)
+  slotName, // required (string)
+} = {}) {
+  return { weekday: (weekday == null ? weekday : Number(weekday)), after: (after == null ? after : Number(after)), starttime: (starttime == null ? starttime : String(starttime)), endtime: (endtime == null ? endtime : String(endtime)), required: (required == null ? required : Boolean(required)), slotName: (slotName == null ? slotName : String(slotName)) };
+}
+/**
+ * Generates request body: {@link Slot}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {number} [params.slotId]
+ * @param {number} [params.slotPosition]
+ * @param {string} [params.starttime]
+ * @param {string} [params.endtime]
+ * @param {number} [params.weekday]
+ * @param {boolean} [params.required]
+ * @param {string} [params.slotName]
+ * @returns {Slot}
+ */
+export function createSlotTemplate({
+  slotId = 0, // optional (integer)
+  slotPosition = 0, // optional (integer)
+  starttime = "", // optional (string, date-time)
+  endtime = "", // optional (string, date-time)
+  weekday = 0, // optional (integer)
+  required = false, // optional (boolean)
+  slotName = "", // optional (string)
+} = {}) {
+  return { slotId: (slotId == null ? slotId : Number(slotId)), slotPosition: (slotPosition == null ? slotPosition : Number(slotPosition)), starttime: (starttime == null ? starttime : String(starttime)), endtime: (endtime == null ? endtime : String(endtime)), weekday: (weekday == null ? weekday : Number(weekday)), required: (required == null ? required : Boolean(required)), slotName: (slotName == null ? slotName : String(slotName)) };
+}
+/**
+ * Generates request body: {@link PostExcuseBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {string} [params.starttimestamp]
+ * @param {string} [params.endtimestamp]
+ * @param {string} [params.reason]
+ * @returns {PostExcuseBody}
+ */
+export function createPostExcuseBodyTemplate({
+  starttimestamp = "", // optional (string, date-time)
+  endtimestamp = "", // optional (string, date-time)
+  reason = "", // optional (string)
+} = {}) {
+  return { starttimestamp: (starttimestamp == null ? starttimestamp : String(starttimestamp)), endtimestamp: (endtimestamp == null ? endtimestamp : String(endtimestamp)), reason: (reason == null ? reason : String(reason)) };
+}
+/**
+ * Generates request body: {@link PostMissionSubscribeBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {string} [params.userid]
+ * @returns {PostMissionSubscribeBody}
+ */
+export function createPostMissionSubscribeBodyTemplate({
+  userid = "", // optional (string)
+} = {}) {
+  return { userid: (userid == null ? userid : String(userid)) };
+}
+/**
+ * Generates request body: {@link PostMissionStartBody}. Fields are named,
+ * this coerces each field to its declared schema type
+ * (e.g. a number passed for a string field becomes a string).
+ * @param {Object} params
+ * @param {string} [params.Injury]
+ * @param {string} [params.location]
+ * @param {string} [params.Author]
+ * @param {string} [params.additionalInformation]
+ * @returns {PostMissionStartBody}
+ */
+export function createPostMissionStartBodyTemplate({
+  Injury = "", // optional (string)
+  location = "", // optional (string)
+  Author = "", // optional (string)
+  additionalInformation = "", // optional (string)
+} = {}) {
+  return { Injury: (Injury == null ? Injury : String(Injury)), location: (location == null ? location : String(location)), Author: (Author == null ? Author : String(Author)), additionalInformation: (additionalInformation == null ? additionalInformation : String(additionalInformation)) };
+}
+
+
+// ---- Endpoints ----
+
+/**
+ * POST /login
+ * @param {PostLoginBody} body - see {@link PostLoginBody} for generation: {@link createPostLoginBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postLogin(body) {
   const pathParams = {};
   const queryParams = {};
@@ -69,7 +420,11 @@ export async function postLogin(body) {
 }
 
 
-export async function postLogout(body) {
+/**
+ * POST /logout
+ * @returns {Promise<any>}
+ */
+export async function postLogout() {
   const pathParams = {};
   const queryParams = {};
 
@@ -84,13 +439,16 @@ export async function postLogout(body) {
     url,
     {
       method: 'POST',
-      body,
     },
     pathParams
   );
 }
 
 
+/**
+ * GET /user/me
+ * @returns {Promise<any>}
+ */
 export async function getUserMe() {
   const pathParams = {};
   const queryParams = {};
@@ -112,6 +470,10 @@ export async function getUserMe() {
 }
 
 
+/**
+ * GET /user/me/alerts
+ * @returns {Promise<any>}
+ */
 export async function getUserMeAlerts() {
   const pathParams = {};
   const queryParams = {};
@@ -133,6 +495,10 @@ export async function getUserMeAlerts() {
 }
 
 
+/**
+ * GET /user/me/setting/
+ * @returns {Promise<any>}
+ */
 export async function getUserMeSetting() {
   const pathParams = {};
   const queryParams = {};
@@ -154,6 +520,11 @@ export async function getUserMeSetting() {
 }
 
 
+/**
+ * GET /user/me/setting/{setting}
+ * @param {string} setting
+ * @returns {Promise<any>}
+ */
 export async function getUserMeSettingSetting(setting) {
   const pathParams = {
     setting,
@@ -177,6 +548,12 @@ export async function getUserMeSettingSetting(setting) {
 }
 
 
+/**
+ * POST /user/me/setting/{setting}
+ * @param {string} setting
+ * @param {string} body - see {@link string} for generation: {@link createStringTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postUserMeSettingSetting(setting, body) {
   const pathParams = {
     setting,
@@ -201,6 +578,11 @@ export async function postUserMeSettingSetting(setting, body) {
 }
 
 
+/**
+ * DELETE /user/me/setting/{setting}
+ * @param {string} setting
+ * @returns {Promise<any>}
+ */
 export async function deleteUserMeSettingSetting(setting) {
   const pathParams = {
     setting,
@@ -224,6 +606,11 @@ export async function deleteUserMeSettingSetting(setting) {
 }
 
 
+/**
+ * POST /user
+ * @param {PostUserBody} body - see {@link PostUserBody} for generation: {@link createPostUserBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postUser(body) {
   const pathParams = {};
   const queryParams = {};
@@ -246,6 +633,10 @@ export async function postUser(body) {
 }
 
 
+/**
+ * GET /user/list
+ * @returns {Promise<any>}
+ */
 export async function getUserList() {
   const pathParams = {};
   const queryParams = {};
@@ -267,6 +658,11 @@ export async function getUserList() {
 }
 
 
+/**
+ * GET /user/{userID}
+ * @param {string} userID
+ * @returns {Promise<any>}
+ */
 export async function getUserUserid(userID) {
   const pathParams = {
     userID,
@@ -290,6 +686,12 @@ export async function getUserUserid(userID) {
 }
 
 
+/**
+ * PUT /user/{userID}
+ * @param {string} userID
+ * @param {PutUserUseridBody} body - see {@link PutUserUseridBody} for generation: {@link createPutUserUseridBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function putUserUserid(userID, body) {
   const pathParams = {
     userID,
@@ -314,6 +716,11 @@ export async function putUserUserid(userID, body) {
 }
 
 
+/**
+ * DELETE /user/{userID}
+ * @param {string} userID
+ * @returns {Promise<any>}
+ */
 export async function deleteUserUserid(userID) {
   const pathParams = {
     userID,
@@ -337,6 +744,11 @@ export async function deleteUserUserid(userID) {
 }
 
 
+/**
+ * GET /user/{userID}/testcall
+ * @param {string} userID
+ * @returns {Promise<any>}
+ */
 export async function getUserUseridTestcall(userID) {
   const pathParams = {
     userID,
@@ -360,6 +772,11 @@ export async function getUserUseridTestcall(userID) {
 }
 
 
+/**
+ * GET /user/{userID}/setting/
+ * @param {string} userID
+ * @returns {Promise<any>}
+ */
 export async function getUserUseridSetting(userID) {
   const pathParams = {
     userID,
@@ -383,6 +800,12 @@ export async function getUserUseridSetting(userID) {
 }
 
 
+/**
+ * GET /user/{userID}/setting/{setting}
+ * @param {string} userID
+ * @param {string} setting
+ * @returns {Promise<any>}
+ */
 export async function getUserUseridSettingSetting(userID, setting) {
   const pathParams = {
     userID,
@@ -407,6 +830,13 @@ export async function getUserUseridSettingSetting(userID, setting) {
 }
 
 
+/**
+ * POST /user/{userID}/setting/{setting}
+ * @param {string} userID
+ * @param {string} setting
+ * @param {string} body - see {@link string} for generation: {@link createStringTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postUserUseridSettingSetting(userID, setting, body) {
   const pathParams = {
     userID,
@@ -432,6 +862,12 @@ export async function postUserUseridSettingSetting(userID, setting, body) {
 }
 
 
+/**
+ * DELETE /user/{userID}/setting/{setting}
+ * @param {string} userID
+ * @param {string} setting
+ * @returns {Promise<any>}
+ */
 export async function deleteUserUseridSettingSetting(userID, setting) {
   const pathParams = {
     userID,
@@ -456,6 +892,12 @@ export async function deleteUserUseridSettingSetting(userID, setting) {
 }
 
 
+/**
+ * GET /schedule/{year}/{week}/
+ * @param {string} year
+ * @param {string} week
+ * @returns {Promise<any>}
+ */
 export async function getScheduleYearWeek(year, week) {
   const pathParams = {
     year,
@@ -480,6 +922,13 @@ export async function getScheduleYearWeek(year, week) {
 }
 
 
+/**
+ * GET /schedule/{year}/{week}/slot/{slotID}
+ * @param {string} year
+ * @param {string} week
+ * @param {string} slotID
+ * @returns {Promise<any>}
+ */
 export async function getScheduleYearWeekSlotSlotid(year, week, slotID) {
   const pathParams = {
     year,
@@ -505,6 +954,14 @@ export async function getScheduleYearWeekSlotSlotid(year, week, slotID) {
 }
 
 
+/**
+ * PUT /schedule/{year}/{week}/slot/{slotID}/info
+ * @param {string} year
+ * @param {string} week
+ * @param {string} slotID
+ * @param {PutScheduleYearWeekSlotSlotidInfoBody} body - see {@link PutScheduleYearWeekSlotSlotidInfoBody} for generation: {@link createPutScheduleYearWeekSlotSlotidInfoBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function putScheduleYearWeekSlotSlotidInfo(year, week, slotID, body) {
   const pathParams = {
     year,
@@ -531,6 +988,14 @@ export async function putScheduleYearWeekSlotSlotidInfo(year, week, slotID, body
 }
 
 
+/**
+ * POST /schedule/{year}/{week}/slot/{slotID}/replacement/apply
+ * @param {string} year
+ * @param {string} week
+ * @param {string} slotID
+ * @param {PostScheduleYearWeekSlotSlotidReplacementApplyBody} body - see {@link PostScheduleYearWeekSlotSlotidReplacementApplyBody} for generation: {@link createPostScheduleYearWeekSlotSlotidReplacementApplyBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postScheduleYearWeekSlotSlotidReplacementApply(year, week, slotID, body) {
   const pathParams = {
     year,
@@ -557,6 +1022,14 @@ export async function postScheduleYearWeekSlotSlotidReplacementApply(year, week,
 }
 
 
+/**
+ * POST /schedule/{year}/{week}/slot/{slotID}/replacement/redraw
+ * @param {string} year
+ * @param {string} week
+ * @param {string} slotID
+ * @param {PostScheduleYearWeekSlotSlotidReplacementRedrawBody} body - see {@link PostScheduleYearWeekSlotSlotidReplacementRedrawBody} for generation: {@link createPostScheduleYearWeekSlotSlotidReplacementRedrawBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postScheduleYearWeekSlotSlotidReplacementRedraw(year, week, slotID, body) {
   const pathParams = {
     year,
@@ -583,6 +1056,14 @@ export async function postScheduleYearWeekSlotSlotidReplacementRedraw(year, week
 }
 
 
+/**
+ * POST /schedule/{year}/{week}/slot/{slotID}/apply
+ * @param {string} year
+ * @param {string} week
+ * @param {string} slotID
+ * @param {PostScheduleYearWeekSlotSlotidApplyBody} body - see {@link PostScheduleYearWeekSlotSlotidApplyBody} for generation: {@link createPostScheduleYearWeekSlotSlotidApplyBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postScheduleYearWeekSlotSlotidApply(year, week, slotID, body) {
   const pathParams = {
     year,
@@ -609,6 +1090,14 @@ export async function postScheduleYearWeekSlotSlotidApply(year, week, slotID, bo
 }
 
 
+/**
+ * POST /schedule/{year}/{week}/slot/{slotID}/leave
+ * @param {string} year
+ * @param {string} week
+ * @param {string} slotID
+ * @param {PostScheduleYearWeekSlotSlotidLeaveBody} body - see {@link PostScheduleYearWeekSlotSlotidLeaveBody} for generation: {@link createPostScheduleYearWeekSlotSlotidLeaveBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postScheduleYearWeekSlotSlotidLeave(year, week, slotID, body) {
   const pathParams = {
     year,
@@ -635,6 +1124,14 @@ export async function postScheduleYearWeekSlotSlotidLeave(year, week, slotID, bo
 }
 
 
+/**
+ * GET /application
+ * @param {string} [filter]
+ * @param {string} [startdate]
+ * @param {string} [enddate]
+ * @param {string} [userid]
+ * @returns {Promise<any>}
+ */
 export async function getApplication(filter, startdate, enddate, userid) {
   const pathParams = {};
   const queryParams = {
@@ -661,6 +1158,11 @@ export async function getApplication(filter, startdate, enddate, userid) {
 }
 
 
+/**
+ * GET /application/{id}
+ * @param {string} id
+ * @returns {Promise<any>}
+ */
 export async function getApplicationId(id) {
   const pathParams = {
     id,
@@ -684,6 +1186,13 @@ export async function getApplicationId(id) {
 }
 
 
+/**
+ * POST /application/{id}/{action}
+ * @param {string} id
+ * @param {string} action
+ * @param {PostApplicationIdActionBody} body - see {@link PostApplicationIdActionBody} for generation: {@link createPostApplicationIdActionBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postApplicationIdAction(id, action, body) {
   const pathParams = {
     id,
@@ -709,6 +1218,12 @@ export async function postApplicationIdAction(id, action, body) {
 }
 
 
+/**
+ * GET /schedule/slot
+ * @param {number} [w]
+ * @param {number} [year]
+ * @returns {Promise<any>}
+ */
 export async function getScheduleSlot(w, year) {
   const pathParams = {};
   const queryParams = {
@@ -733,6 +1248,11 @@ export async function getScheduleSlot(w, year) {
 }
 
 
+/**
+ * POST /schedule/slot
+ * @param {PostScheduleSlotBody} body - see {@link PostScheduleSlotBody} for generation: {@link createPostScheduleSlotBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postScheduleSlot(body) {
   const pathParams = {};
   const queryParams = {};
@@ -755,6 +1275,11 @@ export async function postScheduleSlot(body) {
 }
 
 
+/**
+ * GET /schedule/slot/{id}
+ * @param {string} id
+ * @returns {Promise<any>}
+ */
 export async function getScheduleSlotId(id) {
   const pathParams = {
     id,
@@ -778,6 +1303,12 @@ export async function getScheduleSlotId(id) {
 }
 
 
+/**
+ * PUT /schedule/slot/{id}
+ * @param {string} id
+ * @param {Slot} body - see {@link Slot} for generation: {@link createSlotTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function putScheduleSlotId(id, body) {
   const pathParams = {
     id,
@@ -802,6 +1333,11 @@ export async function putScheduleSlotId(id, body) {
 }
 
 
+/**
+ * DELETE /schedule/slot/{id}
+ * @param {string} id
+ * @returns {Promise<any>}
+ */
 export async function deleteScheduleSlotId(id) {
   const pathParams = {
     id,
@@ -825,6 +1361,11 @@ export async function deleteScheduleSlotId(id) {
 }
 
 
+/**
+ * POST /excuse
+ * @param {PostExcuseBody} body - see {@link PostExcuseBody} for generation: {@link createPostExcuseBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postExcuse(body) {
   const pathParams = {};
   const queryParams = {};
@@ -847,6 +1388,15 @@ export async function postExcuse(body) {
 }
 
 
+/**
+ * GET /excuse/list
+ * @param {string} [startdate]
+ * @param {string} [enddate]
+ * @param {string} [filter]
+ * @param {number} [page]
+ * @param {number} [page_size]
+ * @returns {Promise<any>}
+ */
 export async function getExcuseList(startdate, enddate, filter, page, page_size) {
   const pathParams = {};
   const queryParams = {
@@ -874,6 +1424,16 @@ export async function getExcuseList(startdate, enddate, filter, page, page_size)
 }
 
 
+/**
+ * GET /excuse/list/admin
+ * @param {string} [startdate]
+ * @param {string} [enddate]
+ * @param {string} [filter]
+ * @param {string} [users]
+ * @param {number} [page]
+ * @param {number} [page_size]
+ * @returns {Promise<any>}
+ */
 export async function getExcuseListAdmin(startdate, enddate, filter, users, page, page_size) {
   const pathParams = {};
   const queryParams = {
@@ -902,6 +1462,11 @@ export async function getExcuseListAdmin(startdate, enddate, filter, users, page
 }
 
 
+/**
+ * GET /excuse/{id}/
+ * @param {string} id
+ * @returns {Promise<any>}
+ */
 export async function getExcuseId(id) {
   const pathParams = {
     id,
@@ -925,7 +1490,13 @@ export async function getExcuseId(id) {
 }
 
 
-export async function postExcuseIdAction(id, action, body) {
+/**
+ * POST /excuse/{id}/{action}
+ * @param {string} id
+ * @param {string} action
+ * @returns {Promise<any>}
+ */
+export async function postExcuseIdAction(id, action) {
   const pathParams = {
     id,
     action,
@@ -943,13 +1514,21 @@ export async function postExcuseIdAction(id, action, body) {
     url,
     {
       method: 'POST',
-      body,
     },
     pathParams
   );
 }
 
 
+/**
+ * GET /mission/list
+ * @param {string} [startdate]
+ * @param {string} [enddate]
+ * @param {boolean} [ids_only]
+ * @param {number} [page]
+ * @param {number} [page_size]
+ * @returns {Promise<any>}
+ */
 export async function getMissionList(startdate, enddate, ids_only, page, page_size) {
   const pathParams = {};
   const queryParams = {
@@ -977,6 +1556,11 @@ export async function getMissionList(startdate, enddate, ids_only, page, page_si
 }
 
 
+/**
+ * GET /mission/{id}
+ * @param {string} id
+ * @returns {Promise<any>}
+ */
 export async function getMissionId(id) {
   const pathParams = {
     id,
@@ -1000,6 +1584,10 @@ export async function getMissionId(id) {
 }
 
 
+/**
+ * GET /mission/active
+ * @returns {Promise<any>}
+ */
 export async function getMissionActive() {
   const pathParams = {};
   const queryParams = {};
@@ -1021,6 +1609,11 @@ export async function getMissionActive() {
 }
 
 
+/**
+ * POST /mission/subscribe
+ * @param {PostMissionSubscribeBody} body - see {@link PostMissionSubscribeBody} for generation: {@link createPostMissionSubscribeBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postMissionSubscribe(body) {
   const pathParams = {};
   const queryParams = {};
@@ -1043,6 +1636,11 @@ export async function postMissionSubscribe(body) {
 }
 
 
+/**
+ * POST /mission/start
+ * @param {PostMissionStartBody} body - see {@link PostMissionStartBody} for generation: {@link createPostMissionStartBodyTemplate()}
+ * @returns {Promise<any>}
+ */
 export async function postMissionStart(body) {
   const pathParams = {};
   const queryParams = {};
@@ -1065,6 +1663,11 @@ export async function postMissionStart(body) {
 }
 
 
+/**
+ * GET /mission/{id}/status
+ * @param {string} id
+ * @returns {Promise<any>}
+ */
 export async function getMissionIdStatus(id) {
   const pathParams = {
     id,
@@ -1088,6 +1691,11 @@ export async function getMissionIdStatus(id) {
 }
 
 
+/**
+ * GET /mission/{id}/status/subscribe
+ * @param {string} id
+ * @returns {Promise<any>}
+ */
 export async function getMissionIdStatusSubscribe(id) {
   const pathParams = {
     id,
@@ -1111,6 +1719,10 @@ export async function getMissionIdStatusSubscribe(id) {
 }
 
 
+/**
+ * GET /system/health
+ * @returns {Promise<any>}
+ */
 export async function getSystemHealth() {
   const pathParams = {};
   const queryParams = {};
@@ -1132,6 +1744,10 @@ export async function getSystemHealth() {
 }
 
 
+/**
+ * GET /system/health/module
+ * @returns {Promise<any>}
+ */
 export async function getSystemHealthModule() {
   const pathParams = {};
   const queryParams = {};
@@ -1153,6 +1769,10 @@ export async function getSystemHealthModule() {
 }
 
 
+/**
+ * GET /system/health/db
+ * @returns {Promise<any>}
+ */
 export async function getSystemHealthDb() {
   const pathParams = {};
   const queryParams = {};
@@ -1174,6 +1794,10 @@ export async function getSystemHealthDb() {
 }
 
 
+/**
+ * GET /system/health/api
+ * @returns {Promise<any>}
+ */
 export async function getSystemHealthApi() {
   const pathParams = {};
   const queryParams = {};
@@ -1195,6 +1819,10 @@ export async function getSystemHealthApi() {
 }
 
 
+/**
+ * GET /system/moduleWS
+ * @returns {Promise<any>}
+ */
 export async function getSystemModulews() {
   const pathParams = {};
   const queryParams = {};
