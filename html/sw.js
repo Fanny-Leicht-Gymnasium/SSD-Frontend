@@ -74,23 +74,21 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
     const request = event.request;
-    // console.log(
-    //     '[SW] FETCH:',
-    //     request.method,
-    //     request.url,
-    //     'mode=',
-    //     request.mode,
-    //     'destination=',
-    //     request.destination
-    // );
 
     if (request.method !== 'GET') {
         return;
     }
 
     const url = new URL(request.url);
-    // console.log('[SW] fetch event:', request.method, request.url, 'destination=', request.destination);
-    const isStyleRequest = request.destination === 'style' || url.pathname.startsWith('/assets/css/customElement/');
+
+    // Only handle requests belonging to the Service Worker's own origin.
+    if (url.origin !== self.location.origin) {
+        return;
+    }
+
+    const isStyleRequest =
+        request.destination === 'style' ||
+        url.pathname.startsWith('/assets/css/customElement/');
 
     /*
      * HTML pages

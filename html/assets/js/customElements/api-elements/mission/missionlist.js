@@ -1,6 +1,7 @@
 import { APIElement } from '../../api-element.js';
 import { getMissionList } from '../../../api/api.generated.js';
 import { escapeHtml } from '../../../util.js';
+import { readCachedData, readLatestCachedData, setOfflineMode, writeCachedData } from '../../../offline-cache.js';
 
 class MissionList extends APIElement {
   static get observedAttributes() {
@@ -22,13 +23,21 @@ class MissionList extends APIElement {
     const page = Number(this.getAttribute('page') || 1);
     const page_size = Number(this.getAttribute('page_size') || 50);
 
-    return await getMissionList(
-      startdate,
-      enddate,
-      ids_only,
-      page,
-      page_size
-    );
+    const cacheKey = `missions:${startdate || ''}:${enddate || ''}:${ids_only}:${page}:${page_size}`;
+
+    try {
+      const data = await getMissionList(startdate, enddate, ids_only, page, page_size);
+      writeCachedData(cacheKey, data);
+      setOfflineMode(false);
+      return data;
+    } catch (error) {
+      const cached = readCachedData(cacheKey) || readLatestCachedData('missions:');
+      if (cached) {
+        setOfflineMode(true, cached.updatedAt);
+        return cached.data;
+      }
+      throw error;
+    }
   }
 
 setPage(newPage) {
@@ -59,7 +68,7 @@ setPage(newPage) {
         ${missionList.missions.length === 0 ? /*html*/`<p><x-translation>mission.no-missions-found<x-translation></p>` : ''}
 
         ${missionList.missions.map(m => /*html*/`
-          <ssd-intra-mission id="${m.alertId}" ${hasData?/*html*/`data="${JSON.stringify(m).replaceAll("\"", "'")}"`:""}></ssd-intra-mission>
+          <ssd-intra-mission id="${m.alertId}" ${hasData?/*html*/`data="${escapeHtml(JSON.stringify(m))}"`:""}></ssd-intra-mission>
         `).join('')}
 
         <ssd-pagination

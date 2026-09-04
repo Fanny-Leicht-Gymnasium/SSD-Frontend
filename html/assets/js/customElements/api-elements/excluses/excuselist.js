@@ -6,6 +6,7 @@ import {
 } from '../../../api/api.generated.js';
 
 import { escapeHtml } from '../../../util.js';
+import { readCachedData, readLatestCachedData, setOfflineMode, writeCachedData } from '../../../offline-cache.js';
 
 class ExcuseList extends APIElement {
 
@@ -32,24 +33,23 @@ class ExcuseList extends APIElement {
 
     const isAdmin = this.hasAttribute('isadmin');
 
-    if (isAdmin) {
-      return await getExcuseListAdmin(
-        startdate,
-        enddate,
-        filter,
-        users,
-        page,
-        page_size
-      );
-    }
+    const cacheKey = `excuses:${isAdmin}:${startdate || ''}:${enddate || ''}:${filter || ''}:${users || ''}:${page}:${page_size}`;
 
-    return await getExcuseList(
-      startdate,
-      enddate,
-      filter,
-      page,
-      page_size
-    );
+    try {
+      const data = isAdmin
+        ? await getExcuseListAdmin(startdate, enddate, filter, users, page, page_size)
+        : await getExcuseList(startdate, enddate, filter, page, page_size);
+      writeCachedData(cacheKey, data);
+      setOfflineMode(false);
+      return data;
+    } catch (error) {
+      const cached = readCachedData(cacheKey) || readLatestCachedData('excuses:');
+      if (cached) {
+        setOfflineMode(true, cached.updatedAt);
+        return cached.data;
+      }
+      throw error;
+    }
   }
 
   setPage(newPage) {

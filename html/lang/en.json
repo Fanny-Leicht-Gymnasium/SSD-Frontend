@@ -116,5 +116,10 @@
         "edit":{
             "user": "Edit User"
         }
+    },
+    "offline_mode": {
+        "Title": "Offline Modus",
+        "data_from": "Zeige Daten von: ",
+        "noCached": "Keine Daten vorhanden."
     }
 }

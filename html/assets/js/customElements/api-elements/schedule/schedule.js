@@ -1,6 +1,7 @@
 import { APIElement } from '../../api-element.js';
 import { escapeHtml, getStoredUser } from '../../../util.js';
 import { getScheduleYearWeek, getUserMe } from '../../../api/api.generated.js';
+import { readCachedData, readLatestCachedData, setOfflineMode, writeCachedData } from '../../../offline-cache.js';
 class ScheduleElement extends APIElement {
   static get observedAttributes() {
     return ['data', 'year', 'week', 'isAdmin', 'date-src'];
@@ -85,7 +86,21 @@ class ScheduleElement extends APIElement {
       this.week = this.week || current.week;
     }
 
-    return await getScheduleYearWeek(this.year, this.week);
+    const cacheKey = `schedule:${this.year}:${this.week}`;
+
+    try {
+      const data = await getScheduleYearWeek(this.year, this.week);
+      writeCachedData(cacheKey, data);
+      setOfflineMode(false);
+      return data;
+    } catch (error) {
+      const cached = readCachedData(cacheKey);
+      if (cached) {
+        setOfflineMode(true, cached.updatedAt);
+        return cached.data;
+      }
+      throw error;
+    }
   }
 
   render(data) {

@@ -17,15 +17,17 @@ export async function isLoggedIn() {
     res = await getUserMe();
 
     if (!res) return false;
-
+    if (res?.status === 401 || res?.status===400) {
+      return false;
+    }
     return res; // user object zurückgeben (besser als nur true)
 
   } catch (err) {
     // 401 / not logged in → expected case
-    if (res?.status === 401) {
-      return false;
+    //TODO: better token invalidation
+    if (getStoredUser()){
+      return true
     }
-
     console.error('isLoggedIn error:', err);
     return false;
   }

@@ -7,6 +7,23 @@ body {
     --transition: .2s ease;
 }
 
+#offline-status {
+    position: fixed;
+    top: .75rem;
+    left: 50%;
+    z-index: 100000;
+    max-width: calc(100% - 2rem);
+    padding: .5rem .75rem;
+    border: 1px solid var(--warning);
+    border-radius: var(--radius-small);
+    background: var(--surface-2);
+    color: var(--text);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .25);
+    transform: translateX(-50%);
+    font-size: .85rem;
+    text-align: center;
+}
+
 /* =========================
    SYSTEM DEFAULT
    Follows OS preference

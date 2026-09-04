@@ -2,7 +2,8 @@ import { isLoggedIn } from "../../util.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const user = await isLoggedIn();
-
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    console.log(user)
     if (!user) {
         // prevent duplicates
         if (document.querySelector('ssd-login')) return;

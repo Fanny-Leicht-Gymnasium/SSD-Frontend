@@ -1,6 +1,14 @@
 import { APIElement } from '../api-element.js';
 import { getUserUserid } from '../../api/api.generated.js';
 import { escapeHtml } from '../../util.js';
+import {
+  readCachedData,
+  setOfflineMode,
+  writeCachedData
+} from '../../offline-cache.js';
+
+const USER_CACHE_TTL = 1 * 60 * 1000;
+const userRequests = new Map();
 
 class UserViewer extends APIElement {
   static get observedAttributes() {
@@ -8,7 +16,41 @@ class UserViewer extends APIElement {
   }
 
   async fetchById(id) {
-    return await getUserUserid(id);
+    const cacheKey = `user:${id}`;
+    const cached = readCachedData(cacheKey);
+    const cachedIsFresh = cached?.updatedAt &&
+      Date.now() - Date.parse(cached.updatedAt) < USER_CACHE_TTL;
+
+    if (cachedIsFresh) {
+      return cached.data;
+    }
+
+    if (userRequests.has(String(id))) {
+      return userRequests.get(String(id));
+    }
+
+    const request = getUserUserid(id)
+      .then(user => {
+        writeCachedData(cacheKey, user);
+        setOfflineMode(false);
+        return user;
+      })
+      .catch(error => {
+        const fallback = readCachedData(cacheKey);
+
+        if (fallback) {
+          setOfflineMode(true, fallback.updatedAt);
+          return fallback.data;
+        }
+
+        throw error;
+      })
+      .finally(() => {
+        userRequests.delete(String(id));
+      });
+
+    userRequests.set(String(id), request);
+    return request;
   }
 
   render(user) {

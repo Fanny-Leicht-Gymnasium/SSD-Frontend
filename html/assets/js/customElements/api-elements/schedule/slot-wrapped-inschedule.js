@@ -10,17 +10,20 @@ class SlotElementWrapped extends APIElement {
     const year = this.getAttribute("year")
     return getScheduleYearWeekSlotSlotid(year, week, id);
   }
-
+  
   getInput() {
-    const slotId = this.getAttribute('slot-id');
-    if (slotId) {
-      return {
-        source: 'api',
-        id: slotId
-      };
+    let res =super.getInput()
+    if (res.source=="other"){
+      const slotId = this.getAttribute('slot-id');
+      if (slotId) {
+        return {
+          source: 'api',
+          id: slotId
+        };
+      }
     }
 
-    return super.getInput();
+    return res;
   }
   additionalLoading() {
     // Try to load the user immediately

@@ -1,10 +1,46 @@
 import { getUserMe } from "../api/api.generated.js";
 import { setLanguage } from "../customElements/general/translation.js";
 import { fetchSettings, getStoredSetting, getStoredSettings, updateSettingsToDOM } from "../util.js";
+import { getLastCachedUpdate, setOfflineMode } from "../offline-cache.js";
 
 const BUILD_VERSION_URL = "/__build-version";
 const INSTALLED_VERSION_KEY = "installed-build-version";
 const UPDATE_MESSAGE_KEY = "pwa-update-message";
+
+function renderOfflineStatus(isOffline, updatedAt = getLastCachedUpdate()) {
+  let status = document.getElementById('offline-status');
+
+  if (!status) {
+    status = document.createElement('div');
+    status.id = 'offline-status';
+    document.body.prepend(status);
+  }
+
+  status.hidden = !isOffline;
+  status.innerHTML = updatedAt
+    ? `<x-trans>offline_mode.Title</x-trans> - <x-trans>offline_mode.data_from</x-trans> <time-display show-countdown="true">${new Date(updatedAt)}</time-display>`
+    : '<x-trans>offline_mode.Title</x-trans> - <x-trans>offline_mode.noCached</x-trans>';
+}
+
+window.addEventListener('offline-mode-changed', event => {
+  renderOfflineStatus(event.detail.isOffline, event.detail.updatedAt);
+});
+
+window.addEventListener('offline-cache-updated', event => {
+  if (!navigator.onLine) {
+    renderOfflineStatus(true, event.detail.updatedAt);
+  }
+});
+
+window.addEventListener('offline', () => {
+  setOfflineMode(true);
+});
+
+window.addEventListener('online', () => {
+  setOfflineMode(false);
+});
+
+renderOfflineStatus(!navigator.onLine);
 
 function showUpdateMessage() {
   const message = localStorage.getItem(UPDATE_MESSAGE_KEY);
