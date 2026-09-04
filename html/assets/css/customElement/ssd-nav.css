@@ -1,5 +1,5 @@
 :host {
-  display: block;
+  display: none;
   width: 100%;
   box-sizing: border-box;
 }
@@ -30,7 +30,9 @@
 :host(.top) .nav-container {
   justify-content: flex-start;
 }
-
+:host(.top){
+  display: block;
+}
 /* Bottom navigation is not needed as a second desktop bar */
 
 :host(.bottom) {
