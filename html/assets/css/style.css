@@ -284,3 +284,20 @@ input:-webkit-autofill:focus {
     cursor: pointer;
     margin-bottom: 1em;
 }
+input:read-only,
+textarea:read-only {
+    background: var(--surface);
+    color: var(--text-muted);
+    cursor: default;
+}
+
+input:read-only:hover,
+textarea:read-only:hover {
+    border-color: var(--border);
+}
+
+input:read-only:focus,
+textarea:read-only:focus {
+    border-color: var(--border);
+    box-shadow: none;
+}
