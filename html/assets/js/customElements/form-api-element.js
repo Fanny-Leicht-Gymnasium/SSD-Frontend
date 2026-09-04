@@ -5,7 +5,8 @@ export class FormAPIElement extends APIElement {
     return [
       ...(super.observedAttributes || []),
       'submitoninput',
-      'submittext'
+      'submittext',
+      'submitonEnter',
     ];
   }
   constructor() {
@@ -293,11 +294,13 @@ render(data) {
         return
       }
       this.render(data);
+      this.postRender();
       el.classList.remove('loading');
 
     } catch (err) {
       this.renderError(err);
     }
+
   }
   /**Unused */
   renderLoading() {
