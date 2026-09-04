@@ -98,7 +98,8 @@
         "additional-information": "Additional information",
         "call-log": "Mission Call Log",
         "no-additional-info": "No Additional Information",
-        "no-users": "No Users"
+        "no-users": "No Users",
+        "no-missions-found":"No Mission Found"
     },
     "page":{
         "Dashboard":"Dashboard",

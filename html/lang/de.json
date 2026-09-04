@@ -98,7 +98,8 @@
         "additional-information": "Zusätzliche Informationen",
         "call-log": "Missionsprotokoll",
         "no-additional-info": "Keine zusätzlichen Informationen",
-        "no-users": "Keine Benutzer"
+        "no-users": "Keine Benutzer",
+        "no-missions-found":"Keine Alarmierung gefunden"
     },
     "page":{
         "Dashboard":"Dashboard",
