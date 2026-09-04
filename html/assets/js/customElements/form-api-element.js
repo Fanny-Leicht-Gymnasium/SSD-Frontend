@@ -5,7 +5,8 @@ export class FormAPIElement extends APIElement {
     return [
       ...(super.observedAttributes || []),
       'submitoninput',
-      'submittext'
+      'submittext',
+      'submitonEnter',
     ];
   }
   constructor() {
@@ -18,7 +19,7 @@ export class FormAPIElement extends APIElement {
     <div id="result"></div>`;
     this.form = this.container.querySelector('#customForm');
     this.apiForm = this.container.querySelector('#apiForm');
-    this.result = this.container.querySelector('#result');
+    this.result = this.errorArea;
 
     this.hasSubmitOnInput = this.hasAttribute('submitoninput');
     this.SubmitOnInput = this.getAttribute('submitoninput');
@@ -119,7 +120,7 @@ export class FormAPIElement extends APIElement {
       }));
     }
 
-    if (result.success && result.redirect !== false) {
+    if (result.success && result.redirect != false) {
       const redirectURL = result.redirect || this.getAttribute('redirectURL');
 
       if (this.hasAttribute('redirectURL') || result.redirect) {
@@ -132,7 +133,7 @@ export class FormAPIElement extends APIElement {
       }
     }
     else if (result.error) {
-      this.result.innerHTML = this.renderError(result.error);
+      this.renderError(result.error);
       return;
     }
 
@@ -283,7 +284,7 @@ render(data) {
       const input = this.getInput();
 
       if (!input) {
-        this.result.innerHTML = this.renderError("Missing Input");
+        this.renderError("Missing Input");
         return;
       }
       const data = await this.resolveData(input);
@@ -293,18 +294,16 @@ render(data) {
         return
       }
       this.render(data);
+      this.postRender();
       el.classList.remove('loading');
 
     } catch (err) {
-      this.result.innerHTML = this.renderError(err);
+      this.renderError(err);
     }
+
   }
   /**Unused */
   renderLoading() {
     return `Loading...`;
-  }
-
-  renderError(err) {
-    return /*html*/`<ssd-error ${(this.AlertErrors || this.defaultAlertErrors) ? "alert" : ""}>${err.message}</ssd-error>`;
   }
 }

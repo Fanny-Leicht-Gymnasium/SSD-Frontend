@@ -1,4 +1,4 @@
-import { postMissionStart } from '../../../api/api.generated.js';
+import { createPostMissionStartBodyTemplate, postMissionStart } from '../../../api/api.generated.js';
 import { FormAPIElement } from '../../form-api-element.js';
 
 class SSDMissionStart extends FormAPIElement {
@@ -26,13 +26,12 @@ class SSDMissionStart extends FormAPIElement {
   async load() { }
 
   async handleSend(data) {
-    const missionData = {
+    const missionData = createPostMissionStartBodyTemplate({
       Injury: data.injury,
       location: data.location,
       Author: data.author,
       additionalInformation: data.additionalInformation
-    };
-
+    })
     try {
       const data = await postMissionStart(missionData);
       console.log('Mission started successfully:', data);

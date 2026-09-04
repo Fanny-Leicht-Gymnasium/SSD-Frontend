@@ -19,7 +19,6 @@ class ApplicationViewer extends APIElement {
   }
 
   async fetchById(id) {
-    this.me = await getUserMe();
     return await getApplicationId(id);
   }
 
@@ -54,7 +53,7 @@ class ApplicationViewer extends APIElement {
       await this.load();
     } catch (err) {
       console.log('err:', err);
-      this.container.querySelector(".errorarea").innerHTML = this.renderError(err, alert = true);
+      this.renderError(err, alert = true);
 
 
     }
@@ -233,7 +232,8 @@ render(application) {
 
             <time-display
               show-countdown="false"
-              show-date="always">
+              show-date="always"
+              show-time="never">
               ${escapeHtml(String(startDate))}
             </time-display>
           </div>
@@ -248,7 +248,8 @@ render(application) {
 
             <time-display
               show-countdown="false"
-              show-date="always">
+              show-date="always"
+              show-time="never">
               ${escapeHtml(String(endDate))}
             </time-display>
           </div>

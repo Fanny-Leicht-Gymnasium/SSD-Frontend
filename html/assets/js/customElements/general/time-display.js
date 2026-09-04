@@ -4,6 +4,7 @@ class TimeDisplay extends HTMLElement {
       "date-format",
       "time-format",
       "show-date",
+      "show-time",
       "show-countdown"
     ];
   }
@@ -43,6 +44,10 @@ class TimeDisplay extends HTMLElement {
   get showDate() {
     return this.getAttribute("show-date") || "always";
   }
+  get showTime() {
+    return this.getAttribute("show-time") || "always";
+  }
+
 
   get showCountdown() {
     return this.getAttribute("show-countdown") === "true";
@@ -148,15 +153,17 @@ class TimeDisplay extends HTMLElement {
     const dateStr = this.formatDate(this._targetDate);
     const timeStr = this.formatTime(this._targetDate);
 
-    let parts = [];
+    const parts = [];
 
     const showDate =
       this.showDate === "always" ||
       ((this.showDate === "nottoday" || this.showDate === "notToday") && !isToday);
 
-    if (showDate) parts.push(dateStr);
+    const showTime = !(this.showTime === "never" || ((this.showTime === "onlytoday" || this.showTime === "onlyToday") && !isToday));
 
-    parts.push(timeStr);
+
+    if (showDate) parts.push(dateStr);
+    if (showTime) parts.push(timeStr);
 
     return parts.join(" ").trim();
   }

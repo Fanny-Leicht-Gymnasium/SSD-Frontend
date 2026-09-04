@@ -1,0 +1,53 @@
+/* =========================
+   FORM ACTION BUTTONS
+========================= */
+
+.field {
+    position: relative;
+}
+
+.field > button {
+    position: absolute;
+    top: .5rem;
+    
+    width: 2.5rem;
+    height: 2.5rem;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: var(--radius-small);
+
+    color: var(--text);
+    background: transparent;
+
+    cursor: pointer;
+
+    z-index: 2;
+}
+
+#refreshButton {
+    right: 3.25rem;
+}
+
+#saveButton {
+    right: .5rem;
+}
+
+.field > button:hover {
+    background: var(--surface);
+}
+
+.field > button:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Make room for the buttons inside the input */
+.field:has(> button) input {
+    padding-right: 6rem;
+}

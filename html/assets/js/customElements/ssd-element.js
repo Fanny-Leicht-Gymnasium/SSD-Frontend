@@ -7,7 +7,7 @@ export class SSDElement extends HTMLElement {
         super();
         this.root = this.attachShadow({ mode: 'open' });
 
-        this.root.innerHTML = `<div id="container"></div>`;
+        this.root.innerHTML = `<div id="container"></div><div id="errorArea"></div>`;
         this._container = this.root.getElementById('container');
         // optional base stylesheet
         this.addStylesheet('/assets/css/global.css');

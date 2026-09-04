@@ -12,7 +12,7 @@ input, textarea, button {
     box-sizing: border-box;
 }
 textarea { height: 100px; }
-#result { 
+#errorArea { 
   margin-top: 20px; 
   padding: 1rem;
   border-radius: 4px;

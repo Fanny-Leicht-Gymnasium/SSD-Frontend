@@ -1,6 +1,6 @@
 import { APIElement, } from '../../api-element.js';
 import { escapeHtml, getStoredUser, waitForStoredUser } from '../../../util.js';
-import { getScheduleYearWeekSlotSlotid } from '../../../api/api.generated.js';
+import { getScheduleYearWeekSlotSlotid, postScheduleYearWeekSlotSlotidLeave } from '../../../api/api.generated.js';
 class SlotElementWrapped extends APIElement {
   static get observedAttributes() {
     return ['data'];
@@ -39,6 +39,7 @@ class SlotElementWrapped extends APIElement {
     const slot = slotWrapper?.slot ?? {};
     const isAdmin = this.hasAttribute('isAdmin');
 
+    this.slotName = slot.slotName;
 
     const baseUsers = slotWrapper?.baseUsers ?? [];
     const fallbackUsers = slotWrapper?.fallbackusers ?? [];
@@ -48,7 +49,7 @@ class SlotElementWrapped extends APIElement {
     const applications = slotWrapper?.applications ?? [];
 
     const openApplications = applications.filter(
-      application => (isAdmin?['open', 'leaveRequest'].includes(application.status):application.user.userid==this.me.userid)
+      application => (isAdmin ? ['open', 'leaveRequest'].includes(application.status) : application.user.userid == this.me.userid)
     );
 
     const slotName = escapeHtml(slot.slotName || 'Unnamed Slot');
@@ -87,6 +88,12 @@ class SlotElementWrapped extends APIElement {
             <button class="apply-btn slot-action" data-id="${escapeHtml(slot.slotId)}">
               <ssd-icon name="apply"></ssd-icon>
             </button>
+
+            ${isBaseUser /*TODO: improve this condition to check if the status may already is leave*/? /*html*/`
+              <button class="leave-btn slot-action" data-id="${escapeHtml(slot.slotId)}">
+                <ssd-icon name="leave"></ssd-icon>
+              </button>
+            ` : ''}
 
             ${isAdmin ? /*html*/`
               <button class="edit-btn slot-action" data-id="${escapeHtml(slot.slotId)}">
@@ -174,8 +181,8 @@ class SlotElementWrapped extends APIElement {
               </div>
               <div class="content">
                 ${
-                  /*TODO: Sort open first*/
-                  Array.isArray(slotWrapper.applications)
+      /*TODO: Sort open first*/
+      Array.isArray(slotWrapper.applications)
         ? slotWrapper.applications
           .map(application => /*html*/`<ssd-intra-application id="${escapeHtml(application.id)}" data='${JSON.stringify(application)}' hideSlot></ssd-intra-application>`)
           .join('')
@@ -201,14 +208,41 @@ class SlotElementWrapped extends APIElement {
           this.removeAttribute('data');
           this.load();
         });
-
-        document.body.appendChild(form);
         form.setAttribute('slot-id', id);
         form.setAttribute('year', this.getAttribute('year'));
         form.setAttribute('week', this.getAttribute('week'));
 
+        form.setAttribute('slot-name', this.slotName);
+        document.body.appendChild(form);
+
+
       });
     });
+    this.root.querySelectorAll('.leave-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+
+        const form = document.createElement('ssd-application-apply');
+        const reason = prompt('Please enter a reason for leaving:');
+
+        if (reason === null) {
+          return; // User cancelled
+        }
+        try {
+          await postScheduleYearWeekSlotSlotidLeave(this.getAttribute('year'), this.getAttribute('week'), id, { "reason": reason })
+          this.removeAttribute("data")
+          this.load()
+        } catch (error) {
+          this.renderError(error,true,true);
+          console.error(error)
+        }
+        //TODO: Render success
+        
+          
+
+      });
+    });
+
     if (!this.hasAttribute('isAdmin')) return;
 
     this.root.querySelectorAll('.edit-btn').forEach(btn => {

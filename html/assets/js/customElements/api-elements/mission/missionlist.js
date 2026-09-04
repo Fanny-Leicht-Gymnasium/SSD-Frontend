@@ -53,7 +53,7 @@ setPage(newPage) {
 
     // naive page estimate (replace with backend total if available)
     const totalPages = missionList?.totalPages
-    const hasData = missionList?.missions && missionList.missions[0].author? true : false;
+    const hasData = missionList?.missions && missionList.missions[0]?.author? true : false;
     return /*html*/`
       <div class="mission-list">
         ${missionList.missions.length === 0 ? /*html*/`<p>No missions found</p>` : ''}
