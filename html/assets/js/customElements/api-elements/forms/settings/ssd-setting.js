@@ -122,7 +122,7 @@ class SSDSetting extends FormAPIElement {
 
     if (storagekey === '') {
       this.form.innerHTML = /* html */ `
-        <div class="field" input-label="Error">
+        <div class="field" input-label="Error" trans-lable="setting.error" trans-placeholder="setting.error">
           <input
             type="text"
             id="error"
@@ -241,7 +241,7 @@ class SSDSetting extends FormAPIElement {
     }
 
     this.form.innerHTML = /* html */ `
-      <div class="field" input-label="Error">
+      <div class="field" input-label="Error" trans-lable="setting.error" trans-placeholder="setting.error">
         <input
           type="text"
           id="error"

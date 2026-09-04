@@ -55,7 +55,8 @@
         "email": "E-Mail",
         "role": "Role",
         "phonenumber": "Phone number",
-        "class": "Class"
+        "class": "Class",
+        "password": "Password"
     },
     "slot": {
         "lable": {
@@ -65,7 +66,13 @@
             "excuses": "Excuses",
             "fallback": "Fallback",
             "replacement": "Replacement",
-            "required": "required"
+            "required": "required",
+            "name": "Name",
+            "weekday": "Weekday",
+            "starttime": "Start time",
+            "endtime": "End time",
+            "position": "Position",
+            "after": "After"
         }
     },
     "excuse": {
@@ -86,6 +93,9 @@
     },
     "mission": {
         "author": "Author",
+        "injury": "Injury",
+        "location": "Location",
+        "additional-information": "Additional information",
         "call-log": "Mission Call Log",
         "no-additional-info": "No Additional Information",
         "no-users": "No Users"
@@ -98,6 +108,7 @@
     },
     "setting":{
         "Theme":"Theme",
-        "language":"Language"
+        "language":"Language",
+        "error":"Error"
     }
 }

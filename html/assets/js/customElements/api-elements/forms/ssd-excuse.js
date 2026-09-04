@@ -17,7 +17,7 @@ class SSDExcuseForm extends FormAPIElement {
         this.form.innerHTML = /*html*/`
             <h1>Create Excuse</h1>
 
-            <div class="field" input-label="Start date">
+            <div class="field" input-label="Start date" trans-lable="application.startdate" trans-placeholder="application.startdate">
                 <input
                     type="datetime-local"
                     id="starttimestamp"
@@ -25,7 +25,7 @@ class SSDExcuseForm extends FormAPIElement {
                 >
             </div>
 
-            <div class="field" input-label="End date">
+            <div class="field" input-label="End date" trans-lable="application.enddate" trans-placeholder="application.enddate">
                 <input
                     type="datetime-local"
                     id="endtimestamp"
@@ -33,7 +33,7 @@ class SSDExcuseForm extends FormAPIElement {
                 >
             </div>
 
-            <div class="field" input-label="Reason">
+            <div class="field" input-label="Reason" trans-lable="excuse.reason" trans-placeholder="excuse.reason">
                 <textarea
                     id="reason"
                     placeholder="Reason"

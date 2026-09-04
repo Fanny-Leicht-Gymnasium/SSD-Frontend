@@ -16,11 +16,11 @@ class SSDSlotForm extends FormAPIElement {
 
         this.form.innerHTML = /*html*/`
         <h1>Slot Editor</h1>
-        <div class="field" input-label="Name">
+        <div class="field" input-label="Name" trans-lable="slot.lable.name" trans-placeholder="slot.lable.name">
             <input type="text" id="slotName" placeholder="Name" required>
         </div>
 
-        <div class="field" input-label="Weekday">
+        <div class="field" input-label="Weekday" trans-lable="slot.lable.weekday" trans-placeholder="slot.lable.weekday">
         <select id="weekday" required>
                 <option value="1"><x-trans>time.weekday.1</x-trans></option>
                 <option value="2"><x-trans>time.weekday.2</x-trans></option>
@@ -32,18 +32,24 @@ class SSDSlotForm extends FormAPIElement {
             </select>
         </div>
         ${hasId ? /*html*/`
-        <input type="number" id="slotPosition" placeholder="Position" required>
-        ` : /*html*/`<input type="number" id="after" placeholder="After" required>`}
+        <div class="field" input-label="Position" trans-lable="slot.lable.position" trans-placeholder="slot.lable.position">
+            <input type="number" id="slotPosition" placeholder="Position" required>
+        </div>
+        ` : /*html*/`
+        <div class="field" input-label="After" trans-lable="slot.lable.after" trans-placeholder="slot.lable.after">
+            <input type="number" id="after" placeholder="After" required>
+        </div>
+        `}
 
-        <div class="field" input-label="Start time">
+        <div class="field" input-label="Start time" trans-lable="slot.lable.starttime" trans-placeholder="slot.lable.starttime">
             <input type="time" id="starttime" required>
         </div>
-        <div class="field" input-label="End time">
+        <div class="field" input-label="End time" trans-lable="slot.lable.endtime" trans-placeholder="slot.lable.endtime">
             <input type="time" id="endtime" required>
         </div>
 
    
-        <div class="field" input-label="Required">
+        <div class="field" input-label="Required" trans-lable="slot.lable.required" trans-placeholder="slot.lable.required">
             <input type="checkbox" id="required">
         </div>
 

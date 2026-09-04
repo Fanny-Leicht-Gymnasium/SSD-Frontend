@@ -24,10 +24,10 @@ class SSDApplicationApply extends FormAPIElement {
             });
         this.form.innerHTML = /*html*/`
             <h1><x-trans slotname="${slotName}" startdate="${date}">application.apply.ApplyTO</x-trans></h1>
-            <div class="field" input-label="Reason for application" translate>
+            <div class="field" input-label="Reason for application" trans-lable="application.reason" trans-placeholder="application.reason">
                 <textarea id="reason" placeholder="Reason for application"></textarea>
             </div>
-            <div class="field" input-label="Type" translate>
+            <div class="field" input-label="Type" trans-lable="application.type.type" trans-placeholder="application.type.type">
                 <select id="type" required>
                     <option value="base"><x-trans>application.type.base</x-trans></option>
                     <option value="fallback"><x-trans>application.type.fallback</x-trans></option>
