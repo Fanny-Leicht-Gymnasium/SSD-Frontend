@@ -317,6 +317,20 @@ body[html-frontend-theme="Light"] {
   transition: all 0.2s ease;
 }
 
+.admin-user-list {
+  margin: 1rem 0 2rem;
+}
+
+.admin-user-list-items {
+  display: grid;
+  gap: .5rem;
+}
+
+.admin-user-list-item {
+  display: flex;
+  align-items: center;
+}
+
 /* visible state */
 [asPopup] > * {
   transform: scale(1);

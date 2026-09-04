@@ -30,6 +30,12 @@ class UserViewer extends APIElement {
         String(value).trim() !== '';
     });
 
+    const editButton = this.hasAttribute('edit') ? /*html*/`
+      <button type="button" class="edit-user" aria-label="Edit user">
+        <ssd-icon name="edit"></ssd-icon>
+      </button>
+    ` : '';
+
     return /*html*/`
       <div class="user-viewer">
         <div class="user-header">
@@ -38,6 +44,7 @@ class UserViewer extends APIElement {
           <h2>
             ${escapeHtml(user?.name || user?.username || 'Unknown')}
           </h2>
+          ${editButton}
         </div>
 
         <div class="user-fields">
@@ -55,6 +62,21 @@ class UserViewer extends APIElement {
         </div>
       </div>
     `;
+  }
+
+  postRender() {
+    this.container.querySelector('.edit-user')?.addEventListener('click', () => {
+      this.dispatchEvent(new CustomEvent('user-edit', {
+        bubbles: true,
+        composed: true,
+        detail: { userId: this.getUserById() }
+      }));
+    });
+  }
+
+  getUserById() {
+    const data = this.getAttribute('data');
+    return data ? JSON.parse(data).userid : this.getAttribute('id');
   }
 }
 

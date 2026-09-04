@@ -90,6 +90,21 @@
     white-space: nowrap;
   }
 
+  .user-header .edit-user {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+  }
+
+  .user-header .edit-user:hover {
+    color: var(--blue-light);
+  }
+
   /* =========================================================
    User fields
    ========================================================= */

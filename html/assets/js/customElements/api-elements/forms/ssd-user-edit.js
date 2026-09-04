@@ -1,4 +1,4 @@
-import { getUserMe, putUserUserid } from '../../../api/api.generated.js';
+import { getUserMe, getUserUserid, putUserUserid } from '../../../api/api.generated.js';
 import { FormAPIElement } from '../../form-api-element.js';
 
 class SSDUserEdit extends FormAPIElement {
@@ -7,9 +7,19 @@ class SSDUserEdit extends FormAPIElement {
     this.defaultSubmittext = 'Save changes';
     this.defaultAlertErrors = true;
     this.userId = null;
+    this.loadRequest = 0;
   }
 
   renderForm() {
+    const roleField = this.hasAttribute('admin') ? /*html*/`
+      <div class="field" input-label="Role" trans-lable="user.role" trans-placeholder="user.role">
+        <select id="role">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+    ` : '';
+
     this.form.innerHTML = /*html*/`
       <h2><x-trans>setting.edit.user</x-trans></h2>
       <div class="field" input-label="Username" trans-lable="user.username" trans-placeholder="user.username" >
@@ -27,12 +37,28 @@ class SSDUserEdit extends FormAPIElement {
       <div class="field" input-label="Class" trans-lable="user.class" trans-placeholder="user.class">
         <input type="text" id="class" placeholder="Class">
       </div>
+      ${roleField}
     `;
   }
 
   async load() {
+    const request = ++this.loadRequest;
+
     try {
-      const user = await getUserMe();
+      this.renderForm();
+
+      const userId = this.getAttribute('user-id');
+      const input = this.getAttribute('data');
+      const user = userId
+        ? await getUserUserid(userId)
+        : input
+          ? JSON.parse(input)
+          : await getUserMe();
+
+      if (request !== this.loadRequest) {
+        return;
+      }
+
       this.userId = user?.userid;
 
       if (this.userId === undefined || this.userId === null) {
@@ -54,15 +80,18 @@ class SSDUserEdit extends FormAPIElement {
         email: data.email,
         phonenumber: data.phonenumber,
         class: data.class,
-        name: data.name
+        name: data.name,
+        ...(this.hasAttribute('admin') ? { role: data.role } : {})
       });
 
-      const currentUser = JSON.parse(localStorage.getItem('me') || '{}');
-      localStorage.setItem('me', JSON.stringify({
-        ...currentUser,
-        ...data,
-        ...(updatedUser && typeof updatedUser === 'object' ? updatedUser : {})
-      }));
+      if (!this.hasAttribute('user-id')) {
+        const currentUser = JSON.parse(localStorage.getItem('me') || '{}');
+        localStorage.setItem('me', JSON.stringify({
+          ...currentUser,
+          ...data,
+          ...(updatedUser && typeof updatedUser === 'object' ? updatedUser : {})
+        }));
+      }
       this.result.textContent = 'Changes saved.';
 
       return { success: true, data: updatedUser };

@@ -99,19 +99,21 @@
         "call-log": "Missionsprotokoll",
         "no-additional-info": "Keine zusätzlichen Informationen",
         "no-users": "Keine Benutzer",
-        "no-missions-found":"Keine Alarmierung gefunden"
+        "no-missions-found": "Keine Alarmierung gefunden"
     },
-    "page":{
-        "Dashboard":"Dashboard",
-        "Excuses":"Entschuldigungen",
-        "Alerts":"Alarmierungen",
-        "Settings":"Einstellungen"
+    "page": {
+        "Dashboard": "Dashboard",
+        "Excuses": "Entschuldigungen",
+        "Alerts": "Alarmierungen",
+        "Settings": "Einstellungen"
     },
-    "setting":{
-        "Theme":"Theme",
-        "language":"Sprache",
-        "error":"Fehler",
-        "edit":{
+    "setting": {
+        "Theme": "Theme",
+        "language": "Sprache",
+        "error": "Fehler",
+        "users": "Benutzer",
+        "users-list": "Benutzer Liste",
+        "edit": {
             "user": "Benutzer Bearbeiten"
         }
     }

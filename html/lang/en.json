@@ -111,6 +111,8 @@
         "Theme":"Theme",
         "language":"Language",
         "error":"Error",
+        "users":"Users",
+        "users-list": "User List",
         "edit":{
             "user": "Edit User"
         }
