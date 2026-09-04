@@ -25,7 +25,7 @@ class MissionViewer extends APIElement {
           </span>
           <div class="mission-closed-info">
         <p>${escapeHtml(mission.location || 'N/A')}</p>
-        <p>${escapeHtml(mission.additionalInformation || /*html*/`<x-translation>mission.no-additional-info</x-translation>`)}</p>
+        <p>${mission.additionalInformation? escapeHtml(mission.additionalInformation) : /*html*/`<x-translation>mission.no-additional-info</x-translation>`}</p>
         <time-display 
               show-countdown="true" 
               show-date="nottoday">
@@ -45,7 +45,7 @@ class MissionViewer extends APIElement {
         <div class="mission-row">
                   <ssd-icon name="paperclip"></ssd-icon>
 
-          <span>${escapeHtml(mission.additionalInformation || /*html*/`<x-translation>mission.no-additional-info</x-translation>`)}</span>
+          <span>${mission.additionalInformation? escapeHtml(mission.additionalInformation) : /*html*/`<x-translation>mission.no-additional-info</x-translation>`}</span>
         </div>
 
         <div class="mission-row">
