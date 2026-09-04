@@ -56,7 +56,7 @@ setPage(newPage) {
     const hasData = missionList?.missions && missionList.missions[0]?.author? true : false;
     return /*html*/`
       <div class="mission-list">
-        ${missionList.missions.length === 0 ? /*html*/`<p>No missions found</p>` : ''}
+        ${missionList.missions.length === 0 ? /*html*/`<p><x-translation>mission.no-missions-found<x-translation></p>` : ''}
 
         ${missionList.missions.map(m => /*html*/`
           <ssd-intra-mission id="${m.alertId}" ${hasData?/*html*/`data="${JSON.stringify(m).replaceAll("\"", "'")}"`:""}></ssd-intra-mission>

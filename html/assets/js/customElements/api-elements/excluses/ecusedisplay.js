@@ -30,14 +30,14 @@ class ExcuseViewer extends APIElement {
 
           <div class="excuse-title">
 
-            <h2>${escapeHtml(excuse.reason || 'Unknown Excuse')}</h2>
+            <h2>${escapeHtml(excuse.reason || /*html*/`<x-translation>excuse.unknown</x-translation>`)}</h2>
 
             <span class="excuse-user-name">
                 <ssd-intra-user class="nameonly inline noicon" id="${escapeHtml(excuse.userid ?? 'N/A')}">${escapeHtml(excuse.userid ?? 'N/A')}<ssd-intra-user>
             </span>
 
             <div class="excuse-status-info">
-              <p>${escapeHtml(excuse.status || 'pending')}</p>
+              <p>${excuse.status? /*html*/`<x-translation>excuse.statuses.${excuse.status}</x-translation>` : /*html*/`<x-translation>excuse.statuses.pending</x-translation>`}</p>
             </div>
 
           </div>
@@ -56,7 +56,7 @@ class ExcuseViewer extends APIElement {
             <ssd-icon name="paperclip"></ssd-icon>
             <span>
               <b><x-translation>excuse.reason</x-translation></b>
-              ${escapeHtml(excuse.reason || 'No reason provided')}
+              ${escapeHtml(excuse.reason || /*html*/`<x-translation>excuse.no-reason</x-translation>`)}
             </span>
           </div>
 
@@ -82,7 +82,7 @@ class ExcuseViewer extends APIElement {
           </div>
 
           <div class="excuse-row">
-            <ssd-icon name="status/${escapeHtml(excuse.status || 'pending')}"></ssd-icon>
+            <ssd-icon name="status/excuse/${escapeHtml(excuse.status || 'pending')}"></ssd-icon>
             <span>
               <b><x-translation>excuse.status</x-translation></b>
               ${escapeHtml(excuse.status || 'pending')}

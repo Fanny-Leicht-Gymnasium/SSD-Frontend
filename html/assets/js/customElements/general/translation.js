@@ -1,4 +1,7 @@
 // translation.js
+
+import { getStoredSetting } from "../../util.js";
+
 // HTML global attributes that should be ignored
 const defaultAttributes = new Set([
   "id",
@@ -32,7 +35,7 @@ const translationsCache = new Map();
 const translationsLoading = new Map();
 
 // Global default language
-let globalLanguage = 'en';
+let globalLanguage = getStoredSetting('html-lang')||"en";
 
 // Load language file with caching
 async function loadLanguage(lang) {

@@ -44,8 +44,8 @@
             "base": "Base",
             "fallback": "Fallback"
         },
-        "apply":{
-            "ApplyTO":"Apply for {slotname} starting on {startdate}."
+        "apply": {
+            "ApplyTO": "Apply for {slotname} starting on {startdate}."
         }
     },
     "user": {
@@ -67,5 +67,27 @@
             "replacement": "Replacement",
             "required": "required"
         }
+    },
+    "excuse": {
+        "addecusebutton": "Add Excuse",
+        "end": "Ends at: ",
+        "start": "Starts at: ",
+        "no-reason": "No Reason Provided",
+        "noExcuseFound": "No Excuse Found",
+        "statuses":{
+            "pending": "Pending",
+            "approved": "Approved",
+            "denied": "Denied",
+            "unknown": "Unknown"
+        },
+        "reason": "Reason",
+        "status": "Status",
+        "unknown": "Unknown Reason"
+    },
+    "mission": {
+        "author": "Author",
+        "call-log": "Mission Call Log",
+        "no-additional-info": "No Additional Information",
+        "no-users": "No Users"
     }
 }

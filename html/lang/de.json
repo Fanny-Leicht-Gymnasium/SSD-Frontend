@@ -1,0 +1,93 @@
+{
+    "lang": "German",
+    "time": {
+        "countdown": {
+            "future": "in {value}",
+            "past": "vor {value}"
+        },
+        "weekday": {
+            "0": "Sonntag",
+            "1": "Montag",
+            "2": "Dienstag",
+            "3": "Mittwoch",
+            "4": "Donnerstag",
+            "5": "Freitag",
+            "6": "Samstag",
+            "7": "Sonntag"
+        }
+    },
+    "application": {
+        "button": {
+            "approve": "Genehmigen",
+            "approveLeave": "Abwesenheit genehmigen",
+            "deny": "Ablehnen",
+            "denyLeave": "Abwesenheit ablehnen",
+            "leaveRequest": "Abwesenheit beantragen"
+        },
+        "enddate": "Enddatum",
+        "startdate": "Startdatum",
+        "id": "Antrags-ID",
+        "reason": "Grund",
+        "status": {
+            "status": "Status",
+            "open": "Offen",
+            "approved": "Genehmigt",
+            "denied": "Abgelehnt",
+            "redraw": "Erneut beantragen",
+            "leaveRequest": "Abwesenheitsantrag",
+            "leaveDenied": "Abwesenheit abgelehnt",
+            "leaved": "Abwesend",
+            "inactive": "Inaktiv"
+        },
+        "type": {
+            "type": "Typ",
+            "base": "Basis",
+            "fallback": "Fallback"
+        },
+        "apply": {
+            "ApplyTO": "Für {slotname} ab dem {startdate} bewerben."
+        }
+    },
+    "user": {
+        "name": "Name",
+        "userid": "Benutzer-ID",
+        "username": "Benutzername",
+        "email": "E-Mail",
+        "role": "Rolle",
+        "phonenumber": "Telefonnummer",
+        "class": "Klasse"
+    },
+    "slot": {
+        "lable": {
+            "alerts": "Benachrichtigungen",
+            "applications": "Anträge",
+            "base": "Basis",
+            "excuses": "Entschuldigungen",
+            "fallback": "Fallback",
+            "replacement": "Ersatz",
+            "required": "erforderlich"
+        }
+    },
+    "excuse": {
+        "addecusebutton": "Entschuldigung hinzufügen",
+        "end": "Endet um: ",
+        "start": "Beginnt um: ",
+        "no-reason": "Kein Grund angegeben",
+        "noExcuseFound": "Keine Entschuldigung gefunden",
+        "statuses": {
+            "pending": "Ausstehend",
+            "approved": "Genehmigt",
+            "denied": "Abgelehnt",
+            "unknown": "Unbekannt"
+        },
+        "reason": "Grund",
+        "status": "Status",
+        "unknown": "Unbekannter Grund"
+    },
+    "mission": {
+        "author": "Autor",
+        "call-log": "Missionsprotokoll",
+        "no-additional-info": "Keine zusätzlichen Informationen",
+        "no-users": "Keine Benutzer"
+    }
+}

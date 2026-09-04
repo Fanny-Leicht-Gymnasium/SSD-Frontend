@@ -2,6 +2,9 @@
     "${key}": "${key}",
     "Author": "Author",
     "application": {
+        "apply": {
+            "ApplyTO": "application.apply.ApplyTO"
+        },
         "button": {
             "approve": "Approve",
             "approveLeave": "Approve Leave",
@@ -32,7 +35,24 @@
             "type": "Type"
         }
     },
+    "excuse": {
+        "addecusebutton": "excuse.addecusebutton",
+        "end": "excuse.end",
+        "no-reason": "excuse.no-reason",
+        "noExcuseFound": "excuse.noExcuseFound",
+        "pending": "excuse.pending",
+        "reason": "excuse.reason",
+        "start": "excuse.start",
+        "status": "excuse.status",
+        "unknown": "excuse.unknown"
+    },
     "lang": "English",
+    "mission": {
+        "author": "mission.author",
+        "call-log": "mission.call-log",
+        "no-additional-info": "mission.no-additional-info",
+        "no-users": "mission.no-users"
+    },
     "slot": {
         "lable": {
             "alerts": "Alerts",

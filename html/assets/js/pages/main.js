@@ -1,13 +1,10 @@
 import { getUserMe } from "../api/api.generated.js";
-
-
-
+import { setLanguage } from "../customElements/general/translation.js";
+import { getStoredSetting, getStoredSettings, updateSettingsToDOM } from "../util.js";
 
 const BUILD_VERSION_URL = "/__build-version";
 const INSTALLED_VERSION_KEY = "installed-build-version";
 const UPDATE_MESSAGE_KEY = "pwa-update-message";
-
-
 
 function showUpdateMessage() {
   const message = localStorage.getItem(UPDATE_MESSAGE_KEY);
@@ -159,14 +156,15 @@ document.addEventListener('click', (e) => {
 
 
 (async () => {
-    const updated = await checkBuildVersion();
-
+  const updated = await checkBuildVersion();
   // The page will reload after an update.
   if (updated) {
     return;
   }
-
   showUpdateMessage();
+  updateSettingsToDOM(getStoredSettings());
+  setLanguage(getStoredSetting('html-lang') || 'en');
+  fetchSettings();
   const me = await getUserMe();
   localStorage.setItem("me", JSON.stringify(me));
   console.log("----------------------------------------------------------------------------------------------------------------- Updeded ME")

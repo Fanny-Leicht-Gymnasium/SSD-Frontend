@@ -15,7 +15,5 @@ document.addEventListener('click', (e) => {
 (async () => {
   const me = await getUserMe();
   localStorage.setItem("me", JSON.stringify(me));
-  updateSettingsToDOM(getStoredSettings());
-  fetchSettings();
   console.log("Updated ME and Settings")
 })();
