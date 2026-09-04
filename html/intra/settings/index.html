@@ -12,12 +12,20 @@
     <ssd-nav class="top"></ssd-nav>
     <main>
       <h1>SSD Settings</h1>
-      Work In Progress
-    </main>
+
+  <ssd-setting
+    storagekey="html-frontend-theme"
+    name="Theme"
+    type="select"
+    options="System Default;Light;Dark"
+    saveButton
+    refreshButton
+  >System Default</ssd-setting>
+  </main>
 
     <ssd-nav class="bottom"></ssd-nav>
 
-    <script type="module" src="./assets/js/main.js"></script>
+    <script type="module" src="/assets/js/main.js"></script>
 
     <script src="/assets/js/pages/intra/main.js" type="module"></script>
     <script src="/assets/js/pages/intra/settings/main.js" type="module"></script>
@@ -32,6 +40,8 @@
     <script type="module" src="/assets/js/customElements/ssd-alert/ssd-error.js"></script>
     <script type="module" src="/assets/js/customElements/ssd-alert/ssd-warning.js"></script>
     <script type="module" src="/assets/js/customElements/ssd-alert/ssd-ok.js"></script>
+
+    <script type="module" src="/assets/js/customElements/api-elements/forms/settings/ssd-setting.js"></script>
 
     <script type="module" src="/assets/js/customElements/ssd-nav.js"></script>
 
