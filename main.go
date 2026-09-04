@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -9,6 +10,7 @@ import (
 	"strings"
 	"time"
 )
+
 const htmlRoot = "./html"
 
 func main() {
@@ -52,7 +54,44 @@ func main() {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(files)
 	})
-	
+	http.HandleFunc("/__build-version", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		// This endpoint must never be cached because the service worker
+		// uses it to detect a newly deployed application version.
+		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate")
+		w.Header().Set("Pragma", "no-cache")
+		w.WriteHeader(http.StatusOK)
+
+		if devMode {
+
+			version, err := getBuildVersion()
+			if err != nil {
+				http.Error(w, "Failed to calculate build version", http.StatusInternalServerError)
+				return
+			}
+
+			log.Println("Build version requested in dev mode:", version)
+
+			// Example:
+
+			w.Write([]byte(BuildVersion))
+			fmt.Fprintf(w, "-%x", version)
+			return
+		} else {
+
+		}
+		w.Write([]byte(BuildVersion))
+		version, err := getBuildVersion()
+		if err != nil {
+			return
+		}
+		fmt.Fprintf(w, "-%x", version)
+	})
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
 

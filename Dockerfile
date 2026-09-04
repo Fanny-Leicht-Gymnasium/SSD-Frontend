@@ -11,8 +11,23 @@ RUN go mod download
 # Copy source code
 COPY . .
 
-# Build binary
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o app .
+ARG BUILD_VERSION=""
+ARG BUILD_MODE=""
+
+# Build binary with optional version and build mode
+RUN LDFLAGS="-s -w"; \
+    if [ -n "$BUILD_VERSION" ]; then \
+        LDFLAGS="$LDFLAGS -X main.BuildVersion=$BUILD_VERSION"; \
+    fi; \
+    BUILD_TAGS=""; \
+    if [ "$BUILD_MODE" = "devmode" ]; then \
+        BUILD_TAGS="-tags=devmode"; \
+    fi; \
+    echo "go build -ldflags=\"$LDFLAGS\" $BUILD_TAGS -o app ."; \
+    CGO_ENABLED=0 GOOS=linux go build \
+        -ldflags="$LDFLAGS" \
+        $BUILD_TAGS \
+        -o app .
 
 FROM alpine:latest
 
