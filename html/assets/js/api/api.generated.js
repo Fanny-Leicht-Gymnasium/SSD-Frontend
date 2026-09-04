@@ -395,6 +395,7 @@ export function createPostMissionStartBodyTemplate({
 
 /**
  * POST /login
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L185 - endpoint definition in the OpenAPI spec
  * @param {PostLoginBody} body - see {@link PostLoginBody} for generation: {@link createPostLoginBodyTemplate()}
  * @returns {Promise<any>}
  */
@@ -422,6 +423,7 @@ export async function postLogin(body) {
 
 /**
  * POST /logout
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L207 - endpoint definition in the OpenAPI spec
  * @returns {Promise<any>}
  */
 export async function postLogout() {
@@ -447,6 +449,7 @@ export async function postLogout() {
 
 /**
  * GET /user/me
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L216 - endpoint definition in the OpenAPI spec
  * @returns {Promise<any>}
  */
 export async function getUserMe() {
@@ -472,6 +475,7 @@ export async function getUserMe() {
 
 /**
  * GET /user/me/alerts
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L229 - endpoint definition in the OpenAPI spec
  * @returns {Promise<any>}
  */
 export async function getUserMeAlerts() {
@@ -497,6 +501,7 @@ export async function getUserMeAlerts() {
 
 /**
  * GET /user/me/setting/
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L244 - endpoint definition in the OpenAPI spec
  * @returns {Promise<any>}
  */
 export async function getUserMeSetting() {
@@ -522,6 +527,7 @@ export async function getUserMeSetting() {
 
 /**
  * GET /user/me/setting/{setting}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L265 - endpoint definition in the OpenAPI spec
  * @param {string} setting
  * @returns {Promise<any>}
  */
@@ -550,6 +556,7 @@ export async function getUserMeSettingSetting(setting) {
 
 /**
  * POST /user/me/setting/{setting}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L277 - endpoint definition in the OpenAPI spec
  * @param {string} setting
  * @param {string} body - see {@link string} for generation: {@link createStringTemplate()}
  * @returns {Promise<any>}
@@ -580,6 +587,7 @@ export async function postUserMeSettingSetting(setting, body) {
 
 /**
  * DELETE /user/me/setting/{setting}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L290 - endpoint definition in the OpenAPI spec
  * @param {string} setting
  * @returns {Promise<any>}
  */
@@ -608,6 +616,7 @@ export async function deleteUserMeSettingSetting(setting) {
 
 /**
  * POST /user
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L299 - endpoint definition in the OpenAPI spec
  * @param {PostUserBody} body - see {@link PostUserBody} for generation: {@link createPostUserBodyTemplate()}
  * @returns {Promise<any>}
  */
@@ -635,6 +644,7 @@ export async function postUser(body) {
 
 /**
  * GET /user/list
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L323 - endpoint definition in the OpenAPI spec
  * @returns {Promise<any>}
  */
 export async function getUserList() {
@@ -660,6 +670,7 @@ export async function getUserList() {
 
 /**
  * GET /user/{userID}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L345 - endpoint definition in the OpenAPI spec
  * @param {string} userID
  * @returns {Promise<any>}
  */
@@ -688,6 +699,7 @@ export async function getUserUserid(userID) {
 
 /**
  * PUT /user/{userID}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L357 - endpoint definition in the OpenAPI spec
  * @param {string} userID
  * @param {PutUserUseridBody} body - see {@link PutUserUseridBody} for generation: {@link createPutUserUseridBodyTemplate()}
  * @returns {Promise<any>}
@@ -718,6 +730,7 @@ export async function putUserUserid(userID, body) {
 
 /**
  * DELETE /user/{userID}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L384 - endpoint definition in the OpenAPI spec
  * @param {string} userID
  * @returns {Promise<any>}
  */
@@ -746,6 +759,7 @@ export async function deleteUserUserid(userID) {
 
 /**
  * GET /user/{userID}/testcall
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L399 - endpoint definition in the OpenAPI spec
  * @param {string} userID
  * @returns {Promise<any>}
  */
@@ -774,6 +788,7 @@ export async function getUserUseridTestcall(userID) {
 
 /**
  * GET /user/{userID}/setting/
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L414 - endpoint definition in the OpenAPI spec
  * @param {string} userID
  * @returns {Promise<any>}
  */
@@ -802,6 +817,7 @@ export async function getUserUseridSetting(userID) {
 
 /**
  * GET /user/{userID}/setting/{setting}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L440 - endpoint definition in the OpenAPI spec
  * @param {string} userID
  * @param {string} setting
  * @returns {Promise<any>}
@@ -832,6 +848,7 @@ export async function getUserUseridSettingSetting(userID, setting) {
 
 /**
  * POST /user/{userID}/setting/{setting}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L452 - endpoint definition in the OpenAPI spec
  * @param {string} userID
  * @param {string} setting
  * @param {string} body - see {@link string} for generation: {@link createStringTemplate()}
@@ -864,6 +881,7 @@ export async function postUserUseridSettingSetting(userID, setting, body) {
 
 /**
  * DELETE /user/{userID}/setting/{setting}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L465 - endpoint definition in the OpenAPI spec
  * @param {string} userID
  * @param {string} setting
  * @returns {Promise<any>}
@@ -894,6 +912,7 @@ export async function deleteUserUseridSettingSetting(userID, setting) {
 
 /**
  * GET /schedule/{year}/{week}/
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L485 - endpoint definition in the OpenAPI spec
  * @param {string} year
  * @param {string} week
  * @returns {Promise<any>}
@@ -924,6 +943,7 @@ export async function getScheduleYearWeek(year, week) {
 
 /**
  * GET /schedule/{year}/{week}/slot/{slotID}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L519 - endpoint definition in the OpenAPI spec
  * @param {string} year
  * @param {string} week
  * @param {string} slotID
@@ -956,6 +976,7 @@ export async function getScheduleYearWeekSlotSlotid(year, week, slotID) {
 
 /**
  * PUT /schedule/{year}/{week}/slot/{slotID}/info
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L548 - endpoint definition in the OpenAPI spec
  * @param {string} year
  * @param {string} week
  * @param {string} slotID
@@ -990,6 +1011,7 @@ export async function putScheduleYearWeekSlotSlotidInfo(year, week, slotID, body
 
 /**
  * POST /schedule/{year}/{week}/slot/{slotID}/replacement/apply
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L582 - endpoint definition in the OpenAPI spec
  * @param {string} year
  * @param {string} week
  * @param {string} slotID
@@ -1024,6 +1046,7 @@ export async function postScheduleYearWeekSlotSlotidReplacementApply(year, week,
 
 /**
  * POST /schedule/{year}/{week}/slot/{slotID}/replacement/redraw
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L615 - endpoint definition in the OpenAPI spec
  * @param {string} year
  * @param {string} week
  * @param {string} slotID
@@ -1058,6 +1081,7 @@ export async function postScheduleYearWeekSlotSlotidReplacementRedraw(year, week
 
 /**
  * POST /schedule/{year}/{week}/slot/{slotID}/apply
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L648 - endpoint definition in the OpenAPI spec
  * @param {string} year
  * @param {string} week
  * @param {string} slotID
@@ -1092,6 +1116,7 @@ export async function postScheduleYearWeekSlotSlotidApply(year, week, slotID, bo
 
 /**
  * POST /schedule/{year}/{week}/slot/{slotID}/leave
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L692 - endpoint definition in the OpenAPI spec
  * @param {string} year
  * @param {string} week
  * @param {string} slotID
@@ -1126,6 +1151,7 @@ export async function postScheduleYearWeekSlotSlotidLeave(year, week, slotID, bo
 
 /**
  * GET /application
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L711 - endpoint definition in the OpenAPI spec
  * @param {string} [filter]
  * @param {string} [startdate]
  * @param {string} [enddate]
@@ -1160,6 +1186,7 @@ export async function getApplication(filter, startdate, enddate, userid) {
 
 /**
  * GET /application/{id}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L752 - endpoint definition in the OpenAPI spec
  * @param {string} id
  * @returns {Promise<any>}
  */
@@ -1188,6 +1215,7 @@ export async function getApplicationId(id) {
 
 /**
  * POST /application/{id}/{action}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L777 - endpoint definition in the OpenAPI spec
  * @param {string} id
  * @param {string} action
  * @param {PostApplicationIdActionBody} body - see {@link PostApplicationIdActionBody} for generation: {@link createPostApplicationIdActionBodyTemplate()}
@@ -1220,6 +1248,7 @@ export async function postApplicationIdAction(id, action, body) {
 
 /**
  * GET /schedule/slot
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L795 - endpoint definition in the OpenAPI spec
  * @param {number} [w]
  * @param {number} [year]
  * @returns {Promise<any>}
@@ -1250,6 +1279,7 @@ export async function getScheduleSlot(w, year) {
 
 /**
  * POST /schedule/slot
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L818 - endpoint definition in the OpenAPI spec
  * @param {PostScheduleSlotBody} body - see {@link PostScheduleSlotBody} for generation: {@link createPostScheduleSlotBodyTemplate()}
  * @returns {Promise<any>}
  */
@@ -1277,6 +1307,7 @@ export async function postScheduleSlot(body) {
 
 /**
  * GET /schedule/slot/{id}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L856 - endpoint definition in the OpenAPI spec
  * @param {string} id
  * @returns {Promise<any>}
  */
@@ -1305,6 +1336,7 @@ export async function getScheduleSlotId(id) {
 
 /**
  * PUT /schedule/slot/{id}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L868 - endpoint definition in the OpenAPI spec
  * @param {string} id
  * @param {Slot} body - see {@link Slot} for generation: {@link createSlotTemplate()}
  * @returns {Promise<any>}
@@ -1335,6 +1367,7 @@ export async function putScheduleSlotId(id, body) {
 
 /**
  * DELETE /schedule/slot/{id}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L885 - endpoint definition in the OpenAPI spec
  * @param {string} id
  * @returns {Promise<any>}
  */
@@ -1363,6 +1396,7 @@ export async function deleteScheduleSlotId(id) {
 
 /**
  * POST /excuse
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L895 - endpoint definition in the OpenAPI spec
  * @param {PostExcuseBody} body - see {@link PostExcuseBody} for generation: {@link createPostExcuseBodyTemplate()}
  * @returns {Promise<any>}
  */
@@ -1390,6 +1424,7 @@ export async function postExcuse(body) {
 
 /**
  * GET /excuse/list
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L923 - endpoint definition in the OpenAPI spec
  * @param {string} [startdate]
  * @param {string} [enddate]
  * @param {string} [filter]
@@ -1426,6 +1461,7 @@ export async function getExcuseList(startdate, enddate, filter, page, page_size)
 
 /**
  * GET /excuse/list/admin
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L987 - endpoint definition in the OpenAPI spec
  * @param {string} [startdate]
  * @param {string} [enddate]
  * @param {string} [filter]
@@ -1464,6 +1500,7 @@ export async function getExcuseListAdmin(startdate, enddate, filter, users, page
 
 /**
  * GET /excuse/{id}/
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1062 - endpoint definition in the OpenAPI spec
  * @param {string} id
  * @returns {Promise<any>}
  */
@@ -1492,6 +1529,7 @@ export async function getExcuseId(id) {
 
 /**
  * POST /excuse/{id}/{action}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1088 - endpoint definition in the OpenAPI spec
  * @param {string} id
  * @param {string} action
  * @returns {Promise<any>}
@@ -1522,6 +1560,7 @@ export async function postExcuseIdAction(id, action) {
 
 /**
  * GET /mission/list
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1100 - endpoint definition in the OpenAPI spec
  * @param {string} [startdate]
  * @param {string} [enddate]
  * @param {boolean} [ids_only]
@@ -1558,6 +1597,7 @@ export async function getMissionList(startdate, enddate, ids_only, page, page_si
 
 /**
  * GET /mission/{id}
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1177 - endpoint definition in the OpenAPI spec
  * @param {string} id
  * @returns {Promise<any>}
  */
@@ -1586,6 +1626,7 @@ export async function getMissionId(id) {
 
 /**
  * GET /mission/active
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1188 - endpoint definition in the OpenAPI spec
  * @returns {Promise<any>}
  */
 export async function getMissionActive() {
@@ -1611,6 +1652,7 @@ export async function getMissionActive() {
 
 /**
  * POST /mission/subscribe
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1201 - endpoint definition in the OpenAPI spec
  * @param {PostMissionSubscribeBody} body - see {@link PostMissionSubscribeBody} for generation: {@link createPostMissionSubscribeBodyTemplate()}
  * @returns {Promise<any>}
  */
@@ -1638,6 +1680,7 @@ export async function postMissionSubscribe(body) {
 
 /**
  * POST /mission/start
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1218 - endpoint definition in the OpenAPI spec
  * @param {PostMissionStartBody} body - see {@link PostMissionStartBody} for generation: {@link createPostMissionStartBodyTemplate()}
  * @returns {Promise<any>}
  */
@@ -1665,6 +1708,7 @@ export async function postMissionStart(body) {
 
 /**
  * GET /mission/{id}/status
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1247 - endpoint definition in the OpenAPI spec
  * @param {string} id
  * @returns {Promise<any>}
  */
@@ -1693,6 +1737,7 @@ export async function getMissionIdStatus(id) {
 
 /**
  * GET /mission/{id}/status/subscribe
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1265 - endpoint definition in the OpenAPI spec
  * @param {string} id
  * @returns {Promise<any>}
  */
@@ -1721,6 +1766,7 @@ export async function getMissionIdStatusSubscribe(id) {
 
 /**
  * GET /system/health
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1279 - endpoint definition in the OpenAPI spec
  * @returns {Promise<any>}
  */
 export async function getSystemHealth() {
@@ -1746,6 +1792,7 @@ export async function getSystemHealth() {
 
 /**
  * GET /system/health/module
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1290 - endpoint definition in the OpenAPI spec
  * @returns {Promise<any>}
  */
 export async function getSystemHealthModule() {
@@ -1771,6 +1818,7 @@ export async function getSystemHealthModule() {
 
 /**
  * GET /system/health/db
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1297 - endpoint definition in the OpenAPI spec
  * @returns {Promise<any>}
  */
 export async function getSystemHealthDb() {
@@ -1796,6 +1844,7 @@ export async function getSystemHealthDb() {
 
 /**
  * GET /system/health/api
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1304 - endpoint definition in the OpenAPI spec
  * @returns {Promise<any>}
  */
 export async function getSystemHealthApi() {
@@ -1821,6 +1870,7 @@ export async function getSystemHealthApi() {
 
 /**
  * GET /system/moduleWS
+ * @see  https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/15f2a48851b3d52c20e04cfae681d1fd20df916c/swagger.yml#L1312 - endpoint definition in the OpenAPI spec
  * @returns {Promise<any>}
  */
 export async function getSystemModulews() {

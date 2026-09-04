@@ -1,12 +1,46 @@
 import yaml
 import re
 from pathlib import Path
+import subprocess
 
 INPUT_FILE = "./SSD-Docs/swagger.yml"
 OUTPUT_FILE = "html/assets/js/api/api.generated.js"
 API_BASE_VALUE = "{APIENDPOINT}"  # you can replace or inject env usage
 
+# Optional: template for linking straight to the spec source on your repo
+# host (GitHub/GitLab/etc.) instead of a bare local file path, e.g.:
+#   "https://github.com/your-org/your-repo/blob/main/SSD-Docs/swagger.yml#L{line}"
+# Leave as None to just reference the local file path + line number.
+SPEC_SOURCE_URL_TEMPLATE  = None
+SPEC_REPO_URL = " https://github.com/Fanny-Leicht-Gymnasium/SSD-Docs/blob/{commit}/swagger.yml#L{line}"
 
+def get_submodule_commit(submodule_path: str) -> str:
+    """Return the commit SHA recorded by the parent repository for the submodule."""
+    result = subprocess.run(
+        ["git", "ls-tree", "HEAD", submodule_path],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+
+    match = re.search(r"\b160000\s+commit\s+([0-9a-f]{40})\b", result.stdout)
+    if not match:
+        raise RuntimeError(
+            f"Could not determine the commit of submodule '{submodule_path}'."
+        )
+
+    return match.group(1)
+
+
+submodule_commit = get_submodule_commit("SSD-Docs")
+
+
+def get_spec_source_url(line: int) -> str:
+    """Build a link to the exact submodule commit and source line."""
+    return SPEC_REPO_URL.format(
+        commit=submodule_commit,
+        line=line,
+    )
 # ---------------------------------------------------------------------------
 # Schema resolution helpers
 # ---------------------------------------------------------------------------
@@ -36,6 +70,57 @@ def ref_name(ref: str) -> str:
 def pascal(name: str) -> str:
     safe = re.sub(r"[^A-Za-z0-9]", " ", name)
     return "".join(part[:1].upper() + part[1:] for part in safe.split() if part)
+
+
+# ---------------------------------------------------------------------------
+# Source-location lookup (path, method) -> line number in the spec file
+# ---------------------------------------------------------------------------
+# Built from a *parallel* pass over the composed YAML node tree, entirely
+# separate from the normal yaml.safe_load() data. This is deliberate:
+# tagging line numbers onto the actual parsed dicts (a common recipe using
+# a custom SafeLoader) would inject an extra key into every mapping in the
+# document - including `properties` dicts - which would then get picked up
+# as a bogus schema field everywhere. Composing the tree a second time,
+# read-only, avoids that entirely.
+
+def _mapping_child(node, key: str):
+    """Given a yaml MappingNode, return the value node for `key`, or None."""
+    if node is None or not isinstance(node, yaml.MappingNode):
+        return None
+    for key_node, value_node in node.value:
+        if key_node.value == key:
+            return value_node
+    return None
+
+
+def build_operation_line_map(text: str):
+    """Map (path, method) -> 1-indexed line number of the `method:` key
+    itself (e.g. the line `put:` appears on) by walking the composed node
+    tree for `paths.<path>.<method>`."""
+    line_map = {}
+    root = yaml.compose(text, Loader=yaml.SafeLoader)
+    paths_node = _mapping_child(root, "paths")
+    if not isinstance(paths_node, yaml.MappingNode):
+        return line_map
+
+    for path_key_node, path_val_node in paths_node.value:
+        if not isinstance(path_val_node, yaml.MappingNode):
+            continue
+        for method_key_node, _method_val_node in path_val_node.value:
+            line_map[(path_key_node.value, method_key_node.value)] = (
+                method_key_node.start_mark.line + 1
+            )
+    return line_map
+
+
+def spec_source_link(line: int):
+    if line is None:
+        return None
+    if SPEC_SOURCE_URL_TEMPLATE:
+        return SPEC_SOURCE_URL_TEMPLATE.format(line=line)
+    if SPEC_REPO_URL:
+        return SPEC_REPO_URL.format(commit=submodule_commit, line=line)
+    return f"{INPUT_FILE}:{line}"
 
 
 # ---------------------------------------------------------------------------
@@ -496,7 +581,7 @@ function buildQueryString(queryParams) {
 # Endpoint function generation
 # ---------------------------------------------------------------------------
 
-def generate_function(path, method, operation, spec, typedefs, templates):
+def generate_function(path, method, operation, spec, typedefs, templates, line_map=None):
     func_name = operation.get("operationId")
     if not func_name:
         clean = re.sub(r"[{}]", "", path).replace("/", " ").title().replace(" ", "")
@@ -527,6 +612,10 @@ def generate_function(path, method, operation, spec, typedefs, templates):
 
     # ---- JSDoc block -------------------------------------------------
     doc = ["/**", f" * {method.upper()} {path}"]
+    source_line = (line_map or {}).get((path, method))
+    source_link = spec_source_link(source_line)
+    if source_link:
+        doc.append(f" * @see {source_link} - endpoint definition in the OpenAPI spec")
     for p in path_params:
         t = param_js_type(path_param_defs.get(p, {}))
         doc.append(f" * @param {{{t}}} {p}")
@@ -582,7 +671,9 @@ def generate_function(path, method, operation, spec, typedefs, templates):
 
 def generate():
     with open(INPUT_FILE, "r") as f:
-        spec = yaml.safe_load(f)
+        text = f.read()
+    spec = yaml.safe_load(text)
+    line_map = build_operation_line_map(text)
 
     paths = spec.get("paths", {})
 
@@ -594,7 +685,7 @@ def generate():
         for method, operation in methods.items():
             if method.lower() not in ["get", "post", "put", "delete", "patch"]:
                 continue
-            functions.append(generate_function(path, method, operation, spec, typedefs, templates))
+            functions.append(generate_function(path, method, operation, spec, typedefs, templates, line_map))
             functions.append("\n")
 
     output = []
