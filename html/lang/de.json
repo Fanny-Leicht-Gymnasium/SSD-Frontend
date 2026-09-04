@@ -89,5 +89,15 @@
         "call-log": "Missionsprotokoll",
         "no-additional-info": "Keine zusätzlichen Informationen",
         "no-users": "Keine Benutzer"
+    },
+    "page":{
+        "Dashboard":"Dashboard",
+        "Excuses":"Entschuldigungen",
+        "Alerts":"Alarmierungen",
+        "Settings":"Einstellungen"
+    },
+    "setting":{
+        "Theme":"Theme",
+        "language":"Sprache"
     }
 }

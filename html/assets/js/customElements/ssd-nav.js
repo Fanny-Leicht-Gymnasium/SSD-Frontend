@@ -37,7 +37,7 @@ export class SSDNavigation extends SSDElement {
 
             btn.innerHTML = /*html*/`
                 <ssd-icon name="${page.icon}"></ssd-icon>
-                <span class="label">${page.label}</span>
+                <span class="label"><x-trans>page.${page.label}</x-trans></span>
             `;
 
             btn.addEventListener('click', () => {
