@@ -47,7 +47,7 @@ async function installCache() {
 
                 await cache.put(absoluteUrl, response.clone());
 
-                console.log('[SW] Cached:', absoluteUrl);
+                // console.log('[SW] Cached:', absoluteUrl);
             } catch (error) {
                 console.error('[SW] Failed:', url, error);
                 throw error;
@@ -74,22 +74,22 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
     const request = event.request;
-    console.log(
-        '[SW] FETCH:',
-        request.method,
-        request.url,
-        'mode=',
-        request.mode,
-        'destination=',
-        request.destination
-    );
+    // console.log(
+    //     '[SW] FETCH:',
+    //     request.method,
+    //     request.url,
+    //     'mode=',
+    //     request.mode,
+    //     'destination=',
+    //     request.destination
+    // );
 
     if (request.method !== 'GET') {
         return;
     }
 
     const url = new URL(request.url);
-    console.log('[SW] fetch event:', request.method, request.url, 'destination=', request.destination);
+    // console.log('[SW] fetch event:', request.method, request.url, 'destination=', request.destination);
     const isStyleRequest = request.destination === 'style' || url.pathname.startsWith('/assets/css/customElement/');
 
     /*
@@ -140,7 +140,7 @@ async function handleNavigation(request) {
         const cached = await cache.match(cacheKey);
 
         if (cached) {
-            console.log('[SW] Navigation CACHE HIT:', cacheKey);
+            // console.log('[SW] Navigation CACHE HIT:', cacheKey);
             return cached;
         }
 
@@ -160,7 +160,7 @@ async function handleStyleRequest(request) {
     const cached = await caches.match(cacheKey);
 
     if (cached) {
-        console.log('[SW] STYLE HIT:', new URL(request.url).pathname);
+        // console.log('[SW] STYLE HIT:', new URL(request.url).pathname);
         return cached;
     }
 
@@ -189,11 +189,11 @@ async function handleAsset(request) {
     const cached = await caches.match(cacheKey);
 
     if (cached) {
-        console.log('[SW] CACHE HIT:', new URL(request.url).pathname);
+        // console.log('[SW] CACHE HIT:', new URL(request.url).pathname);
         return cached;
     }
 
-    console.log('[SW] CACHE MISS:', new URL(request.url).pathname);
+    // console.log('[SW] CACHE MISS:', new URL(request.url).pathname);
 
     try {
         const response = await fetch(request);
