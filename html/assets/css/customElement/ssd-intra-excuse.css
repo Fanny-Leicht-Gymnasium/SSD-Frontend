@@ -1,0 +1,144 @@
+:host {
+  display: block;
+  font-family: Arial, sans-serif;
+}
+
+#container {
+  margin: 0;
+}
+
+.excuse-card {
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--surface);
+}
+
+.excuse-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+.excuse-icon {
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--text);
+  color: var(--surface);
+}
+
+.excuse-icon ssd-icon {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.excuse-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.excuse-title h2 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.excuse-user-name {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+}
+
+.excuse-status-info {
+  margin-top: 4px;
+  font-size: 13px;
+}
+
+.excuse-status-info p {
+  margin: 0;
+}
+
+.excuse-actions {
+  display: flex;
+  align-items: center;
+}
+
+.end-now-btn {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--danger);
+  color: var(--surface);
+  font: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.end-now-btn:hover {
+  background: var(--red-dark);
+}
+
+.end-now-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.excuse-body {
+  padding: 0 20px 20px 90px;
+}
+
+.excuse-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  min-height: 25px;
+  font-size: 17px;
+}
+
+.excuse-row ssd-icon {
+  width: 25px !important;
+  height: 25px !important;
+  flex: 0 0 25px;
+}
+
+.excuse-row > span {
+  min-width: 0;
+}
+
+.excuse-row b {
+  font-weight: bold;
+}
+
+time-display {
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .excuse-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .excuse-title {
+    flex-basis: calc(100% - 70px);
+  }
+
+  .excuse-actions {
+    width: 100%;
+    justify-content: flex-end;
+    margin-left: 70px;
+  }
+
+  .excuse-body {
+    padding: 0 20px 20px;
+  }
+}
