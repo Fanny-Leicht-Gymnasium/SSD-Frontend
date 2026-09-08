@@ -1,16 +1,24 @@
-import { createPostMissionStartBodyTemplate, postMissionStart } from '../../../api/api.generated.js';
+import {
+  createPostMissionStartBodyTemplate,
+  postMissionStart
+} from '../../../api/api.generated.js';
+
 import { FormAPIElement } from '../../form-api-element.js';
 
 class SSDMissionStart extends FormAPIElement {
+
   constructor() {
     super();
+
     this.defaultAlertErrors = true;
+    this.injuries = [];
   }
 
   renderForm() {
     this.form.innerHTML = /*html*/`
             <div class="field" input-label="Injury" trans-lable="mission.injury" trans-placeholder="mission.injury">
-            <input type="text" id="injury" placeholder="Injury (e.g. Broken leg)" required>
+            <input type="text" id="injury" placeholder="Injury (e.g. Broken leg)" list="injury-options" required>
+            <datalist id="injury-options"></datalist>
             </div>
             <div class="field" input-label="Location" trans-lable="mission.location" trans-placeholder="mission.location">
             <input type="text" id="location" placeholder="Location" required>
@@ -23,7 +31,40 @@ class SSDMissionStart extends FormAPIElement {
             </div>`;
     this.defaultSubmittext = 'Start Mission';
   }
-  async load() { }
+
+  async load() {
+    try {
+      const response = await fetch('/assets/datasets/injury.json');
+
+      if (!response.ok) {
+        throw new Error(`Failed to load injury data: ${response.status}`);
+      }
+
+      this.injuries = await response.json();
+
+      this.populateInjuryAutocomplete();
+    } catch (error) {
+      console.error('Failed to load injuries:', error);
+    }
+  }
+
+  populateInjuryAutocomplete() {
+    const datalist = this.form.querySelector('#injury-options');
+
+    if (!datalist) {
+      return;
+    }
+
+    datalist.innerHTML = '';
+
+    for (const injury of this.injuries) {
+      const option = document.createElement('option');
+
+      option.value = injury;
+
+      datalist.appendChild(option);
+    }
+  }
 
   async handleSend(data) {
     const missionData = createPostMissionStartBodyTemplate({

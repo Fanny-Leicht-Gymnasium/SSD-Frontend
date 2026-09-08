@@ -1,0 +1,66 @@
+[
+  "Kopfschmerzen",
+  "Bauchschmerzen",
+  "Übelkeit",
+  "Erbrechen",
+  "Schwindel",
+  "Kreislaufprobleme",
+  "Ohnmacht",
+  "Atemnot",
+  "Hyperventilation",
+  "Brustschmerzen",
+
+  "Nasenbluten",
+  "Zahnschmerzen",
+  "Zahnverletzung",
+  "Fremdkörper im Auge",
+  "Augenverletzung",
+
+  "Schnittwunde",
+  "Schürfwunde",
+  "Platzwunde",
+  "Stichverletzung",
+  "Bissverletzung",
+
+  "Prellung",
+  "Stauchung",
+  "Verstauchung",
+  "Zerrung",
+  "Bänderverletzung",
+  "Gelenkschmerzen",
+  "Luxation",
+  "Fraktur",
+  "Verdacht auf Fraktur",
+
+  "Kopfverletzung",
+  "Gehirnerschütterung",
+  "Rückenverletzung",
+  "Nackenverletzung",
+
+  "Verbrennung",
+  "Verbrühung",
+  "Sonnenbrand",
+
+  "Allergische Reaktion",
+  "Insektenstich",
+  "Asthmaanfall",
+  "Fieber",
+  "Krampfanfall",
+
+  "Unterzuckerung",
+  "Überzuckerung",
+
+  "Fremdkörper verschluckt",
+  "Verschlucken",
+  "Vergiftung",
+
+  "Starke Blutung",
+  "Kreislaufkollaps",
+  "Bewusstlosigkeit",
+  "Atemstillstand",
+
+  "Sportverletzung",
+  "Unfallverletzung",
+  "Unklarer Notfall",
+  "Sonstiges"
+]
