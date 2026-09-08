@@ -18,7 +18,8 @@ class ExcuseViewer extends APIElement {
     const me = getStoredUser()
     const canApprove = me?.role === 'admin' && excuse.status != "denied" && excuse.status != "approved" && excuse.status != "redraw";
     const canDeny =  me?.role === 'admin' && excuse.status != "denied" && excuse.status != "approved" && excuse.status != "redraw";
-    const canEndNow = true;
+    const inPast = (new Date(excuse.end) < new Date()) 
+    const canEndNow = me?.userid === excuse.userid &&  !inPast  && excuse.status != "denied" && excuse.status != "approved" && excuse.status != "redraw";
     return /*html*/`
 
       <div class="excuse-card" collapsable>
