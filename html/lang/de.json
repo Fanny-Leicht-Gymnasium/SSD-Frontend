@@ -104,7 +104,8 @@
         "call-log": "Missionsprotokoll",
         "no-additional-info": "Keine zusätzlichen Informationen",
         "no-users": "Keine Benutzer",
-        "no-missions-found": "Keine Alarmierung gefunden"
+        "no-missions-found": "Keine Alarmierung gefunden",
+        "medicWithIndex": "Sanitäter Nr. {index}"
     },
     "page": {
         "Dashboard": "Dashboard",

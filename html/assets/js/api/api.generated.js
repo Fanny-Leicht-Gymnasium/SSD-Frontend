@@ -2,6 +2,10 @@
 
 const API_BASE = `{APIENDPOINT}`;
 
+export function getApiUrl(endpoint) {
+  return `${API_BASE}${endpoint}`;
+}
+
 async function apiFetch(endpoint, options = {}, params = {}) {
   const token = localStorage.getItem("jwt");
 

@@ -110,6 +110,7 @@ export async function fetchSettings() {
 }
 
 export function updateSettingsToDOM(settings) {
+  if (!settings) return;
   Object.entries(settings).forEach(([key, value]) => {
     if (key.startsWith('html-')) {
       const el = document.body.setAttribute(key, value.replace(/^"|"$/g, ''));

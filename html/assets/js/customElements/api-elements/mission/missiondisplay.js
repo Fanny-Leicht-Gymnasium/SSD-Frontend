@@ -1,30 +1,89 @@
 import { APIElement } from '../../api-element.js';
-import { getMissionId } from '../../../api/api.generated.js';
-import { escapeHtml } from '../../../util.js';
+import { getMissionId, getApiUrl, getMissionIdStatus } from '../../../api/api.generated.js';
+import { escapeHtml, getStoredUser, isLoggedIn } from '../../../util.js';
 
 class MissionViewer extends APIElement {
   static get observedAttributes() {
-    return ['id', 'data', 'collapsed'];
+    return ['id', 'data', 'collapsed', 'live', "open", "statusMode"];
   }
+
+  constructor() {
+    super();
+    this.eventSource = null;
+  }
+
   async fetchById(id) {
-    return await getMissionId(id);
+    if (this.hasAttribute("statusMode")) {
+      return await getMissionIdStatus(id);
+    }else{
+      return await getMissionId(id);
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback?.();
+    this.startLiveUpdates();
+  }
+
+  disconnectedCallback() {
+    this.stopLiveUpdates();
+    super.disconnectedCallback?.();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    super.attributeChangedCallback(name, oldValue, newValue);
+    if (oldValue === newValue) return;
+
+    if (name === 'live' || name === 'id') {
+      this.stopLiveUpdates();
+      this.startLiveUpdates();
+    }
+  }
+
+  startLiveUpdates() {
+    const id = this.getAttribute('id');
+    if (!this.hasAttribute('live') || !id || this.eventSource) return;
+
+    this.eventSource = new EventSource(
+      getApiUrl(`/mission/${encodeURIComponent(id)}/status/subscribe`)
+    );
+    this.eventSource.onmessage = (event) => {
+      const mission = JSON.parse(event.data);
+      this.container.innerHTML = this.render(mission);
+      this.container.classList.remove('loading');
+      this.postRender();
+    };
+    this.eventSource.onerror = (error) => {
+      console.error('Mission live update stream failed:', error);
+    };
+  }
+
+  stopLiveUpdates() {
+    this.eventSource?.close();
+    this.eventSource = null;
   }
 
   render(mission) {
+    const me = getStoredUser();
+    const author = this.getAttribute("author");
+    const injury = mission.injury || this.getAttribute("injury");
+    const location = mission.location || this.getAttribute("location");
+    const additionalInformation = mission.additionalInformation || this.getAttribute("additionalInformation");
+
     return /*html*/`
-    <div class="mission-card" collapsable>
+    <div class="mission-card" collapsable ${this.hasAttribute("open")?"open":""}>
       <div class="mission-header header">
         <div class="mission-icon">
           <ssd-icon color ="red" name="status/${mission.status||"open"}"></ssd-icon>
         </div>
 
         <div class="mission-title">
-          <h2>${escapeHtml(mission.injury || 'Unknown Alert')}</h2>
+          <h2>${escapeHtml(injury || 'Unknown Alert')}</h2>
           <span class="mission-id">
             ${escapeHtml(mission.alertId || 'Unknown')}
           </span>
           <div class="mission-closed-info">
-        <p>${escapeHtml(mission.location || 'N/A')}</p>
+        <p>${escapeHtml(location || 'N/A')}</p>
         <p>${mission.additionalInformation? escapeHtml(mission.additionalInformation) : /*html*/`<x-translation>mission.no-additional-info</x-translation>`}</p>
         <time-display 
               show-countdown="true" 
@@ -39,20 +98,20 @@ class MissionViewer extends APIElement {
 
         <div class="mission-row">
         <ssd-icon name="map-pin"></ssd-icon>
-        <span>${escapeHtml(mission.location || 'N/A')}</span>
+        <span>${escapeHtml(location || 'N/A')}</span>
         </div>
 
         <div class="mission-row">
                   <ssd-icon name="paperclip"></ssd-icon>
 
-          <span>${mission.additionalInformation? escapeHtml(mission.additionalInformation) : /*html*/`<x-translation>mission.no-additional-info</x-translation>`}</span>
+          <span>${additionalInformation? escapeHtml(additionalInformation) : /*html*/`<x-translation>mission.no-additional-info</x-translation>`}</span>
         </div>
 
         <div class="mission-row">
           <ssd-icon name="user"></ssd-icon>
           <span>
             <b><x-translation>mission.author</x-translation></b>
-            ${escapeHtml(mission.author || 'N/A')}
+            ${escapeHtml(author || 'N/A')}
           </span>
         </div>
 
@@ -75,13 +134,15 @@ class MissionViewer extends APIElement {
 
          <div class="alert-users">
           ${Array.isArray(mission.alertedUser)
-        ? mission.alertedUser.map(u => /*html*/`
+        ? mission.alertedUser.map((u, index) => /*html*/`
               <div class="user-status ${escapeHtml(u.status || 'unknown')}">
                 <ssd-icon color ="red" name="status/${u.status||"N_A"}"></ssd-icon>
-  
-              <ssd-intra-user class="alert-status"
+                ${
+                  me?/*html*/`<ssd-intra-user class="alert-status"
                   id="${escapeHtml(u.userid ?? 'N/A')}">
-                </ssd-intra-user>
+                </ssd-intra-user>`:/*html*/`<x-translation index=${index+1}>mission.medicWithIndex</x-translation>`
+                }
+              
 
               </div>
             `).join('')

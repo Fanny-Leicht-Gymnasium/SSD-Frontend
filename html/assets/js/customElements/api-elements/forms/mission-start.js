@@ -37,7 +37,10 @@ class SSDMissionStart extends FormAPIElement {
       console.log('Mission started successfully:', data);
       this.result.textContent = `Mission started! UUID: ${data.alertId}`;
       this.result.className = 'success';
-      return { success: true, redirect: "", a:`/mission/?id=${data.alertId}` };
+      if (this.hasAttribute("noRedirect")){
+              return { success: true, redirect: `` , data: data};
+      }
+      return { success: true, redirect: `/mission/?id=${data.alertId}`, data: data};
     } catch (error) {
       return { success: false, error: error };
     }

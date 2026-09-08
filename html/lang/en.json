@@ -104,7 +104,8 @@
         "call-log": "Mission Call Log",
         "no-additional-info": "No Additional Information",
         "no-users": "No Users",
-        "no-missions-found":"No Mission Found"
+        "no-missions-found":"No Mission Found",
+        "medicWithIndex": "Medic No. {index}"
     },
     "page":{
         "Dashboard":"Dashboard",

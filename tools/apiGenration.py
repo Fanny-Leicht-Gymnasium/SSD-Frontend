@@ -528,6 +528,10 @@ def param_js_type(param: dict) -> str:
 
 def generate_api_fetch():
     return f"""
+export function getApiUrl(endpoint) {{
+  return `${{API_BASE}}${{endpoint}}`;
+}}
+
 async function apiFetch(endpoint, options = {{}}, params = {{}}) {{
   const token = localStorage.getItem("jwt");
 
