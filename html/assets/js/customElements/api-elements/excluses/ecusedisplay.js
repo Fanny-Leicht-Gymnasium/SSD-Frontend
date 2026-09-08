@@ -1,8 +1,8 @@
 import { APIElement } from '../../api-element.js';
 
-import { getExcuseId } from '../../../api/api.generated.js';
+import { getExcuseId, postExcuseIdAction } from '../../../api/api.generated.js';
 
-import { escapeHtml } from '../../../util.js';
+import { escapeHtml, getStoredUser } from '../../../util.js';
 
 class ExcuseViewer extends APIElement {
 
@@ -15,6 +15,10 @@ class ExcuseViewer extends APIElement {
   }
 
   render(excuse) {
+    const me = getStoredUser()
+    const canApprove = me?.role === 'admin' && excuse.status != "denied" && excuse.status != "approved" && excuse.status != "redraw";
+    const canDeny =  me?.role === 'admin' && excuse.status != "denied" && excuse.status != "approved" && excuse.status != "redraw";
+    const canEndNow = true;
     return /*html*/`
 
       <div class="excuse-card" collapsable>
@@ -37,11 +41,44 @@ class ExcuseViewer extends APIElement {
             </span>
 
             <div class="excuse-status-info">
-              <p>${excuse.status? /*html*/`<x-translation>excuse.statuses.${excuse.status}</x-translation>` : /*html*/`<x-translation>excuse.statuses.pending</x-translation>`}</p>
+              <p>${excuse.status ? /*html*/`<x-translation>excuse.statuses.${excuse.status}</x-translation>` : /*html*/`<x-translation>excuse.statuses.pending</x-translation>`}</p>
             </div>
 
           </div>
+                ${canApprove || canDeny || canEndNow
+        ? /*html*/`
+          <div class="excuse-actions">
 
+            ${canApprove ? /*html*/`
+              <button
+                class="approve-btn"
+                type="button">
+                <x-translation>excuse.button.approve</x-translation>
+              </button>
+            ` : ''}
+
+
+            ${canDeny ? /*html*/`
+              <button
+                class="deny-btn"
+                type="button">
+                <x-translation>excuse.button.deny</x-translation>
+              </button>
+            ` : ''}
+
+
+            ${canEndNow ? /*html*/`
+              <button
+                class="end-now-btn"
+                type="button">
+                <x-translation>excuse.button.EndNow</x-translation>
+              </button>
+            ` : ''}
+
+          </div>
+        `
+        : ''
+      }
         </div>
 
         <div class="excuse-body content">
@@ -95,7 +132,37 @@ class ExcuseViewer extends APIElement {
 
     `;
   }
+  postRender() {
+    this.setupEvents();
+  }
+    setupEvents() {
 
+    this.container.querySelector('.approve-btn')?.addEventListener('click', () => { this.doAction('approve'); });
+
+    this.container.querySelector('.deny-btn')?.addEventListener('click', () => { this.doAction('deny'); });
+
+    this.container.querySelector('.end-now-btn')?.addEventListener('click', () => { this.doAction('redraw'); });
+  }
+    async doAction(action) {
+      try {
+        await postExcuseIdAction(
+          this.id,
+          action,
+          {
+            reason: ''
+          }
+        );
+        this.setAttribute("id", this.id)
+        this.removeAttribute("data")
+        await this.additionalLoading();
+        await this.load();
+      } catch (err) {
+        console.log('err:', err);
+        this.renderError(err, alert = true);
+  
+  
+      }
+    }
 }
 
 customElements.define('ssd-intra-excuse', ExcuseViewer);

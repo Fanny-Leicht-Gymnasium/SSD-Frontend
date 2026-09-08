@@ -89,7 +89,12 @@
         },
         "reason": "Reason",
         "status": "Status",
-        "unknown": "Unknown Reason"
+        "unknown": "Unknown Reason",
+        "button":{
+            "approve":"Approve",
+            "deny":"Deny",
+            "EndNow":"End Now"
+        }
     },
     "mission": {
         "author": "Author",

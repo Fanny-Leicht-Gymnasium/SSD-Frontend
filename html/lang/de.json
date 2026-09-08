@@ -19,10 +19,10 @@
     "application": {
         "button": {
             "approve": "Genehmigen",
-            "approveLeave": "Abwesenheit genehmigen",
+            "approveLeave": "Verlassen genehmigen",
             "deny": "Ablehnen",
-            "denyLeave": "Abwesenheit ablehnen",
-            "leaveRequest": "Abwesenheit beantragen"
+            "denyLeave": "Verlassen ablehnen",
+            "leaveRequest": "Verlassen beantragen"
         },
         "enddate": "Enddatum",
         "startdate": "Startdatum",
@@ -34,9 +34,9 @@
             "approved": "Genehmigt",
             "denied": "Abgelehnt",
             "redraw": "Erneut beantragen",
-            "leaveRequest": "Abwesenheitsantrag",
-            "leaveDenied": "Abwesenheit abgelehnt",
-            "leaved": "Abwesend",
+            "leaveRequest": "Verlassen beantragen",
+            "leaveDenied": "Verlassen abgelehnt",
+            "leaved": "Verlassen",
             "inactive": "Inaktiv"
         },
         "type": {
@@ -89,7 +89,12 @@
         },
         "reason": "Grund",
         "status": "Status",
-        "unknown": "Unbekannter Grund"
+        "unknown": "Unbekannter Grund",
+        "button":{
+            "approve":"Genehmigen",
+            "deny":"Ablehnen",
+            "EndNow":"Jetzt Beenden"
+        }
     },
     "mission": {
         "author": "Autor",
