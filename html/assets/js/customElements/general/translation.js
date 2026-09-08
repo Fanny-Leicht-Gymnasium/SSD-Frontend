@@ -35,7 +35,7 @@ const translationsCache = new Map();
 const translationsLoading = new Map();
 
 // Global default language
-let globalLanguage = getStoredSetting('html-lang') || "en";
+let globalLanguage = getStoredSetting('html-lang') || navigator.language.split('-')[0] || "en";
 
 // Load language file with caching
 async function loadLanguage(lang) {
