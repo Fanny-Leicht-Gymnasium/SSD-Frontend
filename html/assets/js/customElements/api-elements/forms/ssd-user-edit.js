@@ -81,7 +81,7 @@ class SSDUserEdit extends FormAPIElement {
         phonenumber: data.phonenumber,
         class: data.class,
         name: data.name,
-        ...(this.hasAttribute('admin') ? { role: data.role } : {})
+        ...(this.hasAttribute('admin') ? { role: data.role||"" } : {role: ""})
       })
       const updatedUser = await putUserUserid(String(this.userId), payload);
 
