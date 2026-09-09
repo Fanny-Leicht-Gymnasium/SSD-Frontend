@@ -183,7 +183,7 @@ export class FormAPIElement extends APIElement {
           date.setSeconds(0);
           date.setMilliseconds(0);
 
-          value = date;
+          value = date.toISOString();
         }
       }
       // boolean handling
@@ -191,11 +191,13 @@ export class FormAPIElement extends APIElement {
         value = el.checked;
       } else {
         // number detection
-        if (typeof value === 'string' && value.trim() !== '') {
-          const num = Number(value);
-
-          if (!Number.isNaN(num) && value.trim() !== '') {
-            value = num;
+        if (el.type === 'number'){
+          if (typeof value === 'string' && value.trim() !== '') {
+            const num = Number(value);
+  
+            if (!Number.isNaN(num) && value.trim() !== '') {
+              value = num;
+            }
           }
         }
 

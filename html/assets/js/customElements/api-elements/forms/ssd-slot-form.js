@@ -1,4 +1,4 @@
-import { deleteScheduleSlotId, getScheduleSlot, getScheduleSlotId, postLogin, postScheduleSlot, putScheduleSlotId } from '../../../api/api.generated.js';
+import { createPostScheduleSlotBodyTemplate, createSlotTemplate, deleteScheduleSlotId, getScheduleSlot, getScheduleSlotId, postLogin, postScheduleSlot, putScheduleSlotId } from '../../../api/api.generated.js';
 import { FormAPIElement } from '../../form-api-element.js';
 
 class SSDSlotForm extends FormAPIElement {
@@ -95,9 +95,9 @@ class SSDSlotForm extends FormAPIElement {
     async handleSend(data) {
         try {
             if (this.hasAttribute("id")){
-                await putScheduleSlotId(this.id, data);
+                await putScheduleSlotId(this.id, createSlotTemplate(data));
             }else{
-                await postScheduleSlot(data);
+                await postScheduleSlot(createPostScheduleSlotBodyTemplate(data));
             }
             return { success: true };
 
