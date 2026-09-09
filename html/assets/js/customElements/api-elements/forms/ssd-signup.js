@@ -1,4 +1,4 @@
-import { createPostUserBodyTemplate, postUser } from '../../../api/api.generated.js';
+import { createPostUserBodyTemplate, createPutUserUseridBodyTemplate, postUser } from '../../../api/api.generated.js';
 import { FormAPIElement } from '../../form-api-element.js';
 
 class SSDSignup extends FormAPIElement {
