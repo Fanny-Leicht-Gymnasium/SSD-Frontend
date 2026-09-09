@@ -1,4 +1,4 @@
-import { getUserMe, getUserUserid, putUserUserid } from '../../../api/api.generated.js';
+import { createPutUserUseridBodyTemplate, getUserMe, getUserUserid, putUserUserid } from '../../../api/api.generated.js';
 import { FormAPIElement } from '../../form-api-element.js';
 
 class SSDUserEdit extends FormAPIElement {
@@ -75,15 +75,15 @@ class SSDUserEdit extends FormAPIElement {
   async handleSend(data) {
     try {
       this.result.textContent = 'Saving changes...';
-
-      const updatedUser = await putUserUserid(String(this.userId), {
+      const payload = createPutUserUseridBodyTemplate({
         username: data.username,
         email: data.email,
         phonenumber: data.phonenumber,
         class: data.class,
         name: data.name,
         ...(this.hasAttribute('admin') ? { role: data.role } : {})
-      });
+      })
+      const updatedUser = await putUserUserid(String(this.userId), payload);
 
       if (!this.hasAttribute('user-id')) {
         const currentUser = JSON.parse(localStorage.getItem('me') || '{}');

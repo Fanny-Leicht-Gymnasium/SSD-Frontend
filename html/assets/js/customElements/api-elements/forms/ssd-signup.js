@@ -1,4 +1,4 @@
-import { postUser } from '../../../api/api.generated.js';
+import { createPostUserBodyTemplate, postUser } from '../../../api/api.generated.js';
 import { FormAPIElement } from '../../form-api-element.js';
 
 class SSDSignup extends FormAPIElement {
@@ -41,21 +41,20 @@ class SSDSignup extends FormAPIElement {
     async handleSend(data) {
         try {
             this.result.innerHTML = 'Creating account...';
-
-            const payload = {
-                user: {
+            const user = createPutUserUseridBodyTemplate({
                     username: data.username,
                     email: data.email,
                     role: "user", // default role
                     phonenumber: data.phonenumber,
                     class: data.class,
                     name: data.name
-                },
+                })
+            const payload = createPostUserBodyTemplate({
+                user: user,
                 password: data.password
-            };
-
+            });
             console.log('Signup payload:', payload);
-
+            
             await postUser(payload);
 
             this.result.innerHTML = 'Signup successful! Redirecting...';
