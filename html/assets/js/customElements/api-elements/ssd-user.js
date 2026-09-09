@@ -58,7 +58,7 @@ class UserViewer extends APIElement {
       ['userid', 'userid'],
       ['username', 'username'],
       ['email', 'email'],
-      ['role', 'role'],
+      ['role', 'Role'],
       ['phonenumber', 'phonenumber'],
       ['class', 'class'],
       ['name', 'name'],

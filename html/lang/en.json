@@ -53,10 +53,15 @@
         "userid": "User ID",
         "username": "Username",
         "email": "E-Mail",
-        "role": "Role",
+        "Role": "Role",
         "phonenumber": "Phone number",
         "class": "Class",
-        "password": "Password"
+        "password": "Password",
+        "role": {
+            "user": "User",
+            "admin": "Admin",
+            "disabled": "Inactive"
+        }
     },
     "slot": {
         "lable": {
@@ -81,7 +86,7 @@
         "start": "Starts at: ",
         "no-reason": "No Reason Provided",
         "noExcuseFound": "No Excuse Found",
-        "statuses":{
+        "statuses": {
             "pending": "Pending",
             "approved": "Approved",
             "denied": "Denied",
@@ -90,10 +95,10 @@
         "reason": "Reason",
         "status": "Status",
         "unknown": "Unknown Reason",
-        "button":{
-            "approve":"Approve",
-            "deny":"Deny",
-            "EndNow":"End Now"
+        "button": {
+            "approve": "Approve",
+            "deny": "Deny",
+            "EndNow": "End Now"
         }
     },
     "mission": {
@@ -104,22 +109,22 @@
         "call-log": "Mission Call Log",
         "no-additional-info": "No Additional Information",
         "no-users": "No Users",
-        "no-missions-found":"No Mission Found",
+        "no-missions-found": "No Mission Found",
         "medicWithIndex": "Medic No. {index}"
     },
-    "page":{
-        "Dashboard":"Dashboard",
-        "Excuses":"Excuses",
-        "Alerts":"Alerts",
-        "Settings":"Settings"
+    "page": {
+        "Dashboard": "Dashboard",
+        "Excuses": "Excuses",
+        "Alerts": "Alerts",
+        "Settings": "Settings"
     },
-    "setting":{
-        "Theme":"Theme",
-        "language":"Language",
-        "error":"Error",
-        "users":"Users",
+    "setting": {
+        "Theme": "Theme",
+        "language": "Language",
+        "error": "Error",
+        "users": "Users",
         "users-list": "User List",
-        "edit":{
+        "edit": {
             "user": "Edit User"
         }
     },

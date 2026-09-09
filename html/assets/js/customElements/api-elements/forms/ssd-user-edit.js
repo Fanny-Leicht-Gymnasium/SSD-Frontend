@@ -12,10 +12,11 @@ class SSDUserEdit extends FormAPIElement {
 
   renderForm() {
     const roleField = this.hasAttribute('admin') ? /*html*/`
-      <div class="field" input-label="Role" trans-lable="user.role" trans-placeholder="user.role">
+      <div class="field" input-label="Role" trans-lable="user.Role" trans-placeholder="user.Role">
         <select id="role">
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
+          <option value="user"><x-trans>user.role.user</x-trans></option>
+          <option value="admin"><x-trans>user.role.admin</x-trans></option>
+           <option value="disabled"><x-trans>user.role.disabled</x-trans></option>
         </select>
       </div>
     ` : '';

@@ -53,10 +53,15 @@
         "userid": "Benutzer-ID",
         "username": "Benutzername",
         "email": "E-Mail",
-        "role": "Rolle",
+        "Role": "Rolle",
         "phonenumber": "Telefonnummer",
         "class": "Klasse",
-        "password": "Passwort"
+        "password": "Passwort",
+        "role":{
+            "user":"Benutzer",
+            "admin":"Admin",
+            "disabled":"Deaktiviert"
+        }
     },
     "slot": {
         "lable": {
