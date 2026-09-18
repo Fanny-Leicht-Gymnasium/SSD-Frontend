@@ -32,8 +32,8 @@ class SSDUserEdit extends FormAPIElement {
       <div class="field" input-label="Full Name" trans-lable="user.name" trans-placeholder="user.name">
         <input type="text" id="name" placeholder="Full Name" autocomplete="name">
       </div>
-      <div class="field" input-label="Phone Number" trans-lable="user.phonenumber" trans-placeholder="user.phonenumber">
-        <input type="tel" id="phonenumber" placeholder="Phone Number" autocomplete="tel">
+      <div class="field" input-label="Phone Number" trans-lable="user.phonenumber" trans-placeholder="user.phonenumberexample">
+        <input type="tel" id="phonenumber" placeholder="+49..." autocomplete="tel" pattern="^\\+49[0-9]*$">
       </div>
       <div class="field" input-label="Class" trans-lable="user.class" trans-placeholder="user.class">
         <input type="text" id="class" placeholder="Class">

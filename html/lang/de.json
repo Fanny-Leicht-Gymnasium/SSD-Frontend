@@ -55,6 +55,7 @@
         "email": "E-Mail",
         "Role": "Rolle",
         "phonenumber": "Telefonnummer",
+        "phonenumberexample":"+49....",
         "class": "Klasse",
         "password": "Passwort",
         "role":{
