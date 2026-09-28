@@ -91,6 +91,7 @@
             "pending": "Pending",
             "approved": "Approved",
             "denied": "Denied",
+            "redraw": "Ended",
             "unknown": "Unknown"
         },
         "reason": "Reason",
