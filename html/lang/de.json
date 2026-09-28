@@ -33,8 +33,8 @@
             "open": "Offen",
             "approved": "Genehmigt",
             "denied": "Abgelehnt",
-            "redraw": "Erneut beantragen",
-            "leaveRequest": "Verlassen beantragen",
+            "redraw": "Zurückgezogen",
+            "leaveRequest": "Verlassen beantragt",
             "leaveDenied": "Verlassen abgelehnt",
             "leaved": "Verlassen",
             "inactive": "Inaktiv"
@@ -70,15 +70,15 @@
             "applications": "Anträge",
             "base": "Basis",
             "excuses": "Entschuldigungen",
-            "fallback": "Fallback",
-            "replacement": "Ersatz",
+            "fallback": "Ersatz",
+            "replacement": "Einmaliger-Ersatz",
             "required": "erforderlich",
             "name": "Name",
             "weekday": "Wochentag",
             "starttime": "Startzeit",
             "endtime": "Endzeit",
             "position": "Position",
-            "after": "Danach"
+            "after": "Einfügen Nach Slot Position"
         }
     },
     "excuse": {
@@ -107,7 +107,7 @@
         "injury": "Verletzung",
         "location": "Ort",
         "additional-information": "Zusätzliche Informationen",
-        "call-log": "Missionsprotokoll",
+        "call-log": "Telefonprotokoll",
         "no-additional-info": "Keine zusätzlichen Informationen",
         "no-users": "Keine Benutzer",
         "no-missions-found": "Keine Alarmierung gefunden",
@@ -130,8 +130,8 @@
         }
     },
     "offline_mode": {
-        "Title": "Offline Mode",
-        "data_from": "showing Information from: ",
-        "noCached": "No Data Available."
+        "Title": "Offline Modus",
+        "data_from": "Zeige Stand von: ",
+        "noCached": "Keine Daten Verfügbar."
     }
 }
